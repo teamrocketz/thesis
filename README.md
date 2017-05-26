@@ -54,9 +54,17 @@ Yarn is a replacement for npm. It's faster and *guarantees* consistency -- as yo
 yarn global add grunt-cli knex eslint
 ```
 
+### Create local configuration file
+
+Copy `config/development.example.json` to `config/development.json` and fill in any necessary fields for components you plan to use.
+
 ## Database Initialization
 
-IMPORTANT: ensure `postgres` is running before performing these steps.
+IMPORTANT: ensure `postgres` is running before performing these steps:
+
+```
+brew services start postgresql
+```
 
 ### Database Creation:
 
@@ -71,8 +79,6 @@ Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
 In terminal, from the root directory:
 
 `knex migrate:latest --env NODE_ENV`
-
-`knex migrate:rollback --env NODE_ENV`
 
 `knex seed:run --env NODE_ENV`
 
