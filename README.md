@@ -78,11 +78,15 @@ Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
 
 In terminal, from the root directory:
 
-`knex migrate:latest --env NODE_ENV`
+`knex migrate:latest`
 
-`knex seed:run --env NODE_ENV`
+`knex seed:run`
 
-Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrate:latest` will run all migrations in the development environment, while `knex migrate:latest --env test` will migrate in the test environment.
+Note: The above commands will default to a development database configuration.  For non-development environments, specify like so:
+
+`NODE_ENV=test knex migrate:latest`
+
+...and set the appropriate values in the corresponding `config/` file.
 
 ## Running the App
 
