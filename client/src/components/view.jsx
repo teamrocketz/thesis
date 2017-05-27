@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 
 class View extends React.Component {
   constructor(props) {
@@ -11,7 +9,7 @@ class View extends React.Component {
   render() {
     return (<div>
       <h1>Hello world</h1>
-      </div>);
+    </div>);
   }
 }
 
