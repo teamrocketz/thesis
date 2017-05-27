@@ -23,7 +23,8 @@ passport.deserializeUser((id, done) => (
     .error((error) => {
       done(error, null);
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       done(null, null, { message: 'No user found' });
     })
 ));
@@ -67,7 +68,8 @@ passport.use('local-signup', new LocalStrategy({
       .error((error) => {
         done(error, null);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
       })
 )));
@@ -107,7 +109,8 @@ passport.use('local-login', new LocalStrategy({
       .error((err) => {
         done(err, null);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
       })
 )));
@@ -196,7 +199,8 @@ passport.use('local-login', new LocalStrategy({
 //         done(null, profile.serialize());
 //       }
 //     })
-//     .catch(() => {
+//     .catch((err) => {
+//       console.log(err);
 //       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
 //       // and there is no access to req here
 //       done(null, null, {

@@ -5,7 +5,7 @@ module.exports = (grunt) => {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'db/**/*.js', 'server/**/*.js'],
+      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'config/**/*.js'],
     },
 
     mochaTest: {
