@@ -6,8 +6,13 @@ module.exports.verify = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login');
-  return undefined;
+  if (!req.headers.extension) {
+    res.redirect('/webpage/login');
+    return undefined;
+  } else if (req.headers.extension) {
+    res.redirect('/extension/login');
+    return undefined;
+  }
 };
 
 module.exports.session = session({
