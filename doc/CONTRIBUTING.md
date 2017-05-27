@@ -1,5 +1,18 @@
 # Contributing
 
+## Code style & linting tools
+
+1. [Install Package Control](https://packagecontrol.io/installation) for Sublime if you haven't already.
+2. Install the EditorConfig plugin for Sublime, which will help us automatically maintain consistent editor settings (based on the .editorconfig file in GitHub).
+  * In Sublime, open the Command Palette: Command-Shift-P (Mac) or Ctrl-Shift-P (Windows)
+  * In the window that appears, type "Install Package" and press Enter
+  * In the next window that appears, type "EditorConfig" and press Enter
+  * Restart Sublime
+3. Recommended:  Install SublimeLinter and its ESLint plugin for real-time lint checking.
+  * Using from Sublime's Command Palette (Command-Shift-P / Ctrl-Shift-P):
+  * `Package Control: Install Package -> SublimeLinter`
+  * `Package Control: Install Package -> SublimeLinter-contrib-eslint`
+
 ## General Workflow
 
 1. Fork the repo

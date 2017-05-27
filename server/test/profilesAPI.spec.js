@@ -1,7 +1,8 @@
-'use strict';
+/* eslint-disable func-names, prefer-arrow-callback */
+
+// 'use strict'; // commented out per eslint
+
 const request = require('supertest');
-const express = require('express');
-const expect = require('chai').expect;
 const app = require('../app.js');
 const dbUtils = require('../../db/lib/utils.js');
 
@@ -18,13 +19,13 @@ describe('Profiles API', function () {
   it('accepts GET requests to /api/profiles', function (done) {
     request(app)
       .get('/api/profiles')
-      .expect(res => {
+      .expect((res) => {
         res.body = {
-          length: res.body.length
+          length: res.body.length,
         };
       })
       .expect(200, {
-        length: 1
+        length: 1,
       })
       .end(done);
   });
@@ -32,15 +33,15 @@ describe('Profiles API', function () {
   it('accepts GET requests to /api/profiles/:id', function (done) {
     request(app)
       .get('/api/profiles/1')
-      .expect(res => {
+      .expect((res) => {
         res.body = {
           id: res.body.id,
-          created_at: !!Date.parse(res.body.created_at)
+          created_at: !!Date.parse(res.body.created_at),
         };
       })
       .expect(200, {
         id: 1,
-        created_at: true
+        created_at: true,
       })
       .end(done);
   });
@@ -59,7 +60,7 @@ describe('Profiles API', function () {
   //       username: 'TestUser4',
   //       password: 'happy'
   //     })
-  //     .expect(res => {
+  //     .expect((res) => {
   //       res.body = {
   //         username: res.body.username,
   //         password: res.body.password
@@ -73,32 +74,32 @@ describe('Profiles API', function () {
   // });
 
   it('accepts PUT requests to /api/profiles/:id', function () {
-    let profile = {
+    const profile = {
       first: 'James',
       last: 'Davenport',
       display: 'James Davenport',
       email: 'example@email.com',
-      phone: '415-555-1234'
+      phone: '415-555-1234',
     };
 
     return request(app)
       .put('/api/profiles/1')
       .send(profile)
       .expect(201)
-      .then(() => {
-        return request(app)
+      .then(() => (
+        request(app)
           .get('/api/profiles/1')
-          .expect(res => {
+          .expect((res) => {
             res.body = {
               first: res.body.first,
               last: res.body.last,
               display: res.body.display,
               email: res.body.email,
-              phone: res.body.phone
+              phone: res.body.phone,
             };
           })
-          .expect(200, profile);
-      });
+          .expect(200, profile)
+      ));
   });
 
   it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {

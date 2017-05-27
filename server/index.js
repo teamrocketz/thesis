@@ -1,6 +1,7 @@
-'use strict';
+// 'use strict'; // commented out per eslint
+
 const app = require('./app');
-const db = require('../db');
+
 const PORT = process.env.port || 3000;
 
 app.listen(PORT, () => {
