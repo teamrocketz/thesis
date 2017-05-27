@@ -1,6 +1,13 @@
-const expect = require('chai').expect;
+/* eslint-disable func-names, prefer-arrow-callback */
+
 const Profile = require('../../db/models/profiles.js');
 const dbUtils = require('../../db/lib/utils.js');
+
+const chai = require('chai');
+const dirtyChai = require('dirty-chai');
+
+const expect = chai.expect;
+chai.use(dirtyChai);
 
 describe('Profile model tests', function () {
   // Deletes all tables, creates new tables, and seeds tables with test data
@@ -77,5 +84,4 @@ describe('Profile model tests', function () {
         done(err);
       });
   });
-
 });

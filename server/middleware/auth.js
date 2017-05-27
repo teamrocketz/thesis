@@ -7,15 +7,16 @@ module.exports.verify = (req, res, next) => {
     return next();
   }
   res.redirect('/login');
+  return undefined;
 };
 
 module.exports.session = session({
   store: new RedisStore({
     client: redisClient,
     host: 'localhost',
-    port: 6379
+    port: 6379,
   }),
   secret: 'more laughter, more love, more life',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 });

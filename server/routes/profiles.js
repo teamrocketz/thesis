@@ -1,5 +1,7 @@
-'use strict';
+// 'use strict'; // commented out per eslint
+
 const express = require('express');
+
 const router = express.Router();
 const ProfileController = require('../controllers').Profiles;
 

@@ -1,7 +1,8 @@
 const models = require('../models');
 
-exports.seed = function (knex, Promise) {
-
+// exports.seed = function seedFunc(knex, Promise) {
+// ^ original function declaration, w/unused parameters
+exports.seed = function seedFunc() {
   return models.Profile.where({ email: 'admin@domain.com' }).fetch()
     .then((profile) => {
       if (profile) {
@@ -11,25 +12,24 @@ exports.seed = function (knex, Promise) {
         first: 'System',
         last: 'Admin',
         display: 'Administrator',
-        email: 'admin@domain.com'
+        email: 'admin@domain.com',
       }).save();
     })
-    .error(err => {
+    .error((err) => {
       console.error('ERROR: failed to create profile');
       throw err;
     })
-    .then((profile) => {
-      return models.Auth.forge({
+    .then(profile => (
+      models.Auth.forge({
         type: 'local',
         password: 'admin123',
-        profile_id: profile.get('id')
-      }).save();
-    })
-    .error(err => {
+        profile_id: profile.get('id'),
+      }).save()
+    ))
+    .error(() => {
       console.error('ERROR: failed to create auth');
     })
     .catch(() => {
       console.log('WARNING: defualt user already exists.');
     });
-
 };

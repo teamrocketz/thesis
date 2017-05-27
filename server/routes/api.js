@@ -1,5 +1,7 @@
-'use strict';
+// 'use strict';   // commented out per eslint
+
 const express = require('express');
+
 const router = express.Router();
 
 router.route('/')
@@ -7,7 +9,6 @@ router.route('/')
     res.status(200).send('Hello World!');
   })
   .post((req, res) => {
-    console.log('in the correct route');
     res.status(201).send({ data: 'Posted!' });
   });
 
