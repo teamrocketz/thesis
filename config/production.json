@@ -1,0 +1,12 @@
+{
+  "knex": {
+    "connection": {
+      "database": "thesis_prod"
+    },
+    "debug": false,
+    "pool": {
+      "min": 2,
+      "max": 10
+    }
+  }
+}

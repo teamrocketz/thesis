@@ -1,6 +1,8 @@
 const config = require('config').knex;
 
 module.exports = (grunt) => {
+  require('load-grunt-tasks')(grunt);   // eslint-disable-line global-require
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -30,12 +32,15 @@ module.exports = (grunt) => {
       },
     },
 
+    shell: {
+      dbMigrate: 'knex migrate:latest',
+      dbSeed: 'knex seed:run',
+    },
+
   });
 
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-pg');
-
+  grunt.registerTask('dbCreate', ['pgcreatedb']);
+  grunt.registerTask('dbinit', ['dbCreate', 'shell:dbMigrate', 'shell:dbSeed']);
   grunt.registerTask('default', ['eslint']);
   grunt.registerTask('test', ['mochaTest']);
 };

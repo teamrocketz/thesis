@@ -2,7 +2,7 @@
   "knex": {
     "connection": {
       "database": "thesis_devel",
-      "user": "FILL_ME_IN_WITH_YOUR_LOCAL_USER_ID"
+      "user": "jhogan"
     }
   }
 }
