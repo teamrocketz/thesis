@@ -11,6 +11,7 @@
     "mocha/no-return-and-callback": "error",
     "mocha/handle-done-callback": "error",
     "mocha/no-exclusive-tests": "error",
-    "mocha/no-identical-title": "error"
-  }
+    "mocha/no-identical-title": "error",
+    "import/extensions": "off"
+  },
 }

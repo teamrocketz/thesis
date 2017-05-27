@@ -36,7 +36,8 @@ module.exports.getOne = (req, res) => {
     .error((err) => {
       res.status(500).send(err);
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       res.sendStatus(404);
     });
 };
@@ -55,7 +56,8 @@ module.exports.update = (req, res) => {
     .error((err) => {
       res.status(500).send(err);
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       res.sendStatus(404);
     });
 };
@@ -74,7 +76,8 @@ module.exports.update = (req, res) => {
 //     .error(err => {
 //       res.status(503).send(err);
 //     })
-//     .catch(() => {
+//     .catch((err) => {
+//       console.log(err);
 //       res.sendStatus(404);
 //     });
 // };

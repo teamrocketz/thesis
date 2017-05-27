@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import View from './components/view.js';
+import View from './components/view.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {};
   }
 
-  render () {
+  render() {
     return (
       <View />
     );
