@@ -21,8 +21,16 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/', routes.auth);
-app.use('/api', routes.api);
-app.use('/api/profiles', routes.profiles);
+app.get('/', (req, res) => {
+  res.redirect('/webpage');
+});
+
+app.use('/webpage', routes.auth);
+
+app.use('/extension', routes.extensionAuth);
+app.use('/pageviews', routes.pageviews);
+
+// app.use('/api/profiles', routes.profiles);
 
 module.exports = app;
+
