@@ -1,6 +1,8 @@
-'use strict';
+
 const express = require('express');
+
 const router = express.Router();
+
 const PageviewController = require('../controllers').Pageviews;
 
 router.route('/')
