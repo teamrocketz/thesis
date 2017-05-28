@@ -26,7 +26,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/webpage', routes.auth);
-
 app.use('/extension', routes.extensionAuth);
 app.use('/pageviews', routes.pageviews);
 
