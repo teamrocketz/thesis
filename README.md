@@ -4,10 +4,10 @@ The project description
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Tony Cassara
+- James Hogan
+- John Iaconis
+- Jon Stewart
 
 ## Roadmap
 
