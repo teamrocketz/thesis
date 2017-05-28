@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import Header from './header';
 import PageList from '../containers/page-list';
 import PageDetail from '../containers/page-detail';
 
@@ -14,6 +15,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <PageList />
         <PageDetail />
       </div>
