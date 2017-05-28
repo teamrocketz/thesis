@@ -4,20 +4,22 @@ const middleware = require('../middleware');
 const router = express.Router();
 
 
-router.route('/')
-  .get(middleware.auth.verify, (req, res) => {
-    res.render('index.ejs');
-  });
+router.post('/login', (req, res, next) => {
+  middleware.passport.authenticate('local-login', (err, user) => {
+    if (err) {
+      return res.send('error');
+    } else if (!user) {
+      return res.send('noUser');
+    } req.logIn(user, (error) => {
+      if (error) {
+        return res.send('error');
+      }
+      return res.send('loggedIn');
+    });
+    return undefined;
+  })(req, res, next);
+});
 
-router.route('/login')
-  .get((req, res) => {
-    res.render('login.ejs', { message: req.flash('loginMessage') });
-  })
-  .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/profile',
-    failureRedirect: '/login',
-    failureFlash: true,
-  }));
 
 router.route('/signup')
   .get((req, res) => {
