@@ -1,8 +1,9 @@
 /* eslint-env browser */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import View from './components/view.jsx';
+
+import PageList from '../containers/page-list';
+import PageDetail from '../containers/page-detail';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,9 +13,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <View />
+      <div>
+        <PageList />
+        <PageDetail />
+      </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default App;

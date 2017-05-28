@@ -2,7 +2,7 @@
 import path from 'path';
 
 const config = {
-  entry: './client/src/app.jsx',
+  entry: './client/src/index.jsx',
   output: {
     path: path.join(__dirname, 'public/dist'),
     filename: 'bundle.js',
@@ -21,6 +21,9 @@ const config = {
         ],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.jsx', '.js', '.json'],
   },
 };
 
