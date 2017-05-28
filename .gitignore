@@ -7,6 +7,9 @@ config/test.json
 # OS X
 .DS_Store
 
+# Filemerge
+*.orig
+
 # Logs
 logs
 *.log
