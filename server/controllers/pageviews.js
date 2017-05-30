@@ -77,8 +77,8 @@ module.exports.getAll = (req, res) => {
   //  };
 
 
-  //  We likely will rewrite these as above
-  //  they are here because they are required from server/pageviews
+  //  We likely will rewrite/cancel these - see above
+  //  they are still here because they are required from server/pageviews
 
 module.exports.getOne = (req, res) => {
   console.log('pageviews getOne fired');
