@@ -10,6 +10,7 @@
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
@@ -28,7 +29,6 @@
     "express": "^4.15.2",
     "express-session": "^1.15.1",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
-    "jquery": "^3.2.1",
     "knex": "^0.12.9",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
