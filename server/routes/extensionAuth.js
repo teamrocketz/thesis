@@ -22,6 +22,23 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+router.get('/log', (req, res, next) => {
+  middleware.passport.authenticate('local-login', (err, user) => {
+    if (err) {
+      console.log('authenticate error: ', err);
+      return res.send('error');
+    } else if (!user) {
+      return res.send('noUser');
+    } req.logIn(user, (error) => {
+      if (error) {
+        console.log(error);
+        return res.send('error');
+      }
+      return res.statusCode('200').end();
+    });
+    return undefined;
+  })(req, res, next);
+});
 
 // router.route('/signup')
 //   .get((req, res) => {

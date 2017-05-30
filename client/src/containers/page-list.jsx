@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import selectPage from '../actions/index';
+import { selectPage, getHistory } from '../actions/index';
 
 class PageList extends Component {
+  componentWillMount() {
+    this.props.getHistory();
+  }
+
   renderList() {
     return this.props.pages.map(page =>
       (
@@ -36,17 +40,19 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectPage }, dispatch);
+  return bindActionCreators({ selectPage, getHistory }, dispatch);
 }
 
 PageList.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   selectPage: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
+  getHistory: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
 };
 
 PageList.defaultProps = {
   pages: [], // eslint-disable-line react/forbid-prop-types
   selectPage, // eslint-disable-line react/forbid-prop-types
+  getHistory, // eslint-disable-line react/forbid-prop-types
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageList);
