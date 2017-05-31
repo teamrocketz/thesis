@@ -1,8 +1,0 @@
-{
-  "knex": {
-    "connection": {
-      "database": "thesis_devel",
-      "user": "jhogan"
-    }
-  }
-}
