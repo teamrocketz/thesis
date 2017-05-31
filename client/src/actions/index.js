@@ -7,5 +7,5 @@ export const selectPage = page => ({
 
 export const fetchHistoryIfNeeded = () => ({
   type: 'REQUEST_HISTORY',
-  payload: axios.get('http://localhost:3000/dummy'),
+  payload: axios.get('http://localhost:3000/pageviews/'),
 });
