@@ -70,9 +70,9 @@ brew services start postgresql
 
 Use grunt to create a new database for your development and test environments:
 
-Development envronment: `grunt pgcreatedb:default`
+Development envronment: `grunt dbReset`
 
-Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
+For other environments, make sure DATABASE_URL is set, or NODE_ENV is set and all needed values are in relevant `config` files.
 
 ### Run Migrations & Data Seeds
 
@@ -82,11 +82,7 @@ In terminal, from the root directory:
 
 `knex seed:run`
 
-Note: The above commands will default to a development database configuration.  For non-development environments, specify like so:
-
-`NODE_ENV=test knex migrate:latest`
-
-...and set the appropriate values in the corresponding `config/` file.
+For other environments, make sure DATABASE_URL is set, or NODE_ENV is set and all needed values are in relevant `config` files.
 
 ## Running the App
 

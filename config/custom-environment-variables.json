@@ -9,6 +9,10 @@
     "url": "REDIS_URL"
   },
 
+  "session": {
+    "secret": "SESSION_SECRET"
+  },
+
   "webserver": {
     "port": "PORT"
   }

@@ -1,7 +1,2 @@
 {
-  "knex": {
-    "connection": {
-      "database": "thesis_test"
-    }
-  }
 }

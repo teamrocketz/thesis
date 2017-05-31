@@ -20,7 +20,7 @@ if (config.knex.connection.url) {
   });
 }
 
-const sanitizedUrl = config.knex.connection.url.includes('@') ? `redis://${config.knex.connection.url.match(/@(.*$)/)[1]}` : config.knex.connection.url;
+const sanitizedUrl = config.knex.connection.url.includes('@') ? `postgres://${config.knex.connection.url.match(/@(.*$)/)[1]}` : config.knex.connection.url;
 console.log(`Using Postgres database at ${sanitizedUrl}`);
 
 module.exports = config.knex;
