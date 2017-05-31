@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import HistoryReducer from './reducer_pages';
-import ActivePage from './reducer_active_page';
+import history from './reducer_pages';
+import activePage from './reducer_active_page';
 
 const rootReducer = combineReducers({
-  history: HistoryReducer,
-  activePage: ActivePage,
+  history,
+  activePage,
 });
 
 export default rootReducer;

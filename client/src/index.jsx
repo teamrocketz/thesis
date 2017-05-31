@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import App from './components/app';
 import reducers from './reducers/index';
-// import request from './helpers/webHelper';
+// import request from './middleware/historyHelper';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
