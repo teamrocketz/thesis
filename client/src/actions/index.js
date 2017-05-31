@@ -1,5 +1,3 @@
-// const axios = require('axios');
-
 export const selectPage = page => ({
   // selectPage is an ActionCreator, it needs to return an action,
   // an object with a type property
@@ -7,19 +5,16 @@ export const selectPage = page => ({
   payload: page,
 });
 
-export const getHistory = () => ({
-  // axios({
-  //   method: 'get',
-  //   uri: 'http://localhost.com/3000/webpage/dummy'
-  // })
-  // .then(data => {
-  //   console.log(data);
-  //   return {
-  //     type: 'HISTORY_LOADED',
-  //     payload: history,
-  //   };
-  // })
-  // .catch(err => {
-  //   throw new Error(err);
-  // });
+export const historyLoaded = () => ({
+  type: 'HISTORY_REQUEST',
+});
+
+export const historyPending = error => ({
+  type: 'HISTORY_FAILURE',
+  error,
+});
+
+export const historyFailed = history => ({
+  type: 'HISTORY_SUCCESS',
+  history,
 });

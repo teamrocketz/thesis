@@ -1,7 +1,23 @@
-export default function (state = null, action) {
+export default function (state = {
+  isLoading: false,
+  pages: [],
+}, action) {
   switch (action.type) {
-    case 'HISTORY_LOADED':
-      return action.payload;
+    case 'HISTORY_REQUEST':
+      return {
+        pages: ['Loading results...'],
+        isLoading: true,
+      };
+    case 'HISTORY_FAILURE':
+      return {
+        pages: ['Failed to load results...'],
+        isLoading: false,
+      };
+    case 'HISTORY_SUCCESS':
+      return {
+        pages: action.history,
+        isLoading: false,
+      };
     default:
       return state;
   }
