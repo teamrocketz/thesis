@@ -20,7 +20,7 @@ describe('Profile model tests', function () {
     dbUtils.rollback(done);
   });
 
-  it('Should be able to retrieve test data', function (done) {
+  xit('Should be able to retrieve test data', function (done) {
     Profile.forge().fetchAll()
       .then(function (results) {
         expect(results.length).to.equal(1);
@@ -46,7 +46,7 @@ describe('Profile model tests', function () {
   //     });
   // });
 
-  it('Should be able to update an already existing record', function (done) {
+  xit('Should be able to update an already existing record', function (done) {
     Profile.where({ id: 1 }).fetch()
       .then(function (result) {
         expect(result.get('id')).to.equal(1);

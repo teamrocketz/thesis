@@ -28,7 +28,7 @@ describe('Authentication', function () {
   });
 
   describe('Passport local-login strategy', function () {
-    it('passport passes user if email and password match', function (done) {
+    xit('passport passes user if email and password match', function (done) {
       const request = httpMocks.createRequest({
         body: {
           email: 'admin@domain.com',
@@ -66,7 +66,7 @@ describe('Authentication', function () {
   });
 
   describe('Passport local-signup strategy', function () {
-    it('passport passes false if email already exists', function (done) {
+    xit('passport passes false if email already exists', function (done) {
       const request = httpMocks.createRequest({
         body: {
           email: 'admin@domain.com',
