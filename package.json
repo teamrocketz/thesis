@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "babel-core": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
@@ -42,7 +43,8 @@
     "react-redux": "^5.0.5",
     "redis": "^2.7.1",
     "redux": "^3.6.0",
-    "redux-devtools": "^3.4.0"
+    "redux-devtools": "^3.4.0",
+    "redux-promise-middleware": "^4.3.0"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",

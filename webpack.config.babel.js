@@ -2,7 +2,7 @@
 import path from 'path';
 
 const config = {
-  entry: './client/src/index.jsx',
+  entry: ['babel-polyfill', './client/src/index.jsx'],
   output: {
     path: path.join(__dirname, 'public/dist'),
     filename: 'bundle.js',
