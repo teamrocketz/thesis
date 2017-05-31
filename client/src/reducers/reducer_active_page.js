@@ -2,7 +2,7 @@
 // this reducer is responsible for
 export default function (state = null, action) {
   switch (action.type) {
-    case 'PAGE_SELECTED':
+    case 'SELECT_PAGE':
       return action.payload;
     default:
       return state;
