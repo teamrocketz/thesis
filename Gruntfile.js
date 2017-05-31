@@ -15,10 +15,10 @@ module.exports = (grunt) => {
     },
 
     mochaTest: {
-      test: {
-        options: {
-          reporter: 'spec',
-        },
+      options: {
+        reporter: 'spec',
+      },
+      main: {
         src: ['server/test/**/*.js'],
       },
     },
@@ -50,9 +50,16 @@ module.exports = (grunt) => {
     },
 
     shell: {
+      'client-build': 'webpack',
+      'client-dev': 'webpack --watch --color',
       dbRollback: 'knex migrate:rollback',
       dbMigrate: 'knex migrate:latest',
       dbSeed: 'knex seed:run',
+      server: 'nodemon server',
+      'server-debug': 'nodemon --inspect server',
+      'server-debug-brk': 'nodemon --inspect --debug-brk server',
+      // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
+      'test-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test',
     },
 
   });
@@ -78,10 +85,6 @@ module.exports = (grunt) => {
   grunt.registerTask('dbCreateIfNeeded', function dbCreateIfNeeded() {
     const done = this.async();
 
-    // (pretty sure this command is obsolete, leaving it here temporarily.  feel free to delete)
-    // command: `psql -l ${config.connection.url} | grep \`echo ${config.connection.url} |
-    //   sed 's/^.*\\/\\([^\\/]*$\\)/\\1/'\``,
-
     // there MUST be a better way to see if a database exists...
     doesDatabaseExist()
       .then((exists) => {
@@ -97,6 +100,17 @@ module.exports = (grunt) => {
   });
 
   grunt.registerTask('dbReset', ['dbCreateIfNeeded', 'shell:dbRollback', 'shell:dbMigrate', 'shell:dbSeed']);
-  grunt.registerTask('default', ['eslint']);
-  grunt.registerTask('test', ['mochaTest']);
+
+  grunt.registerTask('test', ['mochaTest:main']);
+  grunt.registerTask('test-debug', ['shell:test-debug']);
+
+  grunt.registerTask('client-build', ['shell:client-build']);
+  grunt.registerTask('client-dev', ['shell:client-dev']);
+
+  grunt.registerTask('server', ['shell:server']);
+  grunt.registerTask('server-debug', ['shell:server-debug']);
+  grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
+
+  grunt.registerTask('verify', ['eslint', 'test']);
+  grunt.registerTask('postinstall', ['dbReset', 'client-build']);
 };
