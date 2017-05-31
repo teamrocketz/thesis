@@ -18,6 +18,15 @@ exports.up = function upFunc(knex, Promise) {
       table.string('salt', 100).nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
+    knex.schema.createTableIfNotExists('pageviews', (table) => {
+      table.increments('id').unsigned().primary();
+      table.string('url', 1000).notNullable();
+      table.string('title', 500).notNullable();
+      table.dateTime('time_open').notNullable();
+      table.dateTime('time_closed').nullable();
+      table.boolean('is_active').notNullable();
+      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
+    }),
   ]);
 };
 
@@ -25,5 +34,6 @@ exports.down = function downFunc(knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
     knex.schema.dropTable('profiles'),
+    knex.schema.dropTable('pageviews'),
   ]);
 };
