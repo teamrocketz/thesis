@@ -112,6 +112,7 @@ module.exports.deactivatePage = (req, res) => {
 //  searches by id, deletes pageview
 
 module.exports.deletePage = (req, res) => {
+  console.log(req.body);
   models.Pageview.where({ id: req.body.id }).fetch()
   .then((Pageview) => {
     if (!Pageview) {

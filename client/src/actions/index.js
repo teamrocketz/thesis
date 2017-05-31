@@ -1,8 +1,18 @@
-export default function selectPage(page) {
-  // selectPage is an ActionCreator, it needs to return an action,
-  // an object with a type property
-  return {
-    type: 'PAGE_SELECTED',
-    payload: page,
-  };
-}
+import axios from 'axios';
+
+export const selectPage = page => ({
+  type: 'SELECT_PAGE',
+  payload: page,
+});
+
+export const deletePage = id => ({
+  type: 'DELETE_PAGE',
+  payload: axios.post('http://localhost:3000/pageviews/delete', {
+    id,
+  }),
+});
+
+export const fetchHistoryIfNeeded = () => ({
+  type: 'REQUEST_HISTORY',
+  payload: axios.get('http://localhost:3000/pageviews/'),
+});

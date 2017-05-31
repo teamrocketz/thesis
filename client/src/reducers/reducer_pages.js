@@ -1,8 +1,28 @@
-export default function () {
-  return [
-  { title: 'KRON4 News', snippet: 'Best website ever omg it\'s so good' },
-  { title: 'Hack Reactor', snippet: 'Best website ever omg it\'s so good' },
-  { title: 'Porn', snippet: 'Best website ever omg it\'s so good' },
-  { title: 'Mega ultra porn', snippet: 'Best website ever omg it\'s so good' },
-  ];
+export default function (state = {
+  isLoading: false,
+  pages: [],
+  error: '',
+}, action) {
+  switch (action.type) {
+    case 'REQUEST_HISTORY_PENDING':
+      return {
+        pages: ['Loading results...'],
+        isLoading: true,
+        error: '',
+      };
+    case 'REQUEST_HISTORY_REJECTED':
+      return {
+        pages: ['Failed to load results...'],
+        isLoading: false,
+        error: action.error,
+      };
+    case 'REQUEST_HISTORY_FULFILLED':
+      return {
+        pages: action.payload.data,
+        isLoading: false,
+        error: '',
+      };
+    default:
+      return state;
+  }
 }
