@@ -1,20 +1,31 @@
+import fetchHistory from '../middleware/historyHelper';
+
+export const SELECT_PAGE = 'SELECT_PAGE';
+export const REQUEST_HISTORY = 'REQUEST_HISTORY';
+export const RECEIVE_HISTORY = 'RECEIVE_HISTORY';
+export const HISTORY_FAILED = 'HISTORY_FAILED';
+
+
 export const selectPage = page => ({
-  // selectPage is an ActionCreator, it needs to return an action,
-  // an object with a type property
-  type: 'PAGE_SELECTED',
+  type: SELECT_PAGE,
   payload: page,
 });
 
-export const historyLoaded = () => ({
-  type: 'HISTORY_REQUEST',
+export const requestHistory = () => ({
+  type: REQUEST_HISTORY,
 });
 
-export const historyPending = error => ({
-  type: 'HISTORY_FAILURE',
+export const receiveHistory = json => ({
+  type: RECEIVE_HISTORY,
+  pages: json,
+});
+
+export const historyFailed = error => ({
+  type: HISTORY_FAILED,
   error,
 });
 
-export const historyFailed = history => ({
-  type: 'HISTORY_SUCCESS',
-  history,
-});
+export const fetchHistoryIfNeeded = () => {
+  fetchHistory();
+  return true;
+};

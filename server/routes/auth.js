@@ -18,16 +18,6 @@ router.route('/login')
     failureFlash: true,
   }));
 
-router.route('/dummy')
-  .get((req, res) => {
-    res.send(`[
-      { title: 'KRON4 News', snippet: 'Best website ever omg it's so good' },
-      { title: 'Hack Reactor', snippet: 'Best website ever omg it's so good' },
-      { title: 'Porn', snippet: 'Best website ever omg it's so good' },
-      { title: 'Mega ultra porn', snippet: 'Best website ever omg it's so good' },]` // eslint-disable-line comma-dangle
-    );
-  });
-
 router.route('/signup')
   .get((req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
