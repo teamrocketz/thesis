@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectPage, fetchHistoryIfNeeded } from '../actions/index';
-// import fetchHistoryIfNeeded from '../middleware/historyHelper';
-// import getHistory from '../helpers/webHelper';
 
 class PageList extends Component {
   componentWillMount() {
@@ -11,16 +9,18 @@ class PageList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.isLoading, this.props);
   }
 
   renderList() {
+    if (this.props.pages.isLoading) {
+      return <div>Loading...</div>;
+    }
     return this.props.pages.map(page =>
       (
         <div
           role="button"
           tabIndex="0"
-          key={page.title}
+          key={page.id}
           onClick={() => this.props.selectPage(page)}
           className="list-group-item"
         >

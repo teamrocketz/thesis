@@ -26,12 +26,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/dummy', (req, res) => {
-  console.log('hey from dummy');
-  res.send(`[
-      { title: 'KRON4 News', snippet: 'Best website ever omg it's so good' },
-      { title: 'Hack Reactor', snippet: 'Best website ever omg it's so good' },
-      { title: 'Porn', snippet: 'Best website ever omg it's so good' },
-      { title: 'Mega ultra porn', snippet: 'Best website ever omg it's so good' },]`);
+  const data = [
+      { id: 0, title: 'KRON4 News', snippet: 'Best website ever omg it\'s so good' },
+      { id: 1, title: 'Hack Reactor', snippet: 'Best website ever omg it\'s so good' },
+      { id: 2, title: 'Porn', snippet: 'Best website ever omg it\'s so good' },
+      { id: 3, title: 'Mega ultra porn', snippet: 'Best website ever omg it\'s so good' },
+  ];
+  console.log('hey from dummy', data);
+  res.send(data);
 });
 app.use('/webpage', routes.auth);
 app.use('/extension', routes.extensionAuth);
