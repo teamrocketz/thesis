@@ -3,29 +3,37 @@ const express = require('express');
 
 const router = express.Router();
 
+const middleware = require('../middleware');
+
 const PageviewController = require('../controllers').Pageviews;
 
+
 router.route('/')
-  .get(PageviewController.getAll)
+  .get(middleware.auth.verify, PageviewController.getAll)
   ;
 
 router.route('/active')
-  .get(PageviewController.getActive)
+  .get(middleware.auth.verify, PageviewController.getActive)
   ;
 
 router.route('/search')
-  .post(PageviewController.search)
+  .post(middleware.auth.verify, PageviewController.searchByUrl)
+  ;
+
+router.route('/searchtitle')
+  .post(middleware.auth.verify, PageviewController.searchByTitle)
   ;
 
 router.route('/visitpage')
-  .post(PageviewController.visitPage)
+  .post(middleware.auth.verify, PageviewController.visitPage)
   ;
 
 router.route('/deactivate')
-  .post(PageviewController.deactivatePage)
+  .post(middleware.auth.verify, PageviewController.deactivatePage)
   ;
 
 router.route('/delete')
-  .post(PageviewController.deletePage)
+  .post(middleware.auth.verify, PageviewController.deletePage)
+  ;
 
 module.exports = router;

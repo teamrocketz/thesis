@@ -1,73 +1,88 @@
 const models = require('../../db/models');
 
-//  gets all from current user or 'testy mctester' in test mode ie no browser cookes
+//  gets all from current user or 99999 in test mode ie no browser cookes
 
 module.exports.getAll = (req, res) => {
   console.log('pageviews getAll fired');
-  models.Pageview.fetchAll({
-    user_Id: req.user ? req.user.id || 'testy mctester' : 'testy mctester',  
+  models.Pageview.where({
+    profile_id: req.user.id,
+  }).fetchAll()
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
-    .then((pageviews) => {
-      res.status(200).send(pageviews);
-    })
-    .catch((err) => {
-      res.status(503).send(err);
-    });
+  .catch((err) => {
+    console.log('getAll error: ', err);
+    res.status(503).send('error');
+  });
 };
 
 
-//  gets all active from current user or 'testy mctester' in test mode ie no session
+//  gets all active from current user or 99999 in test mode ie no session
 
 module.exports.getActive = (req, res) => {
   console.log('pageviews getActive fired');
   models.Pageview.where({
-      user_Id: req.user ? req.user.id || 'testy mctester' : 'testy mctester',
-      is_Active: true,
-    }).fetchAll()
-    .then((profiles) => {
-      res.status(200).send(profiles);
-    })
-    .catch((err) => {
-      res.status(503).send(err);
-    });
+    profile_id: req.user.id,
+    is_active: true,
+  }).fetchAll()
+  .then((profiles) => {
+    res.status(200).send(profiles);
+  })
+  .catch((err) => {
+    console.log('getActive error: ', err);
+    res.status(503).send('error');
+  });
 };
 
 
 //  searches by exact url
 
-module.exports.search = (req, res) => {
+module.exports.searchByUrl = (req, res) => {
   console.log('pageviews search fired');
   models.Pageview.where({ url: req.body.url }).fetchAll()
-    .then((profiles) => {
-      res.status(200).send(profiles);
-    })
-    .catch((err) => {
-      res.status(503).send(err);
-    });
+  .then((profiles) => {
+    res.status(200).send(profiles);
+  })
+  .catch((err) => {
+    console.log('searchByUrl error: ', err);
+    res.status(503).send('error');
+  });
 };
 
 
-//  creates a new pageview, if no session, user_Id is 'testy mctester' 
+//  searches by exact title
+
+module.exports.searchByTitle = (req, res) => {
+  console.log('pageviews search fired');
+  models.Pageview.where({ title: req.body.title }).fetchAll()
+  .then((profiles) => {
+    res.status(200).send(profiles);
+  })
+  .catch((err) => {
+    console.log('searchByTitle error: ', err);
+    res.status(503).send('error');
+  });
+};
+
+//  creates a new pageview, if no session, profile_id is 99999
 
 module.exports.visitPage = (req, res) => {
   models.Pageview.forge({
-    user_Id: req.user ? req.user.id || 'testy mctester' : 'testy mctester',
+    profile_id: req.user.id,
     url: req.body.url,
     title: req.body.url,
-    time_Open: Date.now(),
-    time_Closed: null,
-    is_Active: true,
+    time_open: new Date().toISOString(),
+    time_closed: null,
+    is_active: true,
   })
   .save()
-  .then(result => {
+  .then((result) => {
     res.status(201).send(result);
   })
-  .catch(err => {
-   if (err.constraint === 'users_username_unique') {
-     return res.status(403);
-    }
-    console.log(err)
-    res.status(500).send(err);
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send('error');
+    return undefined;
   });
 };
 
@@ -76,21 +91,21 @@ module.exports.visitPage = (req, res) => {
 
 module.exports.deactivatePage = (req, res) => {
   models.Pageview.where({ id: req.body.id }).fetch()
-    .then((Pageview) => {
-      if (!Pageview) {
-        throw Pageview;
-      }
-      Pageview.save({
-        is_Active: false,
-      });
-      res.status(200).send('OK');
-    })
-    .error((err) => {
-      res.status(500).send(err);
-    })
-    .catch(() => {
-      res.sendStatus(404);
+  .then((Pageview) => {
+    if (!Pageview) {
+      throw new Error('Pageview (id) not found in database');
+    }
+    Pageview.save({
+      is_active: false,
+      time_closed: new Date().toISOString(),
     });
+    res.status(200).send('OK');
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send('error');
+    return undefined;
+  });
 };
 
 
@@ -98,21 +113,19 @@ module.exports.deactivatePage = (req, res) => {
 
 module.exports.deletePage = (req, res) => {
   models.Pageview.where({ id: req.body.id }).fetch()
-    .then(Pageview => {
-      if (!Pageview) {
-        throw Pageview;
-      }
-      return Pageview.destroy();
-    })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .error(err => {
-      res.status(503).send(err);
-    })
-    .catch(() => {
-      res.sendStatus(404);
-    });
+  .then((Pageview) => {
+    if (!Pageview) {
+      throw new Error('Pageview (id) not found in database');
+    }
+    return Pageview.destroy();
+  })
+  .then(() => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log('deletePage error: ', err);
+    res.status(500).send('error');
+  });
 };
 
 
