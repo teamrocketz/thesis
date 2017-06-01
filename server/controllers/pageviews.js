@@ -25,8 +25,8 @@ module.exports.getActive = (req, res) => {
     profile_id: req.user.id,
     is_active: true,
   }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('getActive error: ', err);
@@ -40,8 +40,8 @@ module.exports.getActive = (req, res) => {
 module.exports.searchByUrl = (req, res) => {
   console.log('pageviews search fired');
   models.Pageview.where({ url: req.body.url }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('searchByUrl error: ', err);
@@ -55,8 +55,8 @@ module.exports.searchByUrl = (req, res) => {
 module.exports.searchByTitle = (req, res) => {
   console.log('pageviews search fired');
   models.Pageview.where({ title: req.body.title }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('searchByTitle error: ', err);
