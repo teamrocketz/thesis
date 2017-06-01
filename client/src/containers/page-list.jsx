@@ -15,9 +15,23 @@ class PageList extends Component {
     if (this.props.pages.isLoading) {
       return <div>Loading...</div>;
     }
-    return this.props.pages.map(page =>
-      (
-        <div
+    return this.props.pages.map((page) => {
+      if (page.is_active) {
+        return (
+          <a
+            role="button"
+            tabIndex="0"
+            key={page.id}
+            onClick={() => this.props.selectPage(page)}
+            className="list-group-item"
+            style={{ backgroundColor: '#8CC152', color: 'black' }}
+          >
+            {page.title}
+          </a>
+        );
+      }
+      return (
+        <a
           role="button"
           tabIndex="0"
           key={page.id}
@@ -25,8 +39,9 @@ class PageList extends Component {
           className="list-group-item"
         >
           {page.title}
-        </div>
-      ),
+        </a>
+      );
+    },
     );
   }
 
