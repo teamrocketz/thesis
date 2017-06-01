@@ -10,7 +10,7 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <h3>Nox</h3>
+        <h3>Hault</h3>
       </div>
     );
   }
