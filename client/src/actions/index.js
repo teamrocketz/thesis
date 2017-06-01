@@ -16,3 +16,8 @@ export const fetchHistoryIfNeeded = () => ({
   type: 'REQUEST_HISTORY',
   payload: axios.get('http://localhost:3000/pageviews/'),
 });
+
+export const getSession = () => ({
+  type: 'GET_SESSION',
+  payload: axios.get('http://localhost:3000/pageviews/active'),
+});

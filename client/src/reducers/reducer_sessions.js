@@ -4,23 +4,19 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
-    case 'REQUEST_HISTORY_PENDING':
+    case 'GET_SESSION_PENDING':
       return {
-        pages: ['Loading results...'],
         isLoading: true,
-        error: '',
       };
-    case 'REQUEST_HISTORY_REJECTED':
+    case 'GET_SESSION_REJECTED':
       return {
-        pages: ['Failed to load results...'],
         isLoading: false,
         error: action.payload.response.statusText,
       };
-    case 'REQUEST_HISTORY_FULFILLED':
+    case 'GET_SESSION_FULFILLED':
       return {
-        pages: action.payload.data,
         isLoading: false,
-        error: '',
+        pages: action.payload.data,
       };
     default:
       return state;
