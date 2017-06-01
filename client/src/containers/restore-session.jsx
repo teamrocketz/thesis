@@ -23,27 +23,14 @@ class RestoreSession extends React.Component {
 
   render() {
     return (
-      <div>
-        <div
-          role="button"
-          tabIndex="0"
-          key="activeSession"
-          onClick={this.loadSession}
-          className="list-group-item"
-        >
-          Restore Active Sessions
-        </div>
-        {this.props.pages.map(page =>
-        (
-          <a
-            href={page.url}
-            key={page.id}
-            className="list-group-item"
-          >
-            {page.title}
-          </a>
-          ),
-        )}
+      <div
+        role="button"
+        tabIndex="0"
+        key="activeSession"
+        onClick={this.loadSession}
+        className="list-group-item"
+      >
+        Restore Active Sessions
       </div>
     );
   }

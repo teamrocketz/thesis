@@ -16,10 +16,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <RestoreSession />
         <Header />
         <PageList />
         <PageDetail />
-        <RestoreSession />
       </div>
     );
   }
