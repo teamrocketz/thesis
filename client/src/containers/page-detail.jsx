@@ -8,7 +8,7 @@ const PageDetail = (props) => {
     return <div>Select a page to get started.</div>;
   }
   return (
-    <div>
+    <div className="span4">
       <h3>Details for: </h3>
       <div>Title: {props.page.title}</div>
       <div>Snippet: {props.page.snippet}</div>

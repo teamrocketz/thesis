@@ -24,7 +24,7 @@ class PageList extends Component {
             key={page.id}
             onClick={() => this.props.selectPage(page)}
             className="list-group-item"
-            style={{ backgroundColor: '#8CC152', color: 'black' }}
+            style={{ backgroundColor: '#5cb85c', color: 'black' }}
           >
             {page.title}
           </a>
@@ -47,7 +47,7 @@ class PageList extends Component {
 
   render() {
     return (
-      <ul className="list-group col-sm-4">
+      <ul className="list-group col-md-8">
         {this.renderList()}
       </ul>
     );

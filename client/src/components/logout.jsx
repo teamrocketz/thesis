@@ -14,7 +14,7 @@ class Logout extends React.Component {
         <a
           href={this.state.logout}
         >
-          <h4>Logout</h4>
+          <h4 className="pull-right">Logout</h4>
         </a>
       </div>
     );
