@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-export const selectPage = page => ({
-  type: 'SELECT_PAGE',
-  payload: page,
-});
-
 export const deletePage = id => ({
   type: 'DELETE_PAGE',
   payload: axios.post('/pageviews/delete', {

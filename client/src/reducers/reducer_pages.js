@@ -6,13 +6,13 @@ export default function (state = {
   switch (action.type) {
     case 'REQUEST_HISTORY_PENDING':
       return {
-        pages: ['Loading results...'],
+        pages: [],
         isLoading: true,
         error: '',
       };
     case 'REQUEST_HISTORY_REJECTED':
       return {
-        pages: ['Failed to load results...'],
+        pages: [],
         isLoading: false,
         error: action.payload.response.statusText,
       };

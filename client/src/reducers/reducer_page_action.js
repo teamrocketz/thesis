@@ -6,11 +6,6 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
-    case 'SELECT_PAGE':
-      return {
-        page: action.payload,
-        isDeleting: false,
-      };
     case 'DELETE_PAGE_PENDING':
       return {
         isDeleting: true,
