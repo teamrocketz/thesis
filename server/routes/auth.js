@@ -13,7 +13,7 @@ router.route('/login')
     res.render('login.ejs', { message: req.flash('loginMessage') });
   })
   .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/webpage/profile',
+    successRedirect: '/',
     failureRedirect: '/webpage/login',
     failureFlash: true,
   }));
@@ -23,14 +23,14 @@ router.route('/signup')
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   })
   .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/webpage/profile',
+    successRedirect: '/',
     failureRedirect: '/webpage/signup',
     failureFlash: true,
   }));
 
-router.route('/profile')
+router.route('/index')
   .get(middleware.auth.verify, (req, res) => {
-    res.render('profile.ejs', {
+    res.render('index.ejs', {
       user: req.user, // get the user out of session and pass to template
     });
   });

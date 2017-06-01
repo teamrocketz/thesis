@@ -25,8 +25,8 @@ module.exports.getActive = (req, res) => {
     profile_id: req.user.id,
     is_active: true,
   }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('getActive error: ', err);
@@ -40,8 +40,8 @@ module.exports.getActive = (req, res) => {
 module.exports.searchByUrl = (req, res) => {
   console.log('pageviews search fired');
   models.Pageview.where({ url: req.body.url }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('searchByUrl error: ', err);
@@ -55,8 +55,8 @@ module.exports.searchByUrl = (req, res) => {
 module.exports.searchByTitle = (req, res) => {
   console.log('pageviews search fired');
   models.Pageview.where({ title: req.body.title }).fetchAll()
-  .then((profiles) => {
-    res.status(200).send(profiles);
+  .then((pageviews) => {
+    res.status(200).send(pageviews);
   })
   .catch((err) => {
     console.log('searchByTitle error: ', err);
@@ -109,10 +109,7 @@ module.exports.deactivatePage = (req, res) => {
 };
 
 
-//  searches by id, deletes pageview
-
 module.exports.deletePage = (req, res) => {
-  console.log(req.body);
   models.Pageview.where({ id: req.body.id }).fetch()
   .then((Pageview) => {
     if (!Pageview) {
@@ -129,62 +126,3 @@ module.exports.deletePage = (req, res) => {
   });
 };
 
-
-//  We likely will rewrite/cancel these - see above
-//  they are still here because they are required from server/pageviews
-
-// module.exports.getOne = (req, res) => {
-//   console.log('pageviews getOne fired');
-//   models.Pageview.where({ id: req.params.id }).fetch()
-//     .then((Pageview) => {
-//       if (!Pageview) {
-//         throw Pageview;
-//       }
-//       res.status(200).send(Pageview);
-//     })
-//     .error((err) => {
-//       res.status(500).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };
-
-// module.exports.update = (req, res) => {
-//   console.log('pageviews update fired');
-//   models.Pageview.where({ id: req.params.id }).fetch()
-//     .then((Pageview) => {
-//       if (!Pageview) {
-//         throw Pageview;
-//       }
-//       return Pageview.save(req.body, { method: 'update' });
-//     })
-//     .then(() => {
-//       res.sendStatus(201);
-//     })
-//     .error((err) => {
-//       res.status(500).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };
-
-// module.exports.deleteOne = (req, res) => {
-//   models.Pageview.where({ id: req.params.id }).fetch()
-//     .then(Pageview => {
-//       if (!Pageview) {
-//         throw Pageview;
-//       }
-//       return Pageview.destroy();
-//     })
-//     .then(() => {
-//       res.sendStatus(200);
-//     })
-//     .error(err => {
-//       res.status(503).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };
