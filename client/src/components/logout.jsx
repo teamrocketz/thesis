@@ -4,6 +4,7 @@ class Logout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      logout: `${window.location.href}/logout`,
     };
   }
 
@@ -11,7 +12,7 @@ class Logout extends React.Component {
     return (
       <div>
         <a
-          href="http://localhost:3000/webpage/logout"
+          href={this.state.logout}
         >
           <h4>Logout</h4>
         </a>
