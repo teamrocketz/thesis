@@ -22,22 +22,12 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/log', (req, res, next) => {
-  middleware.passport.authenticate('local-login', (err, user) => {
-    if (err) {
-      console.log('authenticate error: ', err);
-      return res.send('error');
-    } else if (!user) {
-      return res.send('noUser');
-    } req.logIn(user, (error) => {
-      if (error) {
-        console.log(error);
-        return res.send('error');
-      }
-      return res.statusCode('200').end();
-    });
-    return undefined;
-  })(req, res, next);
+router.get('/log', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 // router.route('/signup')
@@ -70,7 +60,7 @@ router.post('/signup', (req, res, next) => {
 router.route('/logout')
   .get((req, res) => {
     req.logout();
-    res.send('loggedOut');
+    res.sendStatus(200);
   });
 
 // router.get('/logout', (req, res) => {
