@@ -23,7 +23,7 @@ class RestoreSession extends React.Component {
 
   render() {
     return (
-      <div
+      <a
         role="button"
         tabIndex="0"
         key="activeSession"
@@ -31,7 +31,7 @@ class RestoreSession extends React.Component {
         className="list-group-item"
       >
         Restore Active Sessions
-      </div>
+      </a>
     );
   }
 
