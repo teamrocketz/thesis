@@ -67,17 +67,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 PageList.propTypes = {
-  isLoading: React.PropTypes.bool, // eslint-disable-line react/forbid-prop-types
+  isLoading: React.PropTypes.bool,
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  selectPage: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
-  fetchHistoryIfNeeded: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
+  selectPage: React.PropTypes.func,
+  fetchHistoryIfNeeded: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
   isLoading: false,
-  pages: [], // eslint-disable-line react/forbid-prop-types
-  selectPage, // eslint-disable-line react/forbid-prop-types
-  fetchHistoryIfNeeded, // eslint-disable-line react/forbid-prop-types
+  pages: [],
+  selectPage,
+  fetchHistoryIfNeeded,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageList);

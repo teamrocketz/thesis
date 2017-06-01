@@ -34,16 +34,16 @@ function mapDispatchToProps(dispatch) {
 
 PageDetail.propTypes = {
   page: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  title: React.PropTypes.string, // eslint-disable-line react/forbid-prop-types
-  snippet: React.PropTypes.string, // eslint-disable-line react/forbid-prop-types
-  deletePage: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
+  title: React.PropTypes.string,
+  snippet: React.PropTypes.string,
+  deletePage: React.PropTypes.func,
 };
 
 PageDetail.defaultProps = {
-  page: {}, // eslint-disable-line react/forbid-prop-types
-  title: '', // eslint-disable-line react/forbid-prop-types
-  snippet: '', // eslint-disable-line react/forbid-prop-types
-  deletePage, // eslint-disable-line react/forbid-prop-types
+  page: {},
+  title: '',
+  snippet: '',
+  deletePage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageDetail);

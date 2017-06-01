@@ -49,12 +49,12 @@ function mapDispatchToProps(dispatch) {
 
 RestoreSession.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  getSession: React.PropTypes.func, // eslint-disable-line react/forbid-prop-types
+  getSession: React.PropTypes.func,
 };
 
 RestoreSession.defaultProps = {
-  pages: [], // eslint-disable-line react/forbid-prop-types
-  getSession, // eslint-disable-line react/forbid-prop-types
+  pages: [],
+  getSession,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestoreSession);

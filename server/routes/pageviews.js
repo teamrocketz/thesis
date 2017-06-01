@@ -1,13 +1,10 @@
-
 const express = require('express');
+const middleware = require('../middleware');
+const PageviewController = require('../controllers').Pageviews;
 
 const router = express.Router();
 
-const middleware = require('../middleware');
-
-const PageviewController = require('../controllers').Pageviews;
-
-
+// retrieval routes return JSON object, containing array of objects matching 'pageviews' schema
 router.route('/')
   .get(middleware.auth.verify, PageviewController.getAll)
   ;
