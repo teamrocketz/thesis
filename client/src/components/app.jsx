@@ -5,6 +5,7 @@ import React from 'react';
 import Header from './header';
 import PageList from '../containers/page-list';
 import PageDetail from '../containers/page-detail';
+import RestoreSession from '../containers/restore-session';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends React.Component {
         <Header />
         <PageList />
         <PageDetail />
+        <RestoreSession />
       </div>
     );
   }
