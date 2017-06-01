@@ -1,6 +1,7 @@
+const config = require('config');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const redisClient = require('redis').createClient();
+const redisClient = require('redis').createClient(config.redis.url);
 
 module.exports.verify = (req, res, next) => {
   if (!req.user) {
@@ -22,10 +23,14 @@ module.exports.verify = (req, res, next) => {
 module.exports.session = session({
   store: new RedisStore({
     client: redisClient,
-    host: 'localhost',
-    port: 6379,
+    logErrors: config.redis.logErrors,
   }),
-  secret: 'more laughter, more love, more life',
+  secret: config.session.secret,
   resave: false,
   saveUninitialized: false,
+});
+
+redisClient.on('connect', () => {
+  const sanitizedUrl = config.redis.url.includes('@') ? `redis://${config.redis.url.match(/@(.*$)/)[1]}` : config.redis.url;
+  console.log(`Connected to Redis server at ${sanitizedUrl}`);
 });

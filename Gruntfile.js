@@ -1,6 +1,12 @@
-const config = require('config').knex;
+/* eslint-disable prefer-arrow-callback */
+
+const Promise = require('bluebird');
+const config = require('./knexfile.js');
+const exec = require('child_process').exec;
 
 module.exports = (grunt) => {
+  require('load-grunt-tasks')(grunt);   // eslint-disable-line global-require
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -9,10 +15,10 @@ module.exports = (grunt) => {
     },
 
     mochaTest: {
-      test: {
-        options: {
-          reporter: 'spec',
-        },
+      options: {
+        reporter: 'spec',
+      },
+      main: {
         src: ['server/test/**/*.js'],
       },
     },
@@ -30,12 +36,81 @@ module.exports = (grunt) => {
       },
     },
 
+    pgdropdb: {
+      default: {
+        connection: {
+          user: config.connection.user,
+          password: config.connection.password,
+          host: config.connection.host,
+          port: config.connection.port,
+          database: 'template1',
+        },
+        name: config.connection.database,
+      },
+    },
+
+    shell: {
+      'client-build': 'webpack',
+      'client-dev': 'webpack --watch --color',
+      dbRollback: 'knex migrate:rollback',
+      dbMigrate: 'knex migrate:latest',
+      dbSeed: 'knex seed:run',
+      server: 'nodemon server',
+      'server-debug': 'nodemon --inspect server',
+      'server-debug-brk': 'nodemon --inspect --debug-brk server',
+      // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
+      'test-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test',
+    },
+
   });
 
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-pg');
+  // returns a Promise.  res = boolean true/false
+  function doesDatabaseExist() {
+    const command = `psql -l ${config.connection.url} | head`;    // will fail if database does not exist
 
-  grunt.registerTask('default', ['eslint']);
-  grunt.registerTask('test', ['mochaTest']);
+    return new Promise((resolve, reject) => {
+      exec(command, (err, stdout, stderr) => {
+        if (err) {
+          if (stderr.match(/database "\w+" does not exist/)) {
+            resolve(false);
+          } else {
+            reject(`error checking for existence of database:\n${stdout}\n${stderr}`);
+          }
+        }
+        resolve(true);
+      });
+    });
+  }
+
+  grunt.registerTask('dbCreateIfNeeded', function dbCreateIfNeeded() {
+    const done = this.async();
+
+    // there MUST be a better way to see if a database exists...
+    doesDatabaseExist()
+      .then((exists) => {
+        if (!exists) {
+          grunt.task.run('pgcreatedb');
+        }
+        done();
+      })
+      .catch((err) => {
+        grunt.fail.fatal(err);
+        done();
+      });
+  });
+
+  grunt.registerTask('dbReset', ['dbCreateIfNeeded', 'shell:dbRollback', 'shell:dbMigrate', 'shell:dbSeed']);
+
+  grunt.registerTask('test', ['mochaTest:main']);
+  grunt.registerTask('test-debug', ['shell:test-debug']);
+
+  grunt.registerTask('client-build', ['shell:client-build']);
+  grunt.registerTask('client-dev', ['shell:client-dev']);
+
+  grunt.registerTask('server', ['shell:server']);
+  grunt.registerTask('server-debug', ['shell:server-debug']);
+  grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
+
+  grunt.registerTask('verify', ['eslint', 'test']);
+  grunt.registerTask('postinstall', ['dbReset', 'client-build']);
 };

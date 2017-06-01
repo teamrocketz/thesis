@@ -1,9 +1,13 @@
 // 'use strict'; // commented out per eslint
 
 const app = require('./app');
+const config = require('config');
 
-const PORT = process.env.port || 3000;
+const PORT = config.webserver.port;
+
+console.log('Server starting up.');
+console.log(`NODE_ENV is set to ${process.env.NODE_ENV}`);
 
 app.listen(PORT, () => {
-  console.log('Example app listening on port 3000!');
+  console.log(`Example app listening on port ${PORT}!`);
 });

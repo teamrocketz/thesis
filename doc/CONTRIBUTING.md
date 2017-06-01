@@ -12,6 +12,8 @@
   * Using from Sublime's Command Palette (Command-Shift-P / Ctrl-Shift-P):
   * `Package Control: Install Package -> SublimeLinter`
   * `Package Control: Install Package -> SublimeLinter-contrib-eslint`
+4. Recommended:  Install Airbnb Pomander to enforce linting before commits.
+  * `pomander/pomander-airbnb-install.sh`
 
 ## General Workflow
 

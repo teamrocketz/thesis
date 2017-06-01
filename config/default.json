@@ -20,9 +20,16 @@
     }
   },
 
-  "passport": {
-    "Google": {},
-    "Facebook": {},
-    "Twitter": {}
+  "redis": {
+    "url": "redis://localhost:6379",
+    "logErrors": true
+  },
+
+  "session": {
+    "secret": "more laughter, more love, more life"
+  },
+
+  "webserver": {
+    "port": 3000
   }
 }
