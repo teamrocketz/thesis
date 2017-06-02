@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { deletePage, fetchHistoryIfNeeded } from '../actions/index';
 
 import PageListItem from '../components/pageListItem';
 
 class PageList extends Component {
   componentWillMount() {
-    this.props.fetchHistoryIfNeeded();
-  }
-
-  componentDidMount() {
+    this.props.requestHistory();
   }
 
   render() {
@@ -47,32 +41,20 @@ class PageList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    isLoading: state.pageList.isLoading,
-    pages: state.pageList.pages,
-    error: state.pageList.error,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ deletePage, fetchHistoryIfNeeded }, dispatch);
-}
-
 PageList.propTypes = {
   isLoading: React.PropTypes.bool,
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
-  fetchHistoryIfNeeded: React.PropTypes.func,
+  requestHistory: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
   isLoading: false,
   pages: [],
   error: '',
-  deletePage,
-  fetchHistoryIfNeeded,
+  deletePage: () => {},
+  requestHistory: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageList);
+export default PageList;
