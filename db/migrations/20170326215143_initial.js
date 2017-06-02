@@ -25,6 +25,7 @@ exports.up = function upFunc(knex, Promise) {
       table.dateTime('time_open').notNullable();
       table.dateTime('time_closed').nullable();
       table.boolean('is_active').notNullable();
+      table.string('icon', 500).nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
   ]);
