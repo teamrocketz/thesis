@@ -17,16 +17,31 @@ module.exports.getAll = (req, res) => {
 };
 
 
-//  gets all active from current user or 99999 in test mode ie no session
+//  gets all active tabs for authenticated user
+// sets prev tabs to closed after sending back to client
 
 module.exports.getActive = (req, res) => {
-  console.log('pageviews getActive fired');
   models.Pageview.where({
     profile_id: req.user.id,
     is_active: true,
   }).orderBy('-time_open').fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
+    for (let i = 0; i < pageviews.models.length; i += 1) {
+      models.Pageview.where({ id: pageviews.models[i].attributes.id }).fetch()
+      .then((Pageview) => {
+        if (!Pageview) {
+          throw new Error('Pageview (id) not found in database');
+        }
+        Pageview.save({
+          is_active: false,
+          time_closed: new Date().toISOString(), // this is going to be weird
+        });
+      })
+      .catch((err) => {
+        console.log('deactivate error: ', err);
+      });
+    }
   })
   .catch((err) => {
     console.log('getActive error: ', err);
@@ -70,16 +85,18 @@ module.exports.searchByTitle = (req, res) => {
   });
 };
 
-//  creates a new pageview, if no session, profile_id is 99999
+// creates a new pageview this could be modified to see if the exact same entry
+// exists within the past 1 second and not add if it does
 
 module.exports.visitPage = (req, res) => {
   models.Pageview.forge({
     profile_id: req.user.id,
     url: req.body.url,
-    title: req.body.url,
+    title: req.body.title,
     time_open: new Date().toISOString(),
     time_closed: null,
     is_active: true,
+    icon: req.body.icon,
   })
   .save()
   .then((result) => {
