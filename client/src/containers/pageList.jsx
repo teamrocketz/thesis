@@ -21,14 +21,15 @@ class PageList extends Component {
     );
 
     const renderList = () => (
-      <table>
+      <table className="table table-condensed table-striped">
         <thead>
           <tr>
+            <th />
             <th>Title</th>
             <th>URL</th>
             <th>Snippet</th>
             <th>Time visited</th>
-            <th>Time open</th>
+            <th>Open for</th>
           </tr>
         </thead>
         <tbody>
