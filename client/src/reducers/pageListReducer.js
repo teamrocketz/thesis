@@ -1,6 +1,6 @@
 export default function (state = {
-  isLoading: false,
   pages: [],
+  isLoading: false,
   error: '',
 }, action) {
   switch (action.type) {

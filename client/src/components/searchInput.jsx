@@ -1,16 +1,45 @@
 import React from 'react';
 
-const SearchInput = props => (
-  <div>
-    {props.requestSearch}
-  </div>
-);
+class SearchInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { query: '' };
+    this.handleQueryChange = this.handleQueryChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.requestHistory();
+  }
+
+  handleQueryChange(e) { this.setState({ query: e.target.value }); }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.props.requestSearch}>
+          <input
+            type="text"
+            name="query"
+            value={this.state.query}
+            onChange={this.handleQueryChange}
+          />
+          <input type="submit" value="Search" />
+        </form>
+        <button type="button" onClick={this.props.requestHistory}>
+          Show all
+        </button>
+      </div>
+    );
+  }
+}
 
 SearchInput.propTypes = {
+  requestHistory: React.PropTypes.func,
   requestSearch: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
+  requestHistory: () => {},
   requestSearch: () => {},
 };
 
