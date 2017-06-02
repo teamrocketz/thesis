@@ -126,7 +126,10 @@ module.exports.deactivatePage = (req, res) => {
 
 
 module.exports.deletePage = (req, res) => {
-  models.Pageview.where({ id: req.body.id }).fetch()
+  models.Pageview.where({
+    profile_id: req.user.id,
+    id: req.body.id,
+  }).fetch()
   .then((Pageview) => {
     if (!Pageview) {
       throw new Error('Pageview (id) not found in database');
