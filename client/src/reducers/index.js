@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import history from './reducer_pages';
-import pageAction from './reducer_page_action';
-import session from './reducer_sessions';
+
+import pageList from './pageListReducer';
+import pageAction from './pageActionReducer';
+import session from './sessionReducer';
 
 const rootReducer = combineReducers({
-  history,
+  pageList,
   pageAction,
   session,
 });

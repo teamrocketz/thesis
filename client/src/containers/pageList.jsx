@@ -48,9 +48,9 @@ class PageList extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoading: state.history.isLoading,
-    pages: state.history.pages,
-    error: state.history.error,
+    isLoading: state.pageList.isLoading,
+    pages: state.pageList.pages,
+    error: state.pageList.error,
   };
 }
 
