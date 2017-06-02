@@ -5,6 +5,7 @@ class SearchInput extends React.Component {
     super(props);
     this.state = { query: '' };
     this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.handleSearchRequest = this.handleSearchRequest.bind(this);
   }
 
   componentWillMount() {
@@ -13,10 +14,15 @@ class SearchInput extends React.Component {
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
 
+  handleSearchRequest(e) {
+    e.preventDefault();
+    this.props.requestSearch(e.target.query.value);
+  }
+
   render() {
     return (
       <div>
-        <form onSubmit={this.props.requestSearch}>
+        <form onSubmit={this.handleSearchRequest}>
           <input
             type="text"
             name="query"

@@ -13,12 +13,9 @@ router.route('/active')
   .get(middleware.auth.verify, PageviewController.getActive)
   ;
 
+// GET /pageviews/search?query={string}
 router.route('/search')
-  .post(middleware.auth.verify, PageviewController.searchByUrl)
-  ;
-
-router.route('/searchtitle')
-  .post(middleware.auth.verify, PageviewController.searchByTitle)
+  .get(middleware.auth.verify, PageviewController.search)
   ;
 
 router.route('/visitpage')

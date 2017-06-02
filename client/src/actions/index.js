@@ -17,7 +17,9 @@ export const requestHistory = () => ({
   payload: axios.get('/pageviews/'),
 });
 
-export const requestSearch = () => ({
+export const requestSearch = query => ({
   type: 'REQUEST_SEARCH',
-  payload: axios.get('/pageviews/'),
+  payload: axios.get('/pageviews/search', {
+    params: { query },
+  }),
 });
