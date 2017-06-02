@@ -6,7 +6,7 @@ module.exports.getAll = (req, res) => {
   console.log('pageviews getAll fired');
   models.Pageview.where({
     profile_id: req.user.id,
-  }).fetchAll()
+  }).orderBy('-time_open').fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
   })
@@ -24,7 +24,7 @@ module.exports.getActive = (req, res) => {
   models.Pageview.where({
     profile_id: req.user.id,
     is_active: true,
-  }).fetchAll()
+  }).orderBy('-time_open').fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
   })
@@ -39,7 +39,10 @@ module.exports.getActive = (req, res) => {
 
 module.exports.searchByUrl = (req, res) => {
   console.log('pageviews search fired');
-  models.Pageview.where({ url: req.body.url }).fetchAll()
+  models.Pageview.where({
+    profile_id: req.user.id,
+    url: req.body.url,
+  }).orderBy('-time_open').fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
   })
@@ -54,7 +57,10 @@ module.exports.searchByUrl = (req, res) => {
 
 module.exports.searchByTitle = (req, res) => {
   console.log('pageviews search fired');
-  models.Pageview.where({ title: req.body.title }).fetchAll()
+  models.Pageview.where({
+    profile_id: req.user.id,
+    title: req.body.title,
+  }).orderBy('-time_open').fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
   })
