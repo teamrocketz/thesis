@@ -16,8 +16,8 @@ class App extends React.Component {
     return (
       <div>
         <Logout />
-        <RestoreSession />
         <Header />
+        <RestoreSession />
         <SearchInputContainer />
         <PageListContainer />
       </div>
