@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     pages: state.pageList.pages,
     isLoading: state.pageList.isLoading,
     error: state.pageList.error,
+    isDeleting: state.pageAction.isDeleting,
   };
 }
 

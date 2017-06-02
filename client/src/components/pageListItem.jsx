@@ -18,8 +18,13 @@ const HistoryItem = (props) => {
           <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
         </button>
       </td>
-      <td>{props.page.title}</td>
-      <td>{props.page.url}</td>
+      <td><a
+        href={props.page.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {props.page.title}
+      </a></td>
       <td>{props.page.snippet}</td>
       <td>{props.page.time_open}</td>
       <td>{openFor}</td>

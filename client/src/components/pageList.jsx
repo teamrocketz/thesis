@@ -16,7 +16,6 @@ class PageList extends Component {
           <tr>
             <th />
             <th>Title</th>
-            <th>URL</th>
             <th>Snippet</th>
             <th>Time visited</th>
             <th>Open for</th>
@@ -39,6 +38,7 @@ class PageList extends Component {
 
 PageList.propTypes = {
   isLoading: React.PropTypes.bool,
+  // isDeleting: React.PropTypes.bool,
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
@@ -46,6 +46,7 @@ PageList.propTypes = {
 
 PageList.defaultProps = {
   isLoading: false,
+  // isDeleting: false,
   pages: [],
   error: '',
   deletePage: () => {},
