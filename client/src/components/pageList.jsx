@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import PageListItem from '../components/pageListItem';
 
 class PageList extends Component {
-  componentWillMount() {
-    this.props.requestHistory();
-  }
-
   render() {
     const renderLoading = () => (
       <div>
@@ -37,7 +33,7 @@ class PageList extends Component {
     if (this.props.error) {
       return this.props.error;
     }
-    return this.props.pages.isLoading ? renderLoading() : renderList();
+    return this.props.isLoading ? renderLoading() : renderList();
   }
 }
 
@@ -46,7 +42,6 @@ PageList.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
-  requestHistory: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
@@ -54,7 +49,6 @@ PageList.defaultProps = {
   pages: [],
   error: '',
   deletePage: () => {},
-  requestHistory: () => {},
 };
 
 export default PageList;

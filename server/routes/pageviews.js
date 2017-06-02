@@ -4,31 +4,45 @@ const PageviewController = require('../controllers').Pageviews;
 
 const router = express.Router();
 
-// retrieval routes return JSON object, containing array of objects matching 'pageviews' schema
+// All GET functions return pageviews in descending chronological order
+
+// Request: GET /pageviews/search?query={string}
+// Returns: [ {pageView1}, ..., {pageViewN} ]
+//    Returns all of the user's pageViews
 router.route('/')
   .get(middleware.auth.verify, PageviewController.getAll)
   ;
 
+// Request: GET /pageviews/search?query={string}
+// Returns: [ {pageView1}, ..., {pageViewN} ]
+//    All pageViews which the user currently has open
 router.route('/active')
   .get(middleware.auth.verify, PageviewController.getActive)
   ;
 
+// Request: GET /pageviews/search?query={string}
+// Returns: [ {pageView1}, ..., {pageViewN} ]
+//    All pageViews with title matching search criteria
 router.route('/search')
-  .post(middleware.auth.verify, PageviewController.searchByUrl)
+  .get(middleware.auth.verify, PageviewController.search)
   ;
 
-router.route('/searchtitle')
-  .post(middleware.auth.verify, PageviewController.searchByTitle)
-  ;
-
+// Request: POST /pageviews/deactivate
+// Body:    { url, title, time_open, icon }
+//    Adds pageview to database
 router.route('/visitpage')
   .post(middleware.auth.verify, PageviewController.visitPage)
   ;
 
+// Request: POST /pageviews/deactivate
+// Body:    { id: pageview_id }
+//   Records the user closing a tab
 router.route('/deactivate')
   .post(middleware.auth.verify, PageviewController.deactivatePage)
   ;
 
+// Request: POST /pageviews/delete
+// Body:    { id: pageview_id }
 router.route('/delete')
   .post(middleware.auth.verify, PageviewController.deletePage)
   ;

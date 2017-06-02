@@ -1,3 +1,4 @@
+const db = require('../../db');
 const models = require('../../db/models');
 
 //  gets all from current user or 99999 in test mode ie no browser cookes
@@ -50,40 +51,32 @@ module.exports.getActive = (req, res) => {
 };
 
 
-//  searches by exact url
-
-module.exports.searchByUrl = (req, res) => {
+module.exports.search = (req, res) => {
   console.log('pageviews search fired');
-  models.Pageview.where({
-    profile_id: req.user.id,
-    url: req.body.url,
-  }).orderBy('-time_open').fetchAll()
-  .then((pageviews) => {
-    res.status(200).send(pageviews);
+
+  const sql = `
+    SELECT id, url, title, time_open, is_active
+    FROM (
+      SELECT
+        *,
+        setweight(to_tsvector(title), 'A') as document
+      FROM pageviews
+      WHERE profile_id = ${req.user.id}
+    ) search
+    WHERE search.document @@ plainto_tsquery('${req.query.query}')
+    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) DESC;
+  `;
+
+  db.knex.raw(sql)
+  .then((pageviewsResult) => {
+    res.status(200).send(pageviewsResult.rows);
   })
   .catch((err) => {
-    console.log('searchByUrl error: ', err);
+    console.log('search error: ', err);
     res.status(503).send('error');
   });
 };
 
-
-//  searches by exact title
-
-module.exports.searchByTitle = (req, res) => {
-  console.log('pageviews search fired');
-  models.Pageview.where({
-    profile_id: req.user.id,
-    title: req.body.title,
-  }).orderBy('-time_open').fetchAll()
-  .then((pageviews) => {
-    res.status(200).send(pageviews);
-  })
-  .catch((err) => {
-    console.log('searchByTitle error: ', err);
-    res.status(503).send('error');
-  });
-};
 
 // creates a new pageview this could be modified to see if the exact same entry
 // exists within the past 1 second and not add if it does
@@ -133,7 +126,10 @@ module.exports.deactivatePage = (req, res) => {
 
 
 module.exports.deletePage = (req, res) => {
-  models.Pageview.where({ id: req.body.id }).fetch()
+  models.Pageview.where({
+    profile_id: req.user.id,
+    id: req.body.id,
+  }).fetch()
   .then((Pageview) => {
     if (!Pageview) {
       throw new Error('Pageview (id) not found in database');

@@ -1,19 +1,19 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deletePage, requestHistory } from '../actions/index';
+import { deletePage } from '../actions/index';
 
 import PageList from '../components/pageList';
 
 function mapStateToProps(state) {
   return {
-    isLoading: state.pageList.isLoading,
     pages: state.pageList.pages,
+    isLoading: state.pageList.isLoading,
     error: state.pageList.error,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ deletePage, requestHistory }, dispatch);
+  return bindActionCreators({ deletePage }, dispatch);
 }
 
 const PageListContainer = connect(mapStateToProps, mapDispatchToProps)(PageList);
