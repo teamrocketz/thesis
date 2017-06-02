@@ -22,6 +22,26 @@ export default function (state = {
         isLoading: false,
         error: '',
       };
+
+    case 'REQUEST_SEARCH_PENDING':
+      return {
+        pages: [],
+        isLoading: true,
+        error: '',
+      };
+    case 'REQUEST_SEARCH_REJECTED':
+      return {
+        pages: [],
+        isLoading: false,
+        error: action.payload.response.statusText,
+      };
+    case 'REQUEST_SEARCH_FULFILLED':
+      return {
+        pages: action.payload.data,
+        isLoading: false,
+        error: '',
+      };
+
     default:
       return state;
   }

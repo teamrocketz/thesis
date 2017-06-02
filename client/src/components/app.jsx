@@ -4,7 +4,7 @@ import Header from './header';
 import Logout from './logout';
 import PageListContainer from '../containers/pageListContainer';
 import RestoreSession from '../containers/restoreSession';
-// import SearchInputContainer from '../containers/searchInputContainer';
+import SearchInputContainer from '../containers/searchInputContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,10 +18,10 @@ class App extends React.Component {
         <Logout />
         <RestoreSession />
         <Header />
+        <SearchInputContainer />
         <PageListContainer />
       </div>
     );
-        // <SearchInputContainer />
   }
 }
 
