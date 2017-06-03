@@ -4,7 +4,7 @@ class Logout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logout: `${window.location.href}logout`,
+      logout: `${window.location.origin}/logout`,
     };
   }
 
