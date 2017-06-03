@@ -8,7 +8,7 @@ router.route('/')
     res.render('index.ejs');
   });
 
-router.route('/landing')
+router.route('/home')
   .get((req, res) => {
     res.render('landing.ejs');
   });
@@ -19,7 +19,7 @@ router.route('/login')
   })
   .post(middleware.passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '/webpage/login',
+    failureRedirect: '/login',
     failureFlash: true,
   }));
 
@@ -29,7 +29,7 @@ router.route('/signup')
   })
   .post(middleware.passport.authenticate('local-signup', {
     successRedirect: '/',
-    failureRedirect: '/webpage/signup',
+    failureRedirect: '/signup',
     failureFlash: true,
   }));
 
@@ -43,7 +43,7 @@ router.route('/index')
 router.route('/logout')
   .get((req, res) => {
     req.logout();
-    res.redirect('/webpage');
+    res.redirect('/');
   });
 
 
