@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const deletePage = id => ({
   type: 'DELETE_PAGE',
+  id,
   payload: axios.post('/pageviews/delete', {
     id,
   }),
