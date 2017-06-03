@@ -1,24 +1,27 @@
+import axios from 'axios';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { getSession } from '../actions/index';
+
+function loadSession() {
+  axios.get('/pageviews/active')
+  .then((res) => {
+    res.data.forEach((page) => {
+      window.open(page.url, '_blank');
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 class RestoreSession extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.loadSession = this.loadSession.bind(this);
-  }
-
-  componentWillMount() {
-    this.props.getSession();
-  }
-
-  loadSession() {
-    console.log(this.state);
-    this.props.pages.forEach((page) => {
-      window.open(page.url, '_blank');
-    });
   }
 
   render() {
@@ -27,7 +30,7 @@ class RestoreSession extends React.Component {
         role="button"
         tabIndex="0"
         key="activeSession"
-        onClick={this.loadSession}
+        onClick={loadSession}
         className="btn btn-success pull-right"
       >
         Restore Active Sessions
