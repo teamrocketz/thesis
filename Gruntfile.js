@@ -36,19 +36,6 @@ module.exports = (grunt) => {
       },
     },
 
-    pgdropdb: {
-      default: {
-        connection: {
-          user: config.connection.user,
-          password: config.connection.password,
-          host: config.connection.host,
-          port: config.connection.port,
-          database: 'template1',
-        },
-        name: config.connection.database,
-      },
-    },
-
     shell: {
       'client-build': 'webpack',
       'client-dev': 'webpack --watch --color',
@@ -59,23 +46,23 @@ module.exports = (grunt) => {
       'server-debug': 'nodemon --inspect server',
       'server-debug-brk': 'nodemon --inspect --debug-brk server',
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
+      // for an explanation of why this is here, rather than in mocha configs above
       'test-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test',
     },
 
   });
 
   // returns a Promise.  res = boolean true/false
+  // there MUST be a better way to see if a database exists...
   function doesDatabaseExist() {
     const command = `psql -l ${config.connection.url} | head`;    // will fail if database does not exist
 
     return new Promise((resolve, reject) => {
       exec(command, (err, stdout, stderr) => {
-        if (err) {
-          if (stderr.match(/database "\w+" does not exist/)) {
-            resolve(false);
-          } else {
-            reject(`error checking for existence of database:\n${stdout}\n${stderr}`);
-          }
+        if (stderr.match(/database "\w+" does not exist/)) {
+          resolve(false);
+        } else if (err) {
+          reject(`error checking for existence of database:\n${stdout}\n${stderr}`);
         }
         resolve(true);
       });
@@ -85,7 +72,6 @@ module.exports = (grunt) => {
   grunt.registerTask('dbCreateIfNeeded', function dbCreateIfNeeded() {
     const done = this.async();
 
-    // there MUST be a better way to see if a database exists...
     doesDatabaseExist()
       .then((exists) => {
         if (!exists) {
@@ -99,7 +85,7 @@ module.exports = (grunt) => {
       });
   });
 
-  grunt.registerTask('dbReset', ['dbCreateIfNeeded', 'shell:dbRollback', 'shell:dbMigrate', 'shell:dbSeed']);
+  grunt.registerTask('dbReset', ['dbCreateIfNeeded', 'shell:dbMigrate']);
 
   grunt.registerTask('test', ['mochaTest:main']);
   grunt.registerTask('test-debug', ['shell:test-debug']);
@@ -111,6 +97,8 @@ module.exports = (grunt) => {
   grunt.registerTask('server-debug', ['shell:server-debug']);
   grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
 
+  grunt.registerTask('postinstall', ['client-build']);
+  grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
+  grunt.registerTask('new-env-setup', ['shell:dbSeed']);
   grunt.registerTask('verify', ['eslint', 'test']);
-  grunt.registerTask('postinstall', ['dbReset', 'client-build']);
 };

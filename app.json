@@ -1,5 +1,5 @@
 {
-  "name": "Thesis",
+  "name": "Hault",
   "description": "Private browser history app",
   "addons": [
     "heroku-postgresql:hobby-dev",
@@ -13,5 +13,8 @@
   "env": {
     "NODE_ENV": { "value": "test" },
     "NPM_CONFIG_PRODUCTION": { "value": "false" }
+  },
+  "scripts": {
+    "postdeploy": "grunt new-env-setup"
   }
 }

@@ -1,7 +1,7 @@
 {
   "knex": {
     "connection": {
-      "database": "thesis_devel",
+      "database": "hault_development",
       "user": "FILL_ME_IN_WITH_YOUR_LOCAL_USER_ID"
     }
   }

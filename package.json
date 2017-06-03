@@ -1,5 +1,5 @@
 {
-  "name": "course.thesis",
+  "name": "Hault",
   "version": "1.0.0",
   "scripts": {
     "build": "grunt client-dev",
