@@ -85,7 +85,6 @@ module.exports = (grunt) => {
       });
   });
 
-  grunt.registerTask('dbReset', ['dbCreateIfNeeded', 'shell:dbMigrate']);
 
   grunt.registerTask('test', ['mochaTest:main']);
   grunt.registerTask('test-debug', ['shell:test-debug']);
@@ -101,4 +100,6 @@ module.exports = (grunt) => {
   grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
   grunt.registerTask('new-env-setup', ['shell:dbSeed']);
   grunt.registerTask('verify', ['eslint', 'test']);
+
+  grunt.registerTask('dbSetup', ['dbCreateIfNeeded', 'shell:dbMigrate', 'shell:dbSeed']);
 };
