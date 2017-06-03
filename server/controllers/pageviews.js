@@ -62,7 +62,7 @@ module.exports.search = (req, res) => {
   console.log('pageviews search fired');
 
   const sql = `
-    SELECT id, url, title, time_open, is_active
+    SELECT id, url, title, time_open, is_active, icon
     FROM (
       SELECT
         *,

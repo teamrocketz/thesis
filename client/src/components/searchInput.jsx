@@ -16,7 +16,7 @@ class SearchInput extends React.Component {
 
   handleSearchRequest(e) {
     e.preventDefault();
-    this.props.requestSearch(e.target.query.value);
+    return e.target.query.value === '' ? this.props.requestHistory() : this.props.requestSearch(e.target.query.value);
   }
 
   render() {
