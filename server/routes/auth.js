@@ -8,6 +8,11 @@ router.route('/')
     res.render('index.ejs');
   });
 
+router.route('/landing')
+  .get((req, res) => {
+    res.render('landing.ejs');
+  });
+
 router.route('/login')
   .get((req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') });
