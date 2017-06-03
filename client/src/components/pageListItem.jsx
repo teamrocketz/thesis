@@ -1,12 +1,30 @@
 import React from 'react';
+import TimeAgo from 'react-timeago';
+
+const MAX_DISPLAY_LENGTH_TITLE = 60;
 
 // NOTE: pages.time_open is what goes in the "Time Visited" column of the table
-const HistoryItem = (props) => {
-  let openFor = '';
+const PageListItem = (props) => {
+  let openSince = <span className="text-muted">(closed)</span>;
   if (props.page.is_active) {
-    // TODO: set openFor to the actual duration, perhaps using 'timeago' npm module
-    openFor = '';
+    // TODO: set openSince to the actual duration, perhaps using 'timeago' npm module
+    openSince = <TimeAgo date={props.page.time_open} minPeriod="60" />;
   }
+
+  let displayTitle = props.page.title;
+  if (displayTitle.length > MAX_DISPLAY_LENGTH_TITLE) {
+    displayTitle = `${displayTitle.slice(0, MAX_DISPLAY_LENGTH_TITLE)}...`;
+  }
+
+  const dateFormatter = new Intl.DateTimeFormat('en', {
+    hour12: true,
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  }).format;
+  const displayTimeOpen = dateFormatter(Date.parse(props.page.time_open));
 
   return (
     <tr>
@@ -24,33 +42,24 @@ const HistoryItem = (props) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {props.page.title}
-        </a>
-      </td>
-      <td>
-        <a
-          href={props.page.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {props.page.url}
+          {displayTitle}
         </a>
       </td>
       <td>{props.page.snippet}</td>
-      <td>{props.page.time_open}</td>
-      <td>{openFor}</td>
+      <td>{displayTimeOpen}</td>
+      <td>{openSince}</td>
     </tr>
   );
 };
 
-HistoryItem.propTypes = {
+PageListItem.propTypes = {
   page: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   deletePage: React.PropTypes.func,
 };
 
-HistoryItem.defaultProps = {
+PageListItem.defaultProps = {
   page: {},
   deletePage: () => {},
 };
 
-export default HistoryItem;
+export default PageListItem;
