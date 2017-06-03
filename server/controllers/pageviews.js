@@ -1,5 +1,6 @@
 const db = require('../../db');
 const models = require('../../db/models');
+const utils = require('./controllerUtils');
 
 const MAX_RESULTS_PAGEVIEWS = 200;
 
@@ -91,24 +92,45 @@ module.exports.search = (req, res) => {
 // exists within the past 1 second and not add if it does
 
 module.exports.visitPage = (req, res) => {
-  models.Pageview.forge({
+  const newEntry = {
     profile_id: req.user.id,
     url: req.body.url,
     title: req.body.title,
-    time_open: new Date().toISOString(),
-    time_closed: null,
     is_active: true,
     icon: req.body.icon,
-  })
-  .save()
-  .then((result) => {
-    res.status(201).send(result);
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).send('error');
-    return undefined;
-  });
+  };
+
+  // return new Promise((resolve, reject) => {
+  //   if (utils.isDuplicate(newEntry)) {
+  //     resolve(newEntry);
+  //   }
+  //   reject('Duplicate entry, not added to DB');
+  // });
+
+  if (utils.isDuplicate(newEntry)) {
+    console.log('PAGEVIEWS: duplicate entry from visit page in pageviews');
+    throw new Error('Duplicate entry, not added to DB');
+  } else {
+    console.log('PAGEVIEWS: adding item to database');
+    models.Pageview.forge({
+      profile_id: req.user.id,
+      url: req.body.url,
+      title: req.body.title,
+      time_open: new Date().toISOString(),
+      time_closed: null,
+      is_active: true,
+      icon: req.body.icon,
+    })
+    .save()
+    .then((result) => {
+      res.status(201).send(result);
+    })
+    .catch((err) => {
+      console.log('PAGEVIEWS: caught error: ', err);
+      res.status(208).send('Duplicate Entry');
+      return undefined;
+    });
+  }
 };
 
 
