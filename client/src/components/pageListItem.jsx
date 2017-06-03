@@ -29,12 +29,12 @@ const PageListItem = (props) => {
   return (
     <tr>
       <td>
-        <button
-          type="submit"
-          onClick={() => props.deletePage(props.page.id)}
-        >
-          <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
-        </button>
+        <img
+          src={props.page.icon}
+          width="32"
+          height="32"
+          alt={props.page.title}
+        />
       </td>
       <td>
         <a
@@ -48,6 +48,14 @@ const PageListItem = (props) => {
       <td>{props.page.snippet}</td>
       <td>{displayTimeOpen}</td>
       <td>{openSince}</td>
+      <td>
+        <button
+          type="submit"
+          onClick={() => props.deletePage(props.page.id)}
+        >
+          <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
+        </button>
+      </td>
     </tr>
   );
 };

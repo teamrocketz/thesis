@@ -19,6 +19,7 @@ class PageList extends Component {
             <th>Snippet</th>
             <th>Time visited</th>
             <th>Open since</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
