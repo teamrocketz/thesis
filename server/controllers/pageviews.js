@@ -1,13 +1,18 @@
 const db = require('../../db');
 const models = require('../../db/models');
 
+const MAX_RESULTS_PAGEVIEWS = 200;
+
 //  gets all from current user or 99999 in test mode ie no browser cookes
 
 module.exports.getAll = (req, res) => {
   console.log('pageviews getAll fired');
   models.Pageview.where({
     profile_id: req.user.id,
-  }).orderBy('-time_open').fetchAll()
+  })
+  .orderBy('-time_open')
+  .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
+  .fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
   })
@@ -25,7 +30,10 @@ module.exports.getActive = (req, res) => {
   models.Pageview.where({
     profile_id: req.user.id,
     is_active: true,
-  }).orderBy('-time_open').fetchAll()
+  })
+  .orderBy('-time_open')
+  .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
+  .fetchAll()
   .then((pageviews) => {
     res.status(200).send(pageviews);
     for (let i = 0; i < pageviews.models.length; i += 1) {
@@ -64,7 +72,8 @@ module.exports.search = (req, res) => {
       WHERE profile_id = ${req.user.id}
     ) search
     WHERE search.document @@ plainto_tsquery('${req.query.query}')
-    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) DESC;
+    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) DESC
+    LIMIT ${MAX_RESULTS_PAGEVIEWS};
   `;
 
   db.knex.raw(sql)
