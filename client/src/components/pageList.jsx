@@ -16,7 +16,6 @@ class PageList extends Component {
           <tr>
             <th />
             <th>Title</th>
-            <th>URL</th>
             <th>Snippet</th>
             <th>Time visited</th>
             <th>Open for</th>

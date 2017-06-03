@@ -22,18 +22,26 @@ class SearchInput extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSearchRequest}>
-          <input
-            type="text"
-            name="query"
-            value={this.state.query}
-            onChange={this.handleQueryChange}
-          />
-          <input type="submit" value="Search" />
+        <form
+          className="navbar-form navbar-left"
+          role="search"
+          onSubmit={this.handleSearchRequest}
+        >
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              name="query"
+              value={this.state.query}
+              onChange={this.handleQueryChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Search</button>
+          <br />
+          <button type="button" className="btn btn-link" onClick={this.props.requestHistory}>
+            Show all
+          </button>
         </form>
-        <button type="button" onClick={this.props.requestHistory}>
-          Show all
-        </button>
       </div>
     );
   }

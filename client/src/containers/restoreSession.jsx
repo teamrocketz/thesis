@@ -28,7 +28,7 @@ class RestoreSession extends React.Component {
         tabIndex="0"
         key="activeSession"
         onClick={this.loadSession}
-        className="btn btn-success"
+        className="btn btn-success pull-right"
       >
         Restore Active Sessions
       </a>

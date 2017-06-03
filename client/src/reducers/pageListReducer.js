@@ -27,6 +27,14 @@ export default function (state = {
         isLoading: false,
         error: '',
       };
+    case 'DELETE_PAGE_FULFILLED':
+      return {
+        pages: state.pages.filter(page =>
+          page.id !== JSON.parse(action.payload.config.data).id,
+        ),
+        isLoading: false,
+        error: '',
+      };
 
     default:
       return state;
