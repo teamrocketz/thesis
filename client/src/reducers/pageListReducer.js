@@ -27,6 +27,7 @@ export default function (state = {
         isLoading: false,
         error: '',
       };
+
     case 'DELETE_PAGE_FULFILLED':
       return {
         pages: state.pages.filter(page =>

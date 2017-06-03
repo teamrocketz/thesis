@@ -3,7 +3,7 @@ import React from 'react';
 import Header from './header';
 import Logout from './logout';
 import PageListContainer from '../containers/pageListContainer';
-import RestoreSession from '../containers/restoreSession';
+import RestoreSessionContainer from '../containers/restoreSessionContainer';
 import SearchInputContainer from '../containers/searchInputContainer';
 
 class App extends React.Component {
@@ -17,7 +17,7 @@ class App extends React.Component {
       <div>
         <Logout />
         <Header />
-        <RestoreSession />
+        <RestoreSessionContainer />
         <SearchInputContainer />
         <PageListContainer />
       </div>
