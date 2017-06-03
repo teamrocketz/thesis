@@ -8,7 +8,7 @@ module.exports.verify = (req, res, next) => {
     return next();
   }
   if (!req.headers.extension) {
-    res.redirect('/webpage/login');
+    res.redirect('/webpage/landing');
   } else if (req.headers.extension) {
     res.redirect('/extension/login');
   }
