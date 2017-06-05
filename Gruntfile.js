@@ -18,8 +18,14 @@ module.exports = (grunt) => {
       options: {
         reporter: 'spec',
       },
-      main: {
-        src: ['server/test/**/*.js'],
+      all: {
+        src: ['test/**/*.js'],
+      },
+      unit: {
+        src: ['test/unit/**/*.js'],
+      },
+      integration: {
+        src: ['test/integration/**/*.js'],
       },
     },
 
@@ -46,8 +52,10 @@ module.exports = (grunt) => {
       'server-debug': 'nodemon --inspect server',
       'server-debug-brk': 'nodemon --inspect --debug-brk server',
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
-      // for an explanation of why this is here, rather than in mocha configs above
-      'test-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test',
+      // for an explanation of why these are here, rather than in mocha configs above
+      'test-unit-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-unit',
+      'test-integration-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-integration',
+      'test-all-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-all',
     },
 
   });
@@ -86,8 +94,13 @@ module.exports = (grunt) => {
   });
 
 
-  grunt.registerTask('test', ['mochaTest:main']);
-  grunt.registerTask('test-debug', ['shell:test-debug']);
+  grunt.registerTask('test-unit', ['mochaTest:unit']);
+  grunt.registerTask('test-integration', ['mochaTest:integration']);
+  grunt.registerTask('test-all', ['mochaTest:all']);
+
+  grunt.registerTask('test-unit-debug', ['shell:test-unit-debug']);
+  grunt.registerTask('test-integration-debug', ['shell:test-integration-debug']);
+  grunt.registerTask('test-all-debug', ['shell:test-all-debug']);
 
   grunt.registerTask('client-build', ['shell:client-build']);
   grunt.registerTask('client-dev', ['shell:client-dev']);
@@ -99,7 +112,7 @@ module.exports = (grunt) => {
   grunt.registerTask('postinstall', ['client-build']);
   grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
   grunt.registerTask('new-env-setup', ['shell:dbSeed']);
-  grunt.registerTask('verify', ['eslint', 'test']);
+  grunt.registerTask('verify', ['eslint', 'test-all']);
 
-  grunt.registerTask('dbSetup', ['dbCreateIfNeeded', 'shell:dbMigrate', 'shell:dbSeed']);
+  grunt.registerTask('db-setup', ['dbCreateIfNeeded', 'shell:dbMigrate', 'shell:dbSeed']);
 };

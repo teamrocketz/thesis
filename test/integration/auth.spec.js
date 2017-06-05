@@ -31,7 +31,7 @@ describe('Authentication', function () {
     xit('passport passes user if email and password match', function (done) {
       const request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
+          email: 'tester@domain.com',
           password: 'admin123',
         },
       });
