@@ -109,7 +109,7 @@ module.exports = (grunt) => {
   grunt.registerTask('server-debug', ['shell:server-debug']);
   grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
 
-  grunt.registerTask('postinstall', ['client-build']);
+  grunt.registerTask('postinstall', ['client-build', 'postrelease']);
   grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
   grunt.registerTask('new-env-setup', ['shell:dbSeed']);
   grunt.registerTask('verify', ['eslint', 'test-all']);
