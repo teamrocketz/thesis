@@ -3,6 +3,15 @@ import React, { Component } from 'react';
 import PageListItem from '../components/pageListItem';
 
 class PageList extends Component {
+  constructor(props) {
+    super(props);
+    this.sort = this.sort.bind(this);
+  }
+
+  sort(e) {
+    this.props.sortPages(e.target.innerHTML.toLowerCase());
+  }
+
   render() {
     const renderLoading = () => (
       <div>
@@ -15,8 +24,8 @@ class PageList extends Component {
         <thead>
           <tr>
             <th />
-            <th>Title</th>
-            <th>Snippet</th>
+            <th onClick={this.sort}>Title</th>
+            <th onClick={this.sort}>Snippet</th>
             <th>Time visited</th>
             <th>Open since</th>
             <th>Delete</th>
@@ -42,6 +51,7 @@ PageList.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
+  sortPages: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
@@ -49,6 +59,7 @@ PageList.defaultProps = {
   pages: [],
   error: '',
   deletePage: () => {},
+  sortPages: () => {},
 };
 
 export default PageList;
