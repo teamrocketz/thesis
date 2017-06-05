@@ -38,7 +38,7 @@ export default function (state = {
       };
 
     case 'SORT_PAGES':
-      return { // action.payload or state.pages?
+      return {
         pages: state.pages.sort((x, y) =>
           x[action.payload].charCodeAt(0) - y.title.charCodeAt(0)).slice(0),
         isLoading: false,
