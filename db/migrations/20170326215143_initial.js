@@ -29,6 +29,11 @@ exports.up = function upFunc(knex, Promise) {
       table.string('snippet', 1000).nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
+    knex.schema.createTableIfNotExists('blacklist', (table) => {
+      table.increments('id').unsigned().primary();
+      table.string('domain', 100).notNullable();
+      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
+    }),
   ]);
 };
 
@@ -37,5 +42,6 @@ exports.down = function downFunc(knex, Promise) {
     knex.schema.dropTable('auths'),
     knex.schema.dropTable('pageviews'),
     knex.schema.dropTable('profiles'),
+    knex.schema.dropTable('blacklist'),
   ]);
 };
