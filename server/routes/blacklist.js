@@ -5,13 +5,13 @@ const BlacklistController = require('../controllers').Blacklist;
 const router = express.Router();
 
 router.route('/')
-  .get(middleware.auth.verify, BlacklistController.getAllBlacklists)
+  .get(middleware.auth.verify, BlacklistController.getBlacklist)
   ;
 
 router.route('/add')
-  .get(middleware.auth.verify, BlacklistController.addBlacklist)
+  .get(middleware.auth.verify, BlacklistController.addToBlacklist)
   ;
 
 router.route('/delete')
-  .get(middleware.auth.verify, BlacklistController.deleteBlacklist)
+  .get(middleware.auth.verify, BlacklistController.deleteFromBlacklist)
   ;
