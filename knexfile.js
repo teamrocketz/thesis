@@ -1,4 +1,5 @@
 const config = require('config');
+const username = require('username');
 
 const parseUrl = (url) => {
   const configArr = url.match(/^postgres:\/\/(\w+):(\w+)@([^:]+):([0-9]+)\/(\w+)$/);
@@ -13,8 +14,13 @@ const parseUrl = (url) => {
 };
 
 if (config.knex.connection.url) {
+  // URL was supplied as an environment variable
   Object.assign(config.knex.connection, parseUrl(config.knex.connection.url));
 } else {
+  // no environment variable, use connection info from config files
+  if (config.knex.connection.user === '$USERNAME') {
+    config.knex.connection.user = username.sync();
+  }
   Object.assign(config.knex.connection, {
     url: `postgres://${config.knex.connection.user}:${config.knex.connection.password}@${config.knex.connection.host}${config.knex.connection.port ? `:${config.knex.connection.port}` : ''}/${config.knex.connection.database}`,
   });

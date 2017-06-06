@@ -1,2 +1,7 @@
 {
+  "knex": {
+    "connection": {
+      "database": "hault_test"
+    }
+  }
 }

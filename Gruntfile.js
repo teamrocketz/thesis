@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 
 const Promise = require('bluebird');
-const config = require('./knexfile.js');
+const dbConfig = require('./knexfile.js');
 const exec = require('child_process').exec;
 
 module.exports = (grunt) => {
@@ -11,11 +11,12 @@ module.exports = (grunt) => {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'config/**/*.js'],
+      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'dbConfig/**/*.js'],
     },
 
     mochaTest: {
       options: {
+        colors: true,
         reporter: 'spec',
       },
       all: {
@@ -32,13 +33,13 @@ module.exports = (grunt) => {
     pgcreatedb: {
       default: {
         connection: {
-          user: config.connection.user,
-          password: config.connection.password,
-          host: config.connection.host,
-          port: config.connection.port,
+          user: dbConfig.connection.user,
+          password: dbConfig.connection.password,
+          host: dbConfig.connection.host,
+          port: dbConfig.connection.port,
           database: 'template1',
         },
-        name: config.connection.database,
+        name: dbConfig.connection.database,
       },
     },
 
@@ -53,9 +54,8 @@ module.exports = (grunt) => {
       'server-debug-brk': 'nodemon --inspect --debug-brk server',
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
       // for an explanation of why these are here, rather than in mocha configs above
-      'test-unit-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-unit',
-      'test-integration-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-integration',
-      'test-all-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test-all',
+      test: 'NODE_ENV=test ./node_modules/.bin/grunt test-run',
+      'test-debug': 'NODE_ENV=test node --inspect --debug-brk ./node_modules/.bin/grunt test-run',
     },
 
   });
@@ -63,7 +63,7 @@ module.exports = (grunt) => {
   // returns a Promise.  res = boolean true/false
   // there MUST be a better way to see if a database exists...
   function doesDatabaseExist() {
-    const command = `psql -l ${config.connection.url} | head`;    // will fail if database does not exist
+    const command = `psql -l ${dbConfig.connection.url} | head`;    // will fail if database does not exist
 
     return new Promise((resolve, reject) => {
       exec(command, (err, stdout, stderr) => {
@@ -93,14 +93,9 @@ module.exports = (grunt) => {
       });
   });
 
-
-  grunt.registerTask('test-unit', ['mochaTest:unit']);
-  grunt.registerTask('test-integration', ['mochaTest:integration']);
-  grunt.registerTask('test-all', ['mochaTest:all']);
-
-  grunt.registerTask('test-unit-debug', ['shell:test-unit-debug']);
-  grunt.registerTask('test-integration-debug', ['shell:test-integration-debug']);
-  grunt.registerTask('test-all-debug', ['shell:test-all-debug']);
+  grunt.registerTask('test', ['shell:test']);
+  grunt.registerTask('test-debug', ['shell:test-debug']);
+  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochaTest:all']);
 
   grunt.registerTask('client-build', ['shell:client-build']);
   grunt.registerTask('client-dev', ['shell:client-dev']);

@@ -22,11 +22,6 @@ describe('Authentication: Passport-to-database tests', function () {
     dbUtils.reinitialize(done);
   });
 
-  // Resets database back to original settings
-  afterEach(function (done) {
-    dbUtils.wipe(done);
-  });
-
   describe('Passport local-login strategy', function () {
     it('passport passes user if email and password match', function (done) {
       const request = httpMocks.createRequest({

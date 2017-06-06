@@ -15,11 +15,6 @@ describe('Profile model tests', function () {
     dbUtils.reinitialize(done);
   });
 
-  // Resets database back to original settings
-  afterEach(function (done) {
-    dbUtils.wipe(done);
-  });
-
   xit('Should be able to retrieve test data', function (done) {
     Profile.forge().fetchAll()
       .then(function (results) {

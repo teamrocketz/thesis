@@ -11,11 +11,6 @@ describe('Profiles API', function () {
     dbUtils.reinitialize(done);
   });
 
-  // Resets database back to original settings
-  afterEach(function (done) {
-    dbUtils.wipe(done);
-  });
-
   xit('accepts GET requests to /api/profiles', function (done) {
     request(app)
       .get('/api/profiles')
