@@ -7,7 +7,7 @@ const BlacklistItem = props =>
       <td>
         <button
           type="submit"
-          onClick={() => props.whitelistDomain(props.domain.domain)}
+          onClick={() => props.deleteDomain(props.domain.domain)}
         >
           <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
         </button>
@@ -18,12 +18,12 @@ const BlacklistItem = props =>
 
 BlacklistItem.propTypes = {
   domain: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  whitelistDomain: React.PropTypes.func,
+  deleteDomain: React.PropTypes.func,
 };
 
 BlacklistItem.defaultProps = {
   domain: {},
-  whitelistDomain: () => {},
+  deleteDomain: () => {},
 };
 
 export default BlacklistItem;

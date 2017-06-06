@@ -6,13 +6,13 @@ export default function (state = {
   switch (action.type) {
     case 'BLACKLIST_DOMAIN_PENDING':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: true,
         error: '',
       };
     case 'BLACKLIST_DOMAIN_REJECTED':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: false,
         error: action.payload.response.statusText,
       };
@@ -24,13 +24,13 @@ export default function (state = {
       };
     case 'GET_BLACKLIST_PENDING':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: true,
         error: '',
       };
     case 'GET_BLACKLIST_REJECTED':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: false,
         error: action.payload.response.statusText,
       };
@@ -42,13 +42,13 @@ export default function (state = {
       };
     case 'WHITELIST_DOMAIN_PENDING':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: true,
         error: '',
       };
     case 'WHITELIST_DOMAIN_REJECTED':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: [],
         status: false,
         error: action.payload.response.statusText,
       };
