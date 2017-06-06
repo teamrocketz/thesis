@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+export const blacklistDomain = domain => ({
+  type: 'BLACKLIST_DOMAIN',
+  payload: axios.post('/blacklist/add', {
+    domain,
+  }),
+});
+
 export const deletePage = id => ({
   type: 'DELETE_PAGE',
   payload: axios.post('/pageviews/delete', {

@@ -18,16 +18,16 @@ module.exports.isDuplicate = entry =>
   });
 
 module.exports.isBlacklistDuplicate = entry =>
+  // console.log('the entry being checked for duplicates is: ', entry);
   models.Blacklist.where(entry).orderBy('id').fetch()
   .then((result) => {
+    console.log('entry being searched:', entry);
+    console.log('the result is: ', result);
     if (!result || !result.attributes) {
+      console.log('so we return false');
       return false;
     }
-    const x = new Date(result.attributes.time_open).getTime();
-    const y = new Date().getTime();
-    if (y - x > 20000) {
-      return false;
-    }
+    console.log('so we return true');
     return true;
   })
   .catch((err) => {

@@ -9,9 +9,11 @@ router.route('/')
   ;
 
 router.route('/add')
-  .get(middleware.auth.verify, BlacklistController.addToBlacklist)
+  .post(middleware.auth.verify, BlacklistController.addToBlacklist)
   ;
 
 router.route('/delete')
-  .get(middleware.auth.verify, BlacklistController.deleteFromBlacklist)
+  .post(middleware.auth.verify, BlacklistController.deleteFromBlacklist)
   ;
+
+module.exports = router;

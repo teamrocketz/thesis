@@ -22,6 +22,7 @@ app.use(middleware.flash());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', routes.auth);
+app.use('/blacklist', routes.blacklist);
 app.use('/extension', routes.extensionAuth);
 app.use('/pageviews', routes.pageviews);
 
