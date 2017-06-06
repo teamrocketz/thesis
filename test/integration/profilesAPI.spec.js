@@ -8,12 +8,12 @@ const dbUtils = require('../../db/lib/utils.js');
 
 describe('Profiles API', function () {
   beforeEach(function (done) {
-    dbUtils.rollbackMigrate(done);
+    dbUtils.reinitialize(done);
   });
 
   // Resets database back to original settings
   afterEach(function (done) {
-    dbUtils.rollback(done);
+    dbUtils.wipe(done);
   });
 
   xit('accepts GET requests to /api/profiles', function (done) {

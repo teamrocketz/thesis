@@ -12,12 +12,12 @@ chai.use(dirtyChai);
 describe('Profile model tests', function () {
   // Deletes all tables, creates new tables, and seeds tables with test data
   beforeEach(function (done) {
-    dbUtils.rollbackMigrate(done);
+    dbUtils.reinitialize(done);
   });
 
   // Resets database back to original settings
   afterEach(function (done) {
-    dbUtils.rollback(done);
+    dbUtils.wipe(done);
   });
 
   xit('Should be able to retrieve test data', function (done) {

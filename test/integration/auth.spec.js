@@ -19,12 +19,12 @@ describe('Authentication', function () {
   };
 
   beforeEach(function (done) {
-    dbUtils.rollbackMigrate(done);
+    dbUtils.reinitialize(done);
   });
 
   // Resets database back to original settings
   afterEach(function (done) {
-    dbUtils.rollback(done);
+    dbUtils.wipe(done);
   });
 
   describe('Passport local-login strategy', function () {
