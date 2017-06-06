@@ -7,6 +7,18 @@ export const blacklistDomain = domain => ({
   }),
 });
 
+export const whitelistDomain = domain => ({
+  type: 'WHITELIST_DOMAIN',
+  payload: axios.post('/blacklist/delete', {
+    domain,
+  }),
+});
+
+export const getBlacklist = () => ({
+  type: 'GET_BLACKLIST',
+  payload: axios.get('/blacklist/'),
+});
+
 export const deletePage = id => ({
   type: 'DELETE_PAGE',
   payload: axios.post('/pageviews/delete', {

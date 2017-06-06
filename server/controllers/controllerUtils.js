@@ -18,7 +18,6 @@ module.exports.isDuplicate = entry =>
   });
 
 module.exports.isBlacklistDuplicate = entry =>
-  // console.log('the entry being checked for duplicates is: ', entry);
   models.Blacklist.where(entry).orderBy('id').fetch()
   .then((result) => {
     console.log('entry being searched:', entry);

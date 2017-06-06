@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { blacklistDomain } from '../actions/index';
+import { blacklistDomain, getBlacklist, whitelistDomain } from '../actions/index';
 import Blacklist from '../components/blacklist';
 
 function mapStateToProps(state) {
@@ -12,7 +12,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ blacklistDomain }, dispatch);
+  return bindActionCreators({ blacklistDomain, getBlacklist, whitelistDomain }, dispatch);
 }
 
 const BlacklistContainer = connect(mapStateToProps, mapDispatchToProps)(Blacklist);

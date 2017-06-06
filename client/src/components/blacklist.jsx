@@ -1,4 +1,5 @@
 import React from 'react';
+import BlacklistItem from './blacklistitem';
 
 class Blacklist extends React.Component {
   constructor(props) {
@@ -6,6 +7,10 @@ class Blacklist extends React.Component {
     this.state = { domain: '' };
     this.addBlacklist = this.addBlacklist.bind(this);
     this.handleDomainChange = this.handleDomainChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getBlacklist();
   }
 
   handleDomainChange(e) {
@@ -39,6 +44,22 @@ class Blacklist extends React.Component {
           <button type="submit" className="btn btn-primary">Add to blacklist</button>
           <br />
         </form>
+        <table className="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th>Domain</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.props.blacklist.map(domain => (
+              <BlacklistItem
+                domain={domain}
+                key={domain.id}
+                deleteDomain={this.props.whitelistDomain}
+              />
+            )) }
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -46,10 +67,16 @@ class Blacklist extends React.Component {
 
 Blacklist.propTypes = {
   blacklistDomain: React.PropTypes.func,
+  getBlacklist: React.PropTypes.func,
+  whitelistDomain: React.PropTypes.func,
+  blacklist: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 Blacklist.defaultProps = {
   blacklistDomain: () => {},
+  getBlacklist: () => {},
+  whitelistDomain: () => {},
+  blacklist: [],
 };
 
 export default Blacklist;
