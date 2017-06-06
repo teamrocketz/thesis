@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { blacklistDomain } from '../actions/index';
-
 import Blacklist from '../components/blacklist';
 
 function mapStateToProps(state) {

@@ -1,25 +1,26 @@
 const models = require('../../db/models');
 const utils = require('./controllerUtils');
 
-// module.exports.getBlacklist = (req, res) => {
-  // console.log('hey from getblacklist');
-  // models.Blacklist.where({
-  //   profile_id: req.user.id,
-  // })
-  // .orderBy('id')
-  // // .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
-  // .fetchAll()
-  // .then((blacklist) => {
-  //   res.status(200).send(blacklist);
-  // })
-  // .catch((err) => {
-  //   console.log('getAllBlackList error: ', err);
-  //   res.status(503).send('error');
-  // });
-// };
+module.exports.getBlacklist = (req, res) => {
+  console.log('hey from getblacklist');
+  models.Blacklist.where({
+    profile_id: req.user.id,
+  })
+  .orderBy('id')
+  // .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
+  .fetchAll()
+  .then((blacklist) => {
+    res.status(200).send(blacklist);
+  })
+  .catch((err) => {
+    console.log('getAllBlackList error: ', err);
+    res.status(503).send('error');
+  });
+};
 
 module.exports.addToBlacklist = (req, res) => {
   console.log('ADD_BLACKLIST_BODY: ', req.body);
+  res.send(req.body);
   const newEntry = {
     profile_id: req.user.id,
     domain: req.body.domain,
@@ -50,22 +51,22 @@ module.exports.addToBlacklist = (req, res) => {
   });
 };
 
-// module.exports.deleteFromBlacklist = (req, res) => {
-  // models.Blacklist.where({
-  //   profile_id: req.user.id,
-  //   id: req.body.id,
-  // }).fetch()
-  // .then((Pageview) => {
-  //   if (!Pageview) {
-  //     throw new Error('Pageview (id) not found in database');
-  //   }
-  //   return Pageview.destroy();
-  // })
-  // .then(() => {
-  //   res.sendStatus(200);
-  // })
-  // .catch((err) => {
-  //   console.log('deletePage error: ', err);
-  //   res.status(500).send('error');
-  // });
-// };
+module.exports.deleteFromBlacklist = (req, res) => {
+  models.Blacklist.where({
+    profile_id: req.user.id,
+    id: req.body.id,
+  }).fetch()
+  .then((Pageview) => {
+    if (!Pageview) {
+      throw new Error('Pageview (id) not found in database');
+    }
+    return Pageview.destroy();
+  })
+  .then(() => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log('deletePage error: ', err);
+    res.status(500).send('error');
+  });
+};
