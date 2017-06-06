@@ -2,7 +2,7 @@
 
 const httpMocks = require('node-mocks-http');
 const dbUtils = require('../../db/lib/utils.js');
-const passport = require('../middleware/passport');
+const passport = require('../../server/middleware/passport');
 const models = require('../../db/models');
 
 const chai = require('chai');

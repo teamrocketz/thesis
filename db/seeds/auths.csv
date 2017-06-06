@@ -1,0 +1,5 @@
+"id","type","password","profile_id"
+100000,"local","passwordtester",100000
+100001,"local","passwordbob",100001
+100002,"local","passwordigor",100002
+100003,"local","passwordsally",100003

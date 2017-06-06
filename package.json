@@ -63,6 +63,8 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-mocha": "^4.9.0",
     "eslint-plugin-react": "^7.0.1",
+    "firstline": "^1.2.1",
+    "knex-csv-seeder": "^0.4.1",
     "mocha": "^3.2.0",
     "node-mocks-http": "^1.6.1",
     "supertest": "^3.0.0",
