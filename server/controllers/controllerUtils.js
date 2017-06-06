@@ -16,3 +16,18 @@ module.exports.isDuplicate = entry =>
   .catch((err) => {
     throw new Error(err);
   });
+
+module.exports.hasSnippet = entry =>
+  models.Pageview.where(entry).orderBy('-time_open').fetch()
+  .then((result) => {
+    if (result.attributes.snippet !== '') {
+      return true;
+    }
+    if (!result || !result.attributes) {
+      throw new Error('No entry found in database');
+    }
+    return false;
+  })
+  .catch((err) => {
+    throw new Error(err);
+  });
