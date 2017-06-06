@@ -32,3 +32,22 @@ module.exports.isBlacklistDuplicate = entry =>
   .catch((err) => {
     throw new Error(err);
   });
+
+module.exports.isBlacklist = entry =>
+  models.Blacklist.where(entry).orderBy('-time_open').fetch()
+  .then((result) => {
+    console.log('ENTRY FOR BLACKLIST: ', entry);
+    console.log('RESULT FROM BLACKLIST SEARCH: ', result);
+    if (!result || !result.attributes) {
+      return false;
+    }
+    const x = new Date(result.attributes.time_open).getTime();
+    const y = new Date().getTime();
+    if (y - x > 20000) {
+      return false;
+    }
+    return true;
+  })
+  .catch((err) => {
+    throw new Error(err);
+  });
