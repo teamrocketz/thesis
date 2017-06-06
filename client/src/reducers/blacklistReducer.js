@@ -6,31 +6,31 @@ export default function (state = {
   switch (action.type) {
     case 'BLACKLIST_DOMAIN_PENDING':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: true,
         error: '',
       };
     case 'BLACKLIST_DOMAIN_REJECTED':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: false,
         error: action.payload.response.statusText,
       };
     case 'BLACKLIST_DOMAIN_FULFILLED':
       return {
-        blacklist: state.blacklist.blacklist,
+        blacklist: state.blacklist,
         status: false,
         error: '',
       };
     case 'GET_BLACKLIST_PENDING':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: true,
         error: '',
       };
     case 'GET_BLACKLIST_REJECTED':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: false,
         error: action.payload.response.statusText,
       };
@@ -42,20 +42,20 @@ export default function (state = {
       };
     case 'WHITELIST_DOMAIN_PENDING':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: true,
         error: '',
       };
     case 'WHITELIST_DOMAIN_REJECTED':
       return {
-        blacklist: [],
+        blacklist: state.blacklist,
         status: false,
         error: action.payload.response.statusText,
       };
     case 'WHITELIST_DOMAIN_FULFILLED':
       return {
-        blacklist: state.blacklist.filter(domain =>
-          domain !== JSON.parse(action.payload.config.data).domain,
+        blacklist: state.blacklist.filter(obj =>
+          obj.domain !== JSON.parse(action.payload.config.data).domain,
         ),
         status: false,
         error: '',

@@ -22,6 +22,9 @@ class Blacklist extends React.Component {
     if (this.state.domain.length > 0) {
       this.props.blacklistDomain(this.state.domain);
     }
+    setTimeout(() => {
+      this.props.getBlacklist();
+    }, 50);
   }
 
   render() {
