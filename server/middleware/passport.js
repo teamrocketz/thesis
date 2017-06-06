@@ -8,6 +8,9 @@ const LocalStrategy = require('passport-local').Strategy;
 // const config = require('config').passport;
 const models = require('../../db/models');
 
+class InvalidUserError extends Error {}
+class InvalidPasswordError extends Error {}
+
 passport.serializeUser((profile, done) => {
   done(null, profile.id);
 });
@@ -16,16 +19,15 @@ passport.deserializeUser((id, done) => (
   models.Profile.where({ id }).fetch()
     .then((profile) => {
       if (!profile) {
-        throw profile;
+        throw InvalidUserError;
       }
       done(null, profile.serialize());
     })
-    .error((error) => {
-      done(error, null);
+    .catch(InvalidUserError, () => {
+      done(null, null, { message: 'No user found' });
     })
     .catch((err) => {
-      console.log(err);
-      done(null, null, { message: 'No user found' });
+      done(err, null);
     })
 ));
 
@@ -48,7 +50,7 @@ passport.use('local-signup', new LocalStrategy({
         }
         // throw if local auth account already exists
         if (profile.related('auths').at(0)) {
-          throw profile;
+          throw new InvalidUserError();
         }
 
         return profile;
@@ -65,12 +67,11 @@ passport.use('local-signup', new LocalStrategy({
         // serialize profile for session
         done(null, profile.serialize());
       })
-      .error((error) => {
-        done(error, null);
+      .catch(InvalidUserError, () => {
+        done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
       })
       .catch((err) => {
-        console.log(err);
-        done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
+        done(err, null);
       })
 )));
 
@@ -89,7 +90,7 @@ passport.use('local-login', new LocalStrategy({
       .then((profile) => {
         // if there is no profile with that email or if there is no local auth account with profile
         if (!profile || !profile.related('auths').at(0)) {
-          throw profile;
+          throw new InvalidUserError();
         }
 
         // check password and pass through account
@@ -97,21 +98,23 @@ passport.use('local-login', new LocalStrategy({
       })
       .then(([profile, match]) => {
         if (!match) {
-          throw profile;
+          throw new InvalidPasswordError();
         }
         // if the password matches, pass on the profile
         return profile;
       })
       .then((profile) => {
+        console.log(1);
         // call done with serialized profile to include in session
         done(null, profile.serialize());
       })
-      .error((err) => {
-        done(err, null);
+      .catch(InvalidUserError, InvalidPasswordError, () => {
+        console.log('inv');
+        done(null, false, req.flash('loginMessage', 'Incorrect username or password'));
       })
       .catch((err) => {
         console.log(err);
-        done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
+        done(err, null);
       })
 )));
 
