@@ -167,3 +167,35 @@ module.exports.deletePage = (req, res) => {
   });
 };
 
+module.exports.addSnippet = (req, res) => {
+  const pageView = {
+    url: req.body.url,
+    title: req.body.title,
+    profile_id: req.user.id,
+    snippet: req.body.snippet,
+  };
+
+  utils.hasSnippet(pageView)
+  .then((alreadyHasSnippet) => {
+    if (!alreadyHasSnippet) {
+      models.Pageview.where({
+        url: req.body.url,
+        title: req.body.title,
+        profile_id: req.user.id,
+      })
+      .fetchAll()
+      .then((pageviews) => {
+        for (let i = 0; i < pageviews.length; i += 1) {
+          pageviews[i].save({ snippet: req.body.snippet });
+        }
+      })
+      .catch((err) => {
+        console.log('Error: ', err);
+      });
+    }
+  })
+  .catch((err) => {
+    console.log('No entry found in database, uh oh');
+    res.state(404).send(err);
+  });
+};
