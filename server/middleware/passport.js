@@ -13,7 +13,7 @@ passport.deserializeUser((id, done) => (
   models.Profile.where({ id }).fetch()
     .then((profile) => {
       if (!profile) {
-        throw InvalidUserError;
+        throw new InvalidUserError();
       }
       done(null, profile.serialize());
     })

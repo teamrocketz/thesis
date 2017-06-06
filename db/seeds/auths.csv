@@ -1,5 +1,5 @@
 "id","type","password","profile_id"
-100000,"local","passwordtester",100000
-100001,"local","passwordbob",100001
-100002,"local","passwordigor",100002
-100003,"local","passwordsally",100003
+100000,"local","$2a$10$zccU8HJGTurkEkpDcl7puuSoEhIUvsBAVgM3EdQClcKLoeIooSvSG",100000
+100001,"local","$2a$10$3Ip3Ww35gT4lnosr4hlg7u5/eQoaqOH7vXXMGMptZGgE3fmfo2S8q",100001
+100002,"local","$2a$10$yWtRmWoFt14K.xuoFEXmQ.XsIl3Rik/sQPveirrDIiZvwUOB0ps3S",100002
+100003,"local","$2a$10$aRd6Qm7lGX.cqcYT4cYn8umzsaOshBaNYcuAkXu52ciqujPnSl2M.",100003

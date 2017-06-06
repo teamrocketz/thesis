@@ -11,7 +11,7 @@ const dirtyChai = require('dirty-chai');
 const expect = chai.expect;
 chai.use(dirtyChai);
 
-describe('Authentication', function () {
+describe('Authentication: Passport-to-database tests', function () {
   const fakeFlash = function (key, message) {
     const object = {};
     object[key] = message;
@@ -28,16 +28,16 @@ describe('Authentication', function () {
   });
 
   describe('Passport local-login strategy', function () {
-    xit('passport passes user if email and password match', function (done) {
+    it('passport passes user if email and password match', function (done) {
       const request = httpMocks.createRequest({
         body: {
           email: 'tester@domain.com',
-          password: 'admin123',
+          password: 'passwordtester',
         },
       });
       request.flash = fakeFlash;
       const response = httpMocks.createResponse();
-      models.Profile.where({ email: 'admin@domain.com' }).fetch()
+      models.Profile.where({ email: 'tester@domain.com' }).fetch()
         .then((profile) => {
           passport.authenticate('local-login', {}, (err, user) => {
             expect(user).to.be.an('object');
@@ -51,7 +51,7 @@ describe('Authentication', function () {
     it('passport passes false if email and password do not match', function (done) {
       const request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
+          email: 'tester@domain.com',
           password: 'incorrect',
         },
       });
@@ -66,11 +66,11 @@ describe('Authentication', function () {
   });
 
   describe('Passport local-signup strategy', function () {
-    xit('passport passes false if email already exists', function (done) {
+    it('passport passes false if email already exists', function (done) {
       const request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
-          password: 'admin123',
+          email: 'tester@domain.com',
+          password: 'password123',
         },
       });
       request.flash = fakeFlash;
