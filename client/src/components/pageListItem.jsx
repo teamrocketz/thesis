@@ -3,17 +3,19 @@ import TimeAgo from 'react-timeago';
 
 const MAX_DISPLAY_LENGTH_TITLE = 60;
 
+const formatTextField = (field) => {
+  if (field.length > MAX_DISPLAY_LENGTH_TITLE) {
+    return `${field.slice(0, MAX_DISPLAY_LENGTH_TITLE)}...`;
+  }
+  return field;
+};
+
 // NOTE: pages.time_open is what goes in the "Time Visited" column of the table
 const PageListItem = (props) => {
   let openSince = <span className="text-muted">(closed)</span>;
   if (props.page.is_active) {
     // TODO: set openSince to the actual duration, perhaps using 'timeago' npm module
     openSince = <TimeAgo date={props.page.time_open} minPeriod="60" />;
-  }
-
-  let displayTitle = props.page.title;
-  if (displayTitle.length > MAX_DISPLAY_LENGTH_TITLE) {
-    displayTitle = `${displayTitle.slice(0, MAX_DISPLAY_LENGTH_TITLE)}...`;
   }
 
   const dateFormatter = new Intl.DateTimeFormat('en', {
@@ -42,10 +44,10 @@ const PageListItem = (props) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {displayTitle}
+          {formatTextField(props.page.title)}
         </a>
       </td>
-      <td>{props.page.snippet}</td>
+      <td>{props.page.snippet ? formatTextField(props.page.snippet) : '' }</td>
       <td>{displayTimeOpen}</td>
       <td>{openSince}</td>
       <td>

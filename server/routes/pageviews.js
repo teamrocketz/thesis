@@ -43,7 +43,7 @@ router.route('/delete')
 
 // Request: POST /pageviews/snippet
 // Body:    { url, title, snippet}
-router.route('/snippet')
-  .post(middleware.auth.verify, PageviewController.addSnipppet);
+// router.route('/snippet')
+//   .post(middleware.auth.verify, PageviewController.addSnippet);
 
 module.exports = router;
