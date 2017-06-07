@@ -4,31 +4,21 @@ module.exports.isDuplicate = entry =>
   models.Pageview.where(entry).orderBy('-time_open').fetch()
   .then((result) => {
     if (!result || !result.attributes) {
-      return false;
+      return true;
     }
     const x = new Date(result.attributes.time_open).getTime();
     const y = new Date().getTime();
     if (y - x > 20000) {
-      return false;
+      return true;
     }
-    return true;
-  })
-  .catch((err) => {
-    throw new Error(err);
+    return Promise.reject('duplicate');
   });
 
 module.exports.isBlacklist = entry =>
   models.Blacklist.where(entry).orderBy('id').fetch()
   .then((result) => {
-    console.log('entry being searched:', entry);
-    console.log('the result is: ', !!result);
     if (!result || !result.attributes) {
-      console.log('so we return false');
-      return false;
+      return true;
     }
-    console.log('so we return true');
-    return true;
-  })
-  .catch((err) => {
-    throw new Error(err);
+    return Promise.reject('blacklist');
   });

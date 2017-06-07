@@ -104,72 +104,40 @@ module.exports.visitPage = (req, res) => {
     profile_id: req.user.id,
     domain: pageUrl.hostname,
   };
-  console.log('hey from visitpage, blacklistEntry is: ', blacklistEntry);
-  utils.isBlacklist(blacklistEntry)
-  .then((bool) => {
-    console.log('we made it to the first bool');
-    if (bool) {
-      res.status(208).send({ err: 'blacklisted' });
-    } else {
-      utils.isDuplicate(dupEntry);
-    }
+
+  const writeToDatabase = {
+    profile_id: req.user.id,
+    url: req.body.url,
+    title: req.body.title,
+    time_open: new Date().toISOString(),
+    time_closed: null,
+    is_active: true,
+    icon: req.body.icon,
+  };
+
+  // console.log('hey from visitpage, blacklistEntry is: ', blacklistEntry);
+  // console.log('hey from visitpage, dupEntry is: ', dupEntry);
+  // console.log('hey from visitpage, writeToDatabase is: ', writeToDatabase);
+
+  utils.isDuplicate(dupEntry)
+  .then(() => { //eslint-disable-line
+    return utils.isBlacklist(blacklistEntry);
   })
-  .then((isDuplicate) => {
-    if (!isDuplicate) {
-      models.Pageview.forge({
-        profile_id: req.user.id,
-        url: req.body.url,
-        title: req.body.title,
-        time_open: new Date().toISOString(),
-        time_closed: null,
-        is_active: true,
-        icon: req.body.icon,
-      })
-      .save()
-      .then((result) => {
-        res.status(201).send(result);
-      })
-      .catch((err) => {
-        res.status(500).send({ err });
-      });
-    } else {
-      res.status(500).send({ err: 'duplicate' });
-    }
+  .then(() => { //eslint-disable-line
+    return models.Pageview.forge(writeToDatabase)
+    .save();
+  })
+  .then((result) => {
+    res.status(201).send(result);
+  })
+  .error((err) => {
+    res.status(500).send({ err });
   })
   .catch((err) => {
-    res.status(500).send({ err });
+    console.log('duplicate/blacklist detected');
+    res.status(208).send({ err });
   });
 };
-
-//   utils.isDuplicate(newEntry)
-//   .then((isDuplicate) => {
-//     if (!isDuplicate) {
-//       models.Pageview.forge({
-//         profile_id: req.user.id,
-//         url: req.body.url,
-//         title: req.body.title,
-//         time_open: new Date().toISOString(),
-//         time_closed: null,
-//         is_active: true,
-//         icon: req.body.icon,
-//       })
-//       .save()
-//       .then((result) => {
-//         res.status(201).send(result);
-//       })
-//       .catch((err) => {
-//         res.status(500).send({ err });
-//         return undefined;
-//       });
-//     } else {
-//       res.status(208).send({ err: 'duplicate' });
-//     }
-//   })
-//   .catch((err) => {
-//     res.status(500).send({ err });
-//   });
-// };
-
 
 //  searches by id, turns is_Active to false
 module.exports.deactivatePage = (req, res) => {
