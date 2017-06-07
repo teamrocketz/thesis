@@ -65,6 +65,7 @@
     "eslint-plugin-mocha": "^4.9.0",
     "eslint-plugin-react": "^7.0.1",
     "firstline": "^1.2.1",
+    "grunt-mocha-cli": "^3.0.0",
     "knex-csv-seeder": "^0.4.1",
     "mocha": "^3.2.0",
     "node-mocks-http": "^1.6.1",

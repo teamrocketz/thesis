@@ -14,19 +14,23 @@ module.exports = (grunt) => {
       target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'dbConfig/**/*.js'],
     },
 
-    mochaTest: {
+    // mochacli supports forcing color output in a subshell
+    mochacli: {
       options: {
         colors: true,
         reporter: 'spec',
+        files: ['test/**/*.js'],
       },
-      all: {
+      main: {},
+    },
+
+    // mochaTest supports debug mode for test debugging
+    mochaTest: {
+      options: {
+        reporter: 'spec',
+      },
+      debug: {
         src: ['test/**/*.js'],
-      },
-      unit: {
-        src: ['test/unit/**/*.js'],
-      },
-      integration: {
-        src: ['test/integration/**/*.js'],
       },
     },
 
@@ -55,7 +59,7 @@ module.exports = (grunt) => {
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
       // for an explanation of why these are here, rather than in mocha configs above
       test: 'NODE_ENV=test ./node_modules/.bin/grunt test-run',
-      'test-debug': 'NODE_ENV=test node --inspect --debug-brk ./node_modules/.bin/grunt test-run',
+      'test-debug': 'NODE_ENV=test node --inspect --debug-brk ./node_modules/.bin/grunt test-run-debug',
     },
 
   });
@@ -95,7 +99,8 @@ module.exports = (grunt) => {
 
   grunt.registerTask('test', ['shell:test']);
   grunt.registerTask('test-debug', ['shell:test-debug']);
-  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochaTest:all']);
+  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochacli:main']);
+  grunt.registerTask('test-run-debug', ['dbCreateIfNeeded', 'mochaTest:debug']);
 
   grunt.registerTask('client-build', ['shell:client-build']);
   grunt.registerTask('client-dev', ['shell:client-dev']);
