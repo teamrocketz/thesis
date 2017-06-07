@@ -25,6 +25,7 @@ app.use('/', routes.auth);
 app.use('/blacklist', routes.blacklist);
 app.use('/extension', routes.extensionAuth);
 app.use('/pageviews', routes.pageviews);
+app.use('/tags', routes.tags);
 
 // app.use('/api/profiles', routes.profiles);
 
