@@ -1,7 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 const httpMocks = require('node-mocks-http');
-const dbUtils = require('../../db/lib/utils.js');
+const dbUtils = require('../lib/dbUtils.js');
 const passport = require('../../server/middleware/passport');
 const models = require('../../db/models');
 
