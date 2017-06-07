@@ -1,5 +1,6 @@
 import React from 'react';
 import BlacklistItem from './blacklistitem';
+import { isDomain } from '../containers/blacklistContainer';
 
 class Blacklist extends React.Component {
   constructor(props) {
@@ -7,7 +8,6 @@ class Blacklist extends React.Component {
     this.state = { domain: '', error: '' };
     this.addBlacklist = this.addBlacklist.bind(this);
     this.handleDomainChange = this.handleDomainChange.bind(this);
-    this.isDomain = this.isDomain.bind(this);
   }
 
   componentWillMount() {
@@ -18,36 +18,21 @@ class Blacklist extends React.Component {
   }
 
   handleDomainChange(e) {
+    e.preventDefault();
     this.setState({ domain: e.target.value });
   }
 
   addBlacklist(e) {
     e.preventDefault();
-    if (this.state.domain.length > 0 && this.isDomain()) {
-      this.props.blacklistDomain(this.state.domain)
-      .then(() => {
-        this.props.getBlacklist();
-        this.setState({
-          error: '',
-        });
-      });
-    } else if (!this.isDomain()) {
+    isDomain(this.state.domain)
+    .then(() => {
+      this.props.blacklistDomain(this.state.domain);
+    })
+    .catch((err) => {
       this.setState({
-        error: (<div className="alert alert-danger fade in">
-          <a className="close" data-dismiss="alert">&times;</a>
-          <strong>Error!</strong>
-          You must provide a valid domain.
-          eg: www.domain.com
-        </div>),
+        error: err,
       });
-    }
-  }
-
-  isDomain() {
-    if (this.state.domain.slice(0, 3) !== 'www') {
-      return false;
-    }
-    return true;
+    });
   }
 
   render() {
