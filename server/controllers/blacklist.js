@@ -37,29 +37,6 @@ module.exports.addToBlacklist = (req, res) => {
     console.log('duplicate/blacklist detected');
     res.status(208).send({ err });
   });
-
-  // utils.isBlacklist(blacklistEntry)
-  // .then((isDuplicate) => {
-  //   if (!isDuplicate) {
-  //     models.Blacklist.forge({
-  //       profile_id: req.user.id,
-  //       domain: req.body.domain,
-  //     })
-  //     .save()
-  //     .then((result) => {
-  //       res.status(201).send(result);
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).send({ err });
-  //       return undefined;
-  //     });
-  //   } else {
-  //     res.status(208).send({ err: 'duplicate' });
-  //   }
-  // })
-  // .catch((err) => {
-  //   res.status(208).send({ err });
-  // });
 };
 
 module.exports.deleteFromBlacklist = (req, res) => {
