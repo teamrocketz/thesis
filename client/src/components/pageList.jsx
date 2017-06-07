@@ -9,7 +9,7 @@ class PageList extends Component {
   }
 
   sort(e) {
-    this.props.sortPages(e.target.innerHTML.toLowerCase());
+    this.props.sortPages(e.target.id);
   }
 
   render() {
@@ -24,8 +24,8 @@ class PageList extends Component {
         <thead>
           <tr>
             <th />
-            <th onClick={this.sort}>Title</th>
-            <th onClick={this.sort}>Snippet</th>
+            <th id="title" onClick={this.sort}>Title</th>
+            <th id="snippet" onClick={this.sort}>Snippet</th>
             <th>Time visited</th>
             <th>Open since</th>
             <th>Delete</th>
