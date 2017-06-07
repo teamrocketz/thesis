@@ -1,11 +1,11 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
 
-const MAX_DISPLAY_LENGTH_TITLE = 60;
+const MAX_TEXT_DISPLAY_LENGTH = 60;
 
 const formatTextField = (field) => {
-  if (field.length > MAX_DISPLAY_LENGTH_TITLE) {
-    return `${field.slice(0, MAX_DISPLAY_LENGTH_TITLE)}...`;
+  if (field.length > MAX_TEXT_DISPLAY_LENGTH) {
+    return `${field.slice(0, MAX_TEXT_DISPLAY_LENGTH)}...`;
   }
   return field;
 };

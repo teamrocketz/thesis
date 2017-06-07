@@ -41,9 +41,4 @@ router.route('/deactivate')
 router.route('/delete')
   .post(middleware.auth.verify, PageviewController.deletePage);
 
-// Request: POST /pageviews/snippet
-// Body:    { url, title, snippet}
-// router.route('/snippet')
-//   .post(middleware.auth.verify, PageviewController.addSnippet);
-
 module.exports = router;
