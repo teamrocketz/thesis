@@ -62,11 +62,12 @@ module.exports.search = (req, res) => {
   console.log('pageviews search fired');
 
   const sql = `
-    SELECT id, url, title, time_open, is_active, icon
+    SELECT id, url, title, time_open, is_active, icon, snippet
     FROM (
       SELECT
         *,
-        setweight(to_tsvector(title), 'A') as document
+        setweight(to_tsvector(title), 'A'), setweight(to_tsvector(snippet), 'B')
+      AS document
       FROM pageviews
       WHERE profile_id = ${req.user.id}
     ) search
@@ -131,11 +132,12 @@ module.exports.deactivatePage = (req, res) => {
   models.Pageview.where({ id: req.body.id }).fetch()
   .then((Pageview) => {
     if (!Pageview) {
-      throw new Error('Pageview (id) not found in database');
+      throw new Error(`Pageview ${req.body.id} not found in database`);
     }
     Pageview.save({
       is_active: false,
       time_closed: new Date().toISOString(),
+      snippet: req.body.snippet,
     });
     res.status(200).send('OK');
   })
@@ -166,4 +168,3 @@ module.exports.deletePage = (req, res) => {
     res.status(500).send('error');
   });
 };
-
