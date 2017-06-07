@@ -50,9 +50,7 @@ module.exports = (grunt) => {
     shell: {
       'client-build': 'webpack',
       'client-dev': 'webpack --watch --color',
-      dbRollback: 'knex migrate:rollback',
       dbMigrate: 'knex migrate:latest',
-      dbSeed: 'knex seed:run',
       server: 'nodemon server',
       'server-debug': 'nodemon --inspect server',
       'server-debug-brk': 'nodemon --inspect --debug-brk server',
@@ -97,11 +95,6 @@ module.exports = (grunt) => {
       });
   });
 
-  grunt.registerTask('test', ['shell:test']);
-  grunt.registerTask('test-debug', ['shell:test-debug']);
-  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochacli:main']);
-  grunt.registerTask('test-run-debug', ['dbCreateIfNeeded', 'mochaTest:debug']);
-
   grunt.registerTask('client-build', ['shell:client-build']);
   grunt.registerTask('client-dev', ['shell:client-dev']);
 
@@ -109,10 +102,18 @@ module.exports = (grunt) => {
   grunt.registerTask('server-debug', ['shell:server-debug']);
   grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
 
+  grunt.registerTask('test', ['shell:test']);
+  grunt.registerTask('test-debug', ['shell:test-debug']);
+  // for internal grunt use only (invoked via shell:test and shell:test-debug)
+  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochacli:main']);
+  grunt.registerTask('test-run-debug', ['dbCreateIfNeeded', 'mochaTest:debug']);
+
+  // called automatically by yarn after 'yarn install' (including every heroku build)
   grunt.registerTask('postinstall', ['client-build', 'postrelease']);
-  grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
-  grunt.registerTask('new-env-setup', ['shell:dbSeed']);
+
+  // invoked via yarn test (e.g. for Heroku CI builds)
   grunt.registerTask('verify', ['eslint', 'test-all']);
 
-  grunt.registerTask('db-setup', ['dbCreateIfNeeded', 'shell:dbMigrate', 'shell:dbSeed']);
+  // invoked by heroku post-deployment (including staging -> production promotion) via Procfile
+  grunt.registerTask('dbsetup', ['dbCreateIfNeeded', 'shell:dbMigrate']);
 };
