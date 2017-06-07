@@ -109,11 +109,11 @@ module.exports = (grunt) => {
   grunt.registerTask('test-run-debug', ['dbCreateIfNeeded', 'mochaTest:debug']);
 
   // called automatically by yarn after 'yarn install' (including every heroku build)
-  grunt.registerTask('postinstall', ['client-build', 'postrelease']);
-
-  // invoked via yarn test (e.g. for Heroku CI builds)
-  grunt.registerTask('verify', ['eslint', 'test-all']);
+  grunt.registerTask('postinstall', ['client-build', 'dbsetup']);
 
   // invoked by heroku post-deployment (including staging -> production promotion) via Procfile
   grunt.registerTask('dbsetup', ['dbCreateIfNeeded', 'shell:dbMigrate']);
+
+  // invoked via yarn test (e.g. for Heroku CI builds)
+  grunt.registerTask('verify', ['eslint', 'test-all']);
 };
