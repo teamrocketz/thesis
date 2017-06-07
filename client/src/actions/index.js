@@ -18,3 +18,8 @@ export const requestSearch = query => ({
     params: { query },
   }),
 });
+
+export const sortPages = field => ({
+  type: 'SORT_PAGES',
+  payload: field,
+});

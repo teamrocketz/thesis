@@ -37,6 +37,14 @@ export default function (state = {
         error: '',
       };
 
+    case 'SORT_PAGES':
+      return {
+        pages: state.pages.sort((x, y) =>
+          x[action.payload].charCodeAt(0) - y[action.payload].charCodeAt(0)).slice(0),
+        isLoading: false,
+        error: '',
+      };
+
     default:
       return state;
   }
