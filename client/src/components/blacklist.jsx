@@ -4,13 +4,17 @@ import BlacklistItem from './blacklistitem';
 class Blacklist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { domain: '' };
+    this.state = { domain: '', error: '' };
     this.addBlacklist = this.addBlacklist.bind(this);
     this.handleDomainChange = this.handleDomainChange.bind(this);
+    this.isDomain = this.isDomain.bind(this);
   }
 
   componentWillMount() {
     this.props.getBlacklist();
+    this.setState({
+      error: '',
+    });
   }
 
   handleDomainChange(e) {
@@ -19,12 +23,31 @@ class Blacklist extends React.Component {
 
   addBlacklist(e) {
     e.preventDefault();
-    if (this.state.domain.length > 0) {
+    if (this.state.domain.length > 0 && this.isDomain()) {
       this.props.blacklistDomain(this.state.domain)
       .then(() => {
         this.props.getBlacklist();
+        this.setState({
+          error: '',
+        });
+      });
+    } else if (!this.isDomain()) {
+      this.setState({
+        error: (<div className="alert alert-danger fade in">
+          <a className="close" data-dismiss="alert">&times;</a>
+          <strong>Error!</strong>
+          You must provide a valid domain.
+          eg: www.domain.com
+        </div>),
       });
     }
+  }
+
+  isDomain() {
+    if (this.state.domain.slice(0, 3) !== 'www') {
+      return false;
+    }
+    return true;
   }
 
   render() {
@@ -47,6 +70,7 @@ class Blacklist extends React.Component {
           <button type="submit" className="btn btn-primary">Add to blacklist</button>
           <br />
         </form>
+        {this.state.error}
         <table className="table table-condensed table-striped">
           <thead>
             <tr>

@@ -17,33 +17,49 @@ module.exports.getBlacklist = (req, res) => {
 };
 
 module.exports.addToBlacklist = (req, res) => {
-  const newEntry = {
+  const blacklistEntry = {
     profile_id: req.user.id,
     domain: req.body.domain,
   };
 
-  utils.isBlacklistDuplicate(newEntry)
-  .then((isDuplicate) => {
-    if (!isDuplicate) {
-      models.Blacklist.forge({
-        profile_id: req.user.id,
-        domain: req.body.domain,
-      })
-      .save()
-      .then((result) => {
-        res.status(201).send(result);
-      })
-      .catch((err) => {
-        res.status(500).send({ err });
-        return undefined;
-      });
-    } else {
-      res.status(208).send({ err: 'duplicate' });
-    }
+  utils.isBlacklist(blacklistEntry)
+  .then(() => { //eslint-disable-line
+    return models.Blacklist.forge(blacklistEntry)
+    .save();
+  })
+  .then((result) => {
+    res.status(201).send(result);
+  })
+  .error((err) => {
+    res.status(500).send({ err });
   })
   .catch((err) => {
-    res.status(500).send({ err });
+    console.log('duplicate/blacklist detected');
+    res.status(208).send({ err });
   });
+
+  // utils.isBlacklist(blacklistEntry)
+  // .then((isDuplicate) => {
+  //   if (!isDuplicate) {
+  //     models.Blacklist.forge({
+  //       profile_id: req.user.id,
+  //       domain: req.body.domain,
+  //     })
+  //     .save()
+  //     .then((result) => {
+  //       res.status(201).send(result);
+  //     })
+  //     .catch((err) => {
+  //       res.status(500).send({ err });
+  //       return undefined;
+  //     });
+  //   } else {
+  //     res.status(208).send({ err: 'duplicate' });
+  //   }
+  // })
+  // .catch((err) => {
+  //   res.status(208).send({ err });
+  // });
 };
 
 module.exports.deleteFromBlacklist = (req, res) => {

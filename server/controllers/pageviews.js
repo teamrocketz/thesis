@@ -115,10 +115,6 @@ module.exports.visitPage = (req, res) => {
     icon: req.body.icon,
   };
 
-  // console.log('hey from visitpage, blacklistEntry is: ', blacklistEntry);
-  // console.log('hey from visitpage, dupEntry is: ', dupEntry);
-  // console.log('hey from visitpage, writeToDatabase is: ', writeToDatabase);
-
   utils.isDuplicate(dupEntry)
   .then(() => { //eslint-disable-line
     return utils.isBlacklist(blacklistEntry);
