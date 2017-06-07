@@ -32,9 +32,9 @@ describe('Profile model', function () {
       });
   });
 
-  xit('Should verify that all usernames are unique', function (done) {
-    // Insert a user with an e-mail that's already in existence
-    Profile.forge({ email: 'bob@domain.com', password: 'abc' }).save()
+  it('Should verify that all usernames are unique', function (done) {
+    // Insert a user with an e-mail that already exists
+    Profile.forge({ email: 'bob@domain.com' }).save()
       .then(function () {
         done(new Error('was not supposed to succeed'));
       })
@@ -45,16 +45,18 @@ describe('Profile model', function () {
       });
   });
 
-  xit('Should be able to update an already existing record', function (done) {
-    Profile.where({ id: 100000 }).fetch()
+  it('Should be able to update an already existing record', function (done) {
+    const profileId = 100000;
+    Profile.where({ id: profileId }).fetch()
       .then(function (result) {
-        expect(result.get('id')).to.equal(1);
+        expect(result.get('id')).to.equal(profileId);
       })
       .then(function () {
-        return Profile.where({ id: 1 }).save({ first: 'James', last: 'Davenport' }, { method: 'update' });
+        return Profile.where({ id: profileId })
+          .save({ first: 'James', last: 'Davenport' }, { method: 'update' });
       })
       .then(function () {
-        return Profile.where({ id: 1 }).fetch();
+        return Profile.where({ id: profileId }).fetch();
       })
       .then(function (result) {
         expect(result.get('first')).to.equal('James');
@@ -62,15 +64,20 @@ describe('Profile model', function () {
         done();
       })
       .catch(function (err) {
-        // If this expect statement is reached, there's an error.
         done(err);
       });
   });
 
   it('Should be able to delete a record', function (done) {
-    // Inserts a user
-    Profile.where({ id: 1 }).destroy()
-      // verifies that the user has been inserted
+    const profileId = 100000;
+    // make sure it exists first
+    Profile.where({ id: profileId }).fetch()
+      .then(function (result) {
+        if (result === null) {
+          throw new Error('profile was not in database');
+        }
+        return Profile.where({ id: profileId }).destroy();
+      })
       .then(function () {
         return Profile.where({ id: 1 }).fetch();
       })
@@ -79,7 +86,6 @@ describe('Profile model', function () {
         done();
       })
       .catch(function (err) {
-        // If this expect statement is reached, there's an error.
         done(err);
       });
   });
