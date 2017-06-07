@@ -25,8 +25,6 @@ class Blacklist extends React.Component {
         this.props.getBlacklist();
       });
     }
-    setTimeout(() => {
-    }, 50);
   }
 
   render() {

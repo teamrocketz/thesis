@@ -1,3 +1,4 @@
+const URL = require('url').URL;
 const db = require('../../db');
 const models = require('../../db/models');
 const utils = require('./controllerUtils');
@@ -90,14 +91,29 @@ module.exports.search = (req, res) => {
 // Creates a new page entry in DB if the page has not already
 // been added in the last 20 seconds
 module.exports.visitPage = (req, res) => {
-  const newEntry = {
+  const pageUrl = new URL(req.body.url);
+
+  const dupEntry = {
     profile_id: req.user.id,
     url: req.body.url,
     title: req.body.title,
     icon: req.body.icon,
   };
 
-  utils.isDuplicate(newEntry)
+  const blacklistEntry = {
+    profile_id: req.user.id,
+    domain: pageUrl.hostname,
+  };
+  console.log('hey from visitpage, blacklistEntry is: ', blacklistEntry);
+  utils.isBlacklist(blacklistEntry)
+  .then((bool) => {
+    console.log('we made it to the first bool');
+    if (bool) {
+      res.status(208).send({ err: 'blacklisted' });
+    } else {
+      utils.isDuplicate(dupEntry);
+    }
+  })
   .then((isDuplicate) => {
     if (!isDuplicate) {
       models.Pageview.forge({
@@ -115,16 +131,44 @@ module.exports.visitPage = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({ err });
-        return undefined;
       });
     } else {
-      res.status(208).send({ err: 'duplicate' });
+      res.status(500).send({ err: 'duplicate' });
     }
   })
   .catch((err) => {
     res.status(500).send({ err });
   });
 };
+
+//   utils.isDuplicate(newEntry)
+//   .then((isDuplicate) => {
+//     if (!isDuplicate) {
+//       models.Pageview.forge({
+//         profile_id: req.user.id,
+//         url: req.body.url,
+//         title: req.body.title,
+//         time_open: new Date().toISOString(),
+//         time_closed: null,
+//         is_active: true,
+//         icon: req.body.icon,
+//       })
+//       .save()
+//       .then((result) => {
+//         res.status(201).send(result);
+//       })
+//       .catch((err) => {
+//         res.status(500).send({ err });
+//         return undefined;
+//       });
+//     } else {
+//       res.status(208).send({ err: 'duplicate' });
+//     }
+//   })
+//   .catch((err) => {
+//     res.status(500).send({ err });
+//   });
+// };
 
 
 //  searches by id, turns is_Active to false
