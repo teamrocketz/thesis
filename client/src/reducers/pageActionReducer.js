@@ -2,7 +2,6 @@
 // this reducer is responsible for
 export default function (state = {
   isDeleting: false,
-  page: {},
   error: '',
 }, action) {
   switch (action.type) {

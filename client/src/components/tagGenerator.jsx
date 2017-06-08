@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TagSearch extends React.Component {
+class TagGenerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +14,11 @@ class TagSearch extends React.Component {
   handleTagInput(e) { this.setState({ tag: e.target.value }); }
 
   handleTagRequest(e) {
+    console.log('adding tag');
     e.preventDefault();
-    this.props.addTag(this.state.tag, this.state.pageId);
+    if (this.state.tag.length > 0) {
+      this.props.addTag(this.state.tag, this.state.pageId);
+    }
   }
 
   render() {
@@ -42,14 +45,14 @@ class TagSearch extends React.Component {
   }
 }
 
-TagSearch.propTypes = {
+TagGenerator.propTypes = {
   pageId: React.PropTypes.number,
   addTag: React.PropTypes.func,
 };
 
-TagSearch.defaultProps = {
+TagGenerator.defaultProps = {
   pageId: null,
   addTag: () => {},
 };
 
-export default TagSearch;
+export default TagGenerator;
