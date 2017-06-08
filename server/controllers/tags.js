@@ -21,7 +21,7 @@ module.exports.addTag = (req, res) => {
 module.exports.removeTag = (req, res) => {
   console.log('remove tag');
   models.Tag.where({
-    name: req.body.tagName,
+    name: req.body.name,
     profile_id: req.user.id,
     page_id: req.body.pageId,
   })

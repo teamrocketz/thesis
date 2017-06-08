@@ -22,6 +22,7 @@ export default function (state = {
 
     case 'REQUEST_HISTORY_FULFILLED':
     case 'REQUEST_SEARCH_FULFILLED':
+      console.log(action.payload.data);
       return {
         pages: action.payload.data,
         isLoading: false,

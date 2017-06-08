@@ -1,5 +1,6 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
+import TagSearch from './tagSearch.jsx';
 
 const MAX_TEXT_DISPLAY_LENGTH = 60;
 
@@ -37,6 +38,7 @@ const PageListItem = (props) => {
           height="32"
           alt={props.page.title}
         />
+        <TagSearch pageId={props.page.id} addTag={props.addTag} />
       </td>
       <td>
         <a
@@ -65,11 +67,13 @@ const PageListItem = (props) => {
 PageListItem.propTypes = {
   page: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   deletePage: React.PropTypes.func,
+  addTag: React.PropTypes.func,
 };
 
 PageListItem.defaultProps = {
   page: {},
   deletePage: () => {},
+  addTag: () => {},
 };
 
 export default PageListItem;

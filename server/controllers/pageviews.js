@@ -17,24 +17,10 @@ module.exports.getAll = (req, res) => {
     withRelated: ['tags'],
   })
   .then((pageviews) => {
-    // console.log(pageviews.models[2].related('id'));
-    console.log(pageviews.models[0].relations);
-    pageviews.models.forEach((page) => {
-      console.log(page.relations.models);
-    });
-    // pageviews.forEach((page) => {
-    //   console.log(page.relations.tags);
-      // models.Tag.where({
-      //   profile_id: req.user.id,
-      //   page_id: page.id,
-      // }).fetch({
-      //   withRelated: ['pageview'],
-      // })
-      // .then((x) => {
-      //   console.log('cool!');
-      //   console.log(x);
-      //   console.log('\n');
-      // });
+    // console.log(pageviews.models[0].relations);
+    // pageviews.models.forEach((page) => {
+    //   console.log(page.relations.tags.models);
+    //   console.log('\n');
     // });
     res.status(200).send(pageviews);
   })
@@ -54,7 +40,9 @@ module.exports.getActive = (req, res) => {
   })
   .orderBy('-time_open')
   .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
-  .fetchAll()
+  .fetchAll({
+    withRelated: ['tags'],
+  })
   .then((pageviews) => {
     res.status(200).send(pageviews);
     for (let i = 0; i < pageviews.models.length; i += 1) {
