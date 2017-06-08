@@ -5,7 +5,7 @@ import { isDomain } from '../containers/blacklistContainer';
 class Blacklist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { domain: '', error: '' };
+    this.state = { domain: '', error: '', formError: false };
     this.addBlacklist = this.addBlacklist.bind(this);
     this.handleDomainChange = this.handleDomainChange.bind(this);
   }
@@ -24,18 +24,27 @@ class Blacklist extends React.Component {
 
   addBlacklist(e) {
     e.preventDefault();
-    isDomain(this.state.domain)
-    .then(() => {
-      this.props.blacklistDomain(this.state.domain);
-    })
-    .catch((err) => {
-      this.setState({
-        error: err,
+    if (!isDomain(this.state.domain)) {
+      this.setState({ formError: true });
+    } else {
+      this.setState({ formError: false });
+      this.props.blacklistDomain(this.state.domain)
+      .catch((err) => {
+        console.log('Blacklist Error: ', err);
       });
-    });
+    }
   }
 
   render() {
+    let error = '';
+    const formError = (<div className="alert alert-danger fade in">
+      <strong>Error!</strong><br />
+      Please provide a valid domain<br />
+      Example: www.domain.com
+    </div>);
+
+    if (this.state.formError) { error = formError; }
+
     return (
       <div className="col-md-4 pull-left">
         <h5>Blacklist</h5>
@@ -55,7 +64,7 @@ class Blacklist extends React.Component {
           <button type="submit" className="btn btn-primary">Add to blacklist</button>
           <br />
         </form>
-        {this.state.error}
+        {error}
         <table className="table table-condensed table-striped">
           <thead>
             <tr>
