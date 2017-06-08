@@ -25,7 +25,8 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="col-md-4 pull-left">
+        <h2>Search</h2>
         <form
           className="navbar-form navbar-left"
           role="search"

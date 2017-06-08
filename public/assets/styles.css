@@ -3,3 +3,26 @@
   width: 15px;
   padding: 0px;
 }
+
+.jumbotron {
+  background-color: white;
+}
+
+.align-top {
+  /*padding-top: 15px;*/
+  padding: 10px;
+}
+
+.card {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.row {
+  background-color: lightgray;
+}
+
+.btn-success {
+  margin-top: 20px;
+  vertical-align: center;
+}
