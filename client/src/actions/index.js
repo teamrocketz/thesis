@@ -42,3 +42,19 @@ export const sortPages = field => ({
   type: 'SORT_PAGES',
   payload: field,
 });
+
+export const addTag = (name, pageId) => ({
+  type: 'ADD_TAG',
+  payload: axios.post('/tags/addtag', {
+    name,
+    pageId,
+  }),
+});
+
+export const removeTag = (name, pageId) => ({
+  type: 'REMOVE_TAG',
+  payload: axios.post('/tags/removeTag', {
+    name,
+    pageId,
+  }),
+});
