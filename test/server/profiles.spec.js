@@ -1,7 +1,5 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
-// 'use strict'; // commented out per eslint
-
 const request = require('supertest');
 const app = require('../../server/app.js');
 const dbUtils = require('../lib/dbUtils.js');
