@@ -1,13 +1,13 @@
 import React from 'react';
 import BlacklistItem from './blacklistitem';
+import { isDomain } from '../containers/blacklistContainer';
 
 class Blacklist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { domain: '', error: '' };
+    this.state = { domain: '', error: '', formError: false };
     this.addBlacklist = this.addBlacklist.bind(this);
     this.handleDomainChange = this.handleDomainChange.bind(this);
-    this.isDomain = this.isDomain.bind(this);
   }
 
   componentWillMount() {
@@ -18,39 +18,33 @@ class Blacklist extends React.Component {
   }
 
   handleDomainChange(e) {
+    e.preventDefault();   // this line can probably be deleted
     this.setState({ domain: e.target.value });
   }
 
   addBlacklist(e) {
     e.preventDefault();
-    if (this.state.domain.length > 0 && this.isDomain()) {
+    if (!isDomain(this.state.domain)) {
+      this.setState({ formError: true });
+    } else {
+      this.setState({ formError: false });
       this.props.blacklistDomain(this.state.domain)
-      .then(() => {
-        this.props.getBlacklist();
-        this.setState({
-          error: '',
-        });
-      });
-    } else if (!this.isDomain()) {
-      this.setState({
-        error: (<div className="alert alert-danger fade in">
-          <a className="close" data-dismiss="alert">&times;</a>
-          <strong>Error!</strong>
-          You must provide a valid domain.
-          eg: www.domain.com
-        </div>),
+      .catch((err) => {
+        console.log('Blacklist Error: ', err);
       });
     }
-  }
-
-  isDomain() {
-    if (this.state.domain.slice(0, 3) !== 'www') {
-      return false;
-    }
-    return true;
   }
 
   render() {
+    let error = '';
+    const formError = (<div className="alert alert-danger fade in">
+      <strong>Error!</strong><br />
+      Please provide a valid domain<br />
+      Example: www.domain.com
+    </div>);
+
+    if (this.state.formError) { error = formError; }
+
     return (
       <div className="col-md-4 pull-left">
         <h5>Blacklist</h5>
@@ -70,7 +64,7 @@ class Blacklist extends React.Component {
           <button type="submit" className="btn btn-primary">Add to blacklist</button>
           <br />
         </form>
-        {this.state.error}
+        {error}
         <table className="table table-condensed table-striped">
           <thead>
             <tr>

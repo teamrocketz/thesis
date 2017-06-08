@@ -18,7 +18,11 @@ export default function (state = {
       };
     case 'BLACKLIST_DOMAIN_FULFILLED':
       return {
-        blacklist: state.blacklist,
+        blacklist: state.blacklist.concat([{
+          domain: action.payload.data.domain,
+          id: action.payload.data.id,
+          profile_id: action.payload.data.profile_id,
+        }]),
         status: false,
         error: '',
       };

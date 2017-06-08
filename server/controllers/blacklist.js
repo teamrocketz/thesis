@@ -28,14 +28,15 @@ module.exports.addToBlacklist = (req, res) => {
     .save();
   })
   .then((result) => {
+    console.log(result);
     res.status(201).send(result);
   })
   .error((err) => {
     res.status(500).send({ err });
   })
   .catch((err) => {
-    console.log('duplicate/blacklist detected');
-    res.status(208).send({ err });
+    console.log('duplicate/blacklist detected', err);
+    res.status(409).send({ err });
   });
 };
 
