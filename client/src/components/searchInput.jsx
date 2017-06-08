@@ -34,10 +34,10 @@ class SearchInput extends React.Component {
           <div className="form-group">
             <input
               type="text"
-              className="form-control"
               name="query"
               value={this.state.query}
               onChange={this.handleQueryChange}
+              className="form-control"
             />
           </div>
           <button type="submit" className="btn btn-primary">Search</button>

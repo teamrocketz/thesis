@@ -14,7 +14,6 @@ class TagGenerator extends React.Component {
   handleTagInput(e) { this.setState({ tag: e.target.value }); }
 
   handleTagRequest(e) {
-    console.log('adding tag');
     e.preventDefault();
     if (this.state.tag.length > 0) {
       this.props.addTag(this.state.tag, this.state.pageId);
@@ -26,16 +25,16 @@ class TagGenerator extends React.Component {
     return (
       <div>
         <form
-          className="navbar-form"
           role="search"
           onSubmit={this.handleTagRequest}
+          className="navbar-form"
         >
           <input
             type="text"
-            className="form-control"
             name="tag"
             value={this.state.tag}
             onChange={this.handleTagInput}
+            className="form-control"
           />
           <div>
             <button type="submit" className="btn btn-primary">Add Tag</button>

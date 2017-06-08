@@ -8,12 +8,9 @@ module.exports.addTag = (req, res) => {
   })
   .save()
   .then((tag) => {
-    console.log('tag saved');
-    console.log(tag);
     res.status(200).send(tag);
   })
   .catch((err) => {
-    console.log(err);
     res.status(500).send(err);
   });
 };
@@ -30,17 +27,13 @@ module.exports.removeTag = (req, res) => {
     if (!tag) {
       throw new Error(`Tag ${req.body.name} not found`);
     } else {
-      console.log('tag will be destroyed');
       return tag.destroy();
     }
   })
   .then(() => {
-    // does anything need to be sent back here?
-    // Or does store retain the info we need
     res.status(200).send(req.body);
   })
   .catch((err) => {
-    console.log(`Error destorying ${req.body.name}.`);
     res.status(500).send(err);
   });
 };
