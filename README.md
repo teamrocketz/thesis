@@ -70,7 +70,7 @@ brew services start postgresql
 
 Use grunt to create a new database for your development and test environments:
 
-Development envronment: `grunt dbsetup`
+Development environment: `grunt dbsetup`
 
 For other environments, make sure DATABASE_URL is set, or NODE_ENV is set and all needed values are in relevant `config` files.
 
