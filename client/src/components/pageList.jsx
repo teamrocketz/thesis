@@ -28,7 +28,7 @@ class PageList extends Component {
             <th id="snippet" onClick={this.sort}>Snippet</th>
             <th>Time visited</th>
             <th>Open since</th>
-            <th>Delete</th>
+            <th />
           </tr>
         </thead>
         <tbody>
