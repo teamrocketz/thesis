@@ -6,6 +6,7 @@ class SearchInput extends React.Component {
     this.state = { query: '' };
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
+    this.handleTagSearch = this.handleTagSearch.bind(this);
   }
 
   componentWillMount() {
@@ -13,6 +14,17 @@ class SearchInput extends React.Component {
   }
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
+
+  handleTagSearch(e) {
+    console.log(e);
+    console.log('searching for tags');
+    if (this.state.tag) {
+      this.props.tagSearch(this.state.tag);
+    }
+    this.setState({
+      query: '',
+    });
+  }
 
   handleSearchRequest(e) {
     e.preventDefault();
@@ -32,16 +44,21 @@ class SearchInput extends React.Component {
           role="search"
           onSubmit={this.handleSearchRequest}
         >
-          <div className="form-group">
-            <input
-              type="text"
-              name="query"
-              value={this.state.query}
-              onChange={this.handleQueryChange}
-              className="form-control"
-            />
+          <input
+            type="text"
+            name="query"
+            value={this.state.query}
+            onChange={this.handleQueryChange}
+            className="form-control"
+          />
+          <div className="input-group-btn form-group">
+            <button type="submit" className="btn btn-primary">Search</button>
+            <button
+              type="button"
+              onClick={this.handleTagSearch}
+              className="btn btn-primary"
+            >By Tag</button>
           </div>
-          <button type="submit" className="btn btn-primary">Search</button>
           <br />
           <button type="button" className="btn btn-link" onClick={this.props.requestHistory}>
             Show all
@@ -55,11 +72,13 @@ class SearchInput extends React.Component {
 SearchInput.propTypes = {
   requestHistory: React.PropTypes.func,
   requestSearch: React.PropTypes.func,
+  tagSearch: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
   requestHistory: () => {},
   requestSearch: () => {},
+  tagSearch: () => {},
 };
 
 export default SearchInput;
