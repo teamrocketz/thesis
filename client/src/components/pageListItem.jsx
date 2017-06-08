@@ -1,7 +1,7 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
 import TagGenerator from './tagGenerator';
-import Tag from './tag.jsx';
+import Tag from './tag';
 
 const MAX_TEXT_DISPLAY_LENGTH = 60;
 
