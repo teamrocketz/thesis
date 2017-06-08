@@ -3,17 +3,12 @@
 // 'use strict'; // commented out per eslint
 
 const request = require('supertest');
-const app = require('../app.js');
-const dbUtils = require('../../db/lib/utils.js');
+const app = require('../../server/app.js');
+const dbUtils = require('../lib/dbUtils.js');
 
 describe('Profiles API', function () {
   beforeEach(function (done) {
-    dbUtils.rollbackMigrate(done);
-  });
-
-  // Resets database back to original settings
-  afterEach(function (done) {
-    dbUtils.rollback(done);
+    dbUtils.reinitialize(done);
   });
 
   xit('accepts GET requests to /api/profiles', function (done) {

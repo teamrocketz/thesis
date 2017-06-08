@@ -24,8 +24,3 @@ module.exports.session = session({
   resave: false,
   saveUninitialized: false,
 });
-
-redisClient.on('connect', () => {
-  const sanitizedUrl = config.redis.url.includes('@') ? `redis://${config.redis.url.match(/@(.*$)/)[1]}` : config.redis.url;
-  console.log(`Connected to Redis server at ${sanitizedUrl}`);
-});

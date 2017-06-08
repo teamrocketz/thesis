@@ -3,7 +3,7 @@
 // 'use strict';  // commented out per eslint
 
 const request = require('supertest');
-const app = require('../app.js');
+const app = require('../../server/app.js');
 
 const chai = require('chai');
 const dirtyChai = require('dirty-chai');

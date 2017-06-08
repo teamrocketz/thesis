@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 
 const Promise = require('bluebird');
-const config = require('./knexfile.js');
+const dbConfig = require('./knexfile.js');
 const exec = require('child_process').exec;
 
 module.exports = (grunt) => {
@@ -11,43 +11,53 @@ module.exports = (grunt) => {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'config/**/*.js'],
+      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'dbConfig/**/*.js'],
     },
 
+    // mochacli supports forcing color output in a subshell
+    mochacli: {
+      options: {
+        colors: true,
+        reporter: 'spec',
+        files: ['test/**/*.js'],
+      },
+      main: {},
+    },
+
+    // mochaTest supports debug mode for test debugging
     mochaTest: {
       options: {
         reporter: 'spec',
       },
-      main: {
-        src: ['server/test/**/*.js'],
+      debug: {
+        src: ['test/**/*.js'],
       },
     },
 
     pgcreatedb: {
       default: {
         connection: {
-          user: config.connection.user,
-          password: config.connection.password,
-          host: config.connection.host,
-          port: config.connection.port,
+          user: dbConfig.connection.user,
+          password: dbConfig.connection.password,
+          host: dbConfig.connection.host,
+          port: dbConfig.connection.port,
           database: 'template1',
         },
-        name: config.connection.database,
+        name: dbConfig.connection.database,
       },
     },
 
     shell: {
       'client-build': 'webpack',
       'client-dev': 'webpack --watch --color',
-      dbRollback: 'knex migrate:rollback',
       dbMigrate: 'knex migrate:latest',
-      dbSeed: 'knex seed:run',
       server: 'nodemon server',
       'server-debug': 'nodemon --inspect server',
       'server-debug-brk': 'nodemon --inspect --debug-brk server',
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
-      // for an explanation of why this is here, rather than in mocha configs above
-      'test-debug': 'node --inspect --debug-brk ./node_modules/.bin/grunt test',
+      // for an explanation of why these are here, rather than in mocha configs above
+      test: 'NODE_ENV=test ./node_modules/.bin/grunt test-run',
+      'test-debug': 'NODE_ENV=test node --inspect --debug-brk ./node_modules/.bin/grunt test-run-debug',
     },
 
   });
@@ -55,7 +65,7 @@ module.exports = (grunt) => {
   // returns a Promise.  res = boolean true/false
   // there MUST be a better way to see if a database exists...
   function doesDatabaseExist() {
-    const command = `psql -l ${config.connection.url} | head`;    // will fail if database does not exist
+    const command = `psql -l ${dbConfig.connection.url} | head`;    // will fail if database does not exist
 
     return new Promise((resolve, reject) => {
       exec(command, (err, stdout, stderr) => {
@@ -85,10 +95,6 @@ module.exports = (grunt) => {
       });
   });
 
-
-  grunt.registerTask('test', ['mochaTest:main']);
-  grunt.registerTask('test-debug', ['shell:test-debug']);
-
   grunt.registerTask('client-build', ['shell:client-build']);
   grunt.registerTask('client-dev', ['shell:client-dev']);
 
@@ -96,10 +102,18 @@ module.exports = (grunt) => {
   grunt.registerTask('server-debug', ['shell:server-debug']);
   grunt.registerTask('server-debug-brk', ['shell:server-debug-brk']);
 
-  grunt.registerTask('postinstall', ['client-build']);
-  grunt.registerTask('postrelease', ['dbCreateIfNeeded', 'shell:dbMigrate']);
-  grunt.registerTask('new-env-setup', ['shell:dbSeed']);
-  grunt.registerTask('verify', ['eslint', 'test']);
+  grunt.registerTask('test', ['shell:test']);
+  grunt.registerTask('test-debug', ['shell:test-debug']);
+  // for internal grunt use only (invoked via shell:test and shell:test-debug)
+  grunt.registerTask('test-run', ['dbCreateIfNeeded', 'mochacli:main']);
+  grunt.registerTask('test-run-debug', ['dbCreateIfNeeded', 'mochaTest:debug']);
 
-  grunt.registerTask('dbSetup', ['dbCreateIfNeeded', 'shell:dbMigrate', 'shell:dbSeed']);
+  // called automatically by yarn after 'yarn install' (including every heroku build)
+  grunt.registerTask('postinstall', ['client-build', 'dbsetup']);
+
+  // invoked by heroku post-deployment (including staging -> production promotion) via Procfile
+  grunt.registerTask('dbsetup', ['dbCreateIfNeeded', 'shell:dbMigrate']);
+
+  // invoked via yarn test (e.g. for Heroku CI builds)
+  grunt.registerTask('verify', ['eslint', 'test']);
 };

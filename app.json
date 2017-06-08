@@ -13,8 +13,5 @@
   "env": {
     "NODE_ENV": { "value": "test" },
     "NPM_CONFIG_PRODUCTION": { "value": "false" }
-  },
-  "scripts": {
-    "postdeploy": "grunt new-env-setup"
   }
 }

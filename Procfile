@@ -1,2 +1,2 @@
-release: grunt postrelease
+release: grunt dbsetup
 web: npm start

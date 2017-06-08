@@ -2,10 +2,11 @@
   "knex": {
     "client": "postgresql",
     "connection": {
-      "database": "hault",
-      "password": "postgres",
       "host": "localhost",
-      "port": 5432
+      "port": 5432,
+      "database": "hault",
+      "user": "$USERNAME",
+      "password": "postgres"
     },
     "pool": {
       "min": 1,
@@ -16,7 +17,7 @@
       "directory": "db/migrations"
     },
     "seeds": {
-      "directory": "db/seeds"
+      "directory": "test/seeds"
     }
   },
 
