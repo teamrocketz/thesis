@@ -51,10 +51,11 @@ export const addTag = (name, pageId) => ({
   }),
 });
 
-export const removeTag = (name, pageId) => ({
+export const removeTag = (name, pageId, tagId) => ({
   type: 'REMOVE_TAG',
   payload: axios.post('/tags/removeTag', {
     name,
     pageId,
+    tagId,
   }),
 });
