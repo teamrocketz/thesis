@@ -7,15 +7,17 @@ export default function (state = {
     case 'REQUEST_HISTORY_PENDING':
     case 'REQUEST_SEARCH_PENDING':
       return {
-        pages: [],
+        pages: state.pages,
         isLoading: true,
         error: '',
       };
 
+    case 'REMOVE_TAG_REJECTED':
+    case 'ADD_TAG_REJECTED':
     case 'REQUEST_HISTORY_REJECTED':
     case 'REQUEST_SEARCH_REJECTED':
       return {
-        pages: [],
+        pages: state.pages,
         isLoading: false,
         error: action.payload.response.statusText,
       };
@@ -41,6 +43,32 @@ export default function (state = {
       return {
         pages: state.pages.sort((x, y) =>
           x[action.payload].charCodeAt(0) - y[action.payload].charCodeAt(0)).slice(0),
+        isLoading: false,
+        error: '',
+      };
+
+    case 'ADD_TAG_FULFILLED':
+      return {
+        pages: state.pages.map((page) => {
+          if (page.id === action.payload.data.pageview_id) {
+            page.tags.push(action.payload.data);
+          }
+          return page;
+        }),
+        isLoading: false,
+        error: '',
+      };
+
+    case 'REMOVE_TAG_FULFILLED':
+      return {
+        pages: state.pages.map((page) => {
+          if (page.id === action.payload.data.pageId) {
+            page.tags = page.tags.filter(tag => // eslint-disable-line no-param-reassign
+              tag.id !== action.payload.data.tagId,
+            );
+          }
+          return page;
+        }),
         isLoading: false,
         error: '',
       };

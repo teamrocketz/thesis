@@ -2,10 +2,10 @@ import React from 'react';
 
 const RestoreSession = props => (
   <a
-    role="button"
-    tabIndex="0"
     key="activeSession"
+    role="button"
     onClick={props.openSessionTabs}
+    tabIndex="0"
     className="btn btn-success pull-right"
   >
     Restore Active Sessions
