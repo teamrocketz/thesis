@@ -53,9 +53,10 @@ const PageListItem = (props) => {
       <td>
         <button
           type="submit"
+          className="close"
+          aria-label="Close"
           onClick={() => props.deletePage(props.page.id)}
-        >
-          <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
+        ><span aria-hidden="true">&times;</span>
         </button>
       </td>
     </tr>
