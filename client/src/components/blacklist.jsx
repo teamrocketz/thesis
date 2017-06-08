@@ -64,10 +64,11 @@ class Blacklist extends React.Component {
           <br />
         </form>
         {error}
-        <table className="table table-condensed table-striped">
+        <table className="table table-condensed">
           <thead>
             <tr>
-              <th>Domain</th>
+              <th />
+              <th />
             </tr>
           </thead>
           <tbody>
