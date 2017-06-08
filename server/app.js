@@ -8,7 +8,10 @@ const helmet = require('helmet');
 
 const app = express();
 
-app.use(middleware.morgan('dev'));
+app.use(middleware.morgan('dev', {
+  skip(req, res) { return res.statusCode < 400; },
+}));
+
 app.use(middleware.cookieParser());
 app.use(middleware.bodyParser.urlencoded({ extended: false }));
 app.use(middleware.bodyParser.json());

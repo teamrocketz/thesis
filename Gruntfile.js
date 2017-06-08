@@ -11,7 +11,7 @@ module.exports = (grunt) => {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'dbConfig/**/*.js'],
+      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'test/**/*.js'],
     },
 
     // mochacli supports forcing color output in a subshell
