@@ -5,7 +5,7 @@ exports.up = function upFunc(knex, Promise) {
       table.increments('id').unsigned().primary();
       table.string('name', 64).notNullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
-      table.integer('page_id').references('pageviews.id').onDelete('CASCADE');
+      table.integer('pageview_id').references('pageviews.id').onDelete('CASCADE');
     }),
   ]);
 };

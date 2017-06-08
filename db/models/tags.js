@@ -3,7 +3,7 @@ const db = require('../');
 const Tag = db.Model.extend({
   tableName: 'tags',
   pageview() {
-    return this.belongsTo(db.Pageview);
+    return this.belongsTo('Pageview');
   },
 });
 
