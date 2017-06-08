@@ -46,9 +46,10 @@ const PageListItem = (props) => {
           href={props.page.url}
           target="_blank"
           rel="noopener noreferrer"
+          className="pull-left"
         >
           {formatTextField(props.page.title)}
-        </a>
+        </a><br />
         {props.page.tags ?
           props.page.tags.map(tag => (
             <Tag

@@ -30,3 +30,7 @@
 .close:hover {
   color: red;
 }
+
+.tag {
+  margin: 1px;
+}
