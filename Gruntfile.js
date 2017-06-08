@@ -115,5 +115,5 @@ module.exports = (grunt) => {
   grunt.registerTask('dbsetup', ['dbCreateIfNeeded', 'shell:dbMigrate']);
 
   // invoked via yarn test (e.g. for Heroku CI builds)
-  grunt.registerTask('verify', ['eslint', 'test-all']);
+  grunt.registerTask('verify', ['eslint', 'test']);
 };
