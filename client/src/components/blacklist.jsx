@@ -18,7 +18,7 @@ class Blacklist extends React.Component {
   }
 
   handleDomainChange(e) {
-    e.preventDefault();
+    e.preventDefault();   // this line can probably be deleted
     this.setState({ domain: e.target.value });
   }
 
