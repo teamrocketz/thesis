@@ -52,12 +52,11 @@ const PageListItem = (props) => {
         {props.page.tags ?
           props.page.tags.map(tag => (
             <Tag
-              pageId={props.page.id}
-              removeTag={props.removeTag}
-              display="inline"
               key={tag.id}
               tagId={tag.id}
+              pageId={props.page.id}
               tagName={tag.name}
+              removeTag={props.removeTag}
             />
         )) : null}
       </td>

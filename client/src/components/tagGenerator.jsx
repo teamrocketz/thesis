@@ -18,6 +18,7 @@ class TagGenerator extends React.Component {
     e.preventDefault();
     if (this.state.tag.length > 0) {
       this.props.addTag(this.state.tag, this.state.pageId);
+      this.setState({ tag: '' });
     }
   }
 
