@@ -6,7 +6,7 @@ const RestoreSession = props => (
     role="button"
     onClick={props.openSessionTabs}
     tabIndex="0"
-    className="btn btn-success pull-right"
+    className="btn btn-success session pull-right"
   >
     Restore Active Sessions
   </a>

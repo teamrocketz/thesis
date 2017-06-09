@@ -8,8 +8,8 @@
   background-color: white;
 }
 
-.align-top {
-  /*padding-top: 15px;*/
+.navbar {
+  padding-top: 15px;
   padding: 10px;
 }
 
@@ -22,9 +22,12 @@
   background-color: lightgray;
 }
 
-.btn-success {
+.session {
   margin-top: 20px;
   vertical-align: center;
+}
+.align-top {
+  padding-top: 10px;
 }
 
 .close:hover {
@@ -34,3 +37,11 @@
 .tag {
   margin: 1px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+}
+p, div, body, head {
+    font-family: 'Roboto', sans-serif;
+}
+
