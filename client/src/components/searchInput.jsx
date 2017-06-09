@@ -15,15 +15,11 @@ class SearchInput extends React.Component {
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
 
-  handleTagSearch(e) {
-    console.log(e);
-    console.log('searching for tags');
-    if (this.state.tag) {
-      this.props.tagSearch(this.state.tag);
+  handleTagSearch() {
+    if (this.state.query) {
+      this.props.tagSearch(this.state.query);
+      this.setState({ query: '' });
     }
-    this.setState({
-      query: '',
-    });
   }
 
   handleSearchRequest(e) {
