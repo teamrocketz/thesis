@@ -33,7 +33,13 @@ class PageList extends Component {
         </thead>
         <tbody>
           { this.props.pages.map(page => (
-            <PageListItem page={page} key={page.id} deletePage={this.props.deletePage} />
+            <PageListItem
+              key={page.id}
+              page={page}
+              addTag={this.props.addTag}
+              removeTag={this.props.removeTag}
+              deletePage={this.props.deletePage}
+            />
           )) }
         </tbody>
       </table>
@@ -52,6 +58,8 @@ PageList.propTypes = {
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
   sortPages: React.PropTypes.func,
+  removeTag: React.PropTypes.func,
+  addTag: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
@@ -60,6 +68,8 @@ PageList.defaultProps = {
   error: '',
   deletePage: () => {},
   sortPages: () => {},
+  removeTag: () => {},
+  addTag: () => {},
 };
 
 export default PageList;

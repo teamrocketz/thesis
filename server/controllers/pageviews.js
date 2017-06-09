@@ -13,8 +13,15 @@ module.exports.getAll = (req, res) => {
   })
   .orderBy('-time_open')
   .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
-  .fetchAll()
+  .fetchAll({
+    withRelated: ['tags'],
+  })
   .then((pageviews) => {
+    // console.log(pageviews.models[0].relations);
+    // pageviews.models.forEach((page) => {
+    //   console.log(page.relations.tags.models);
+    //   console.log('\n');
+    // });
     res.status(200).send(pageviews);
   })
   .catch((err) => {
@@ -33,7 +40,9 @@ module.exports.getActive = (req, res) => {
   })
   .orderBy('-time_open')
   .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
-  .fetchAll()
+  .fetchAll({
+    withRelated: ['tags'],
+  })
   .then((pageviews) => {
     res.status(200).send(pageviews);
     for (let i = 0; i < pageviews.models.length; i += 1) {

@@ -1,5 +1,7 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
+import TagGenerator from './tagGenerator';
+import Tag from './tag';
 
 const MAX_TEXT_DISPLAY_LENGTH = 60;
 
@@ -37,6 +39,7 @@ const PageListItem = (props) => {
           height="32"
           alt={props.page.title}
         />
+        <TagGenerator pageId={props.page.id} addTag={props.addTag} />
       </td>
       <td>
         <a
@@ -46,6 +49,16 @@ const PageListItem = (props) => {
         >
           {formatTextField(props.page.title)}
         </a>
+        {props.page.tags ?
+          props.page.tags.map(tag => (
+            <Tag
+              key={tag.id}
+              tagId={tag.id}
+              pageId={props.page.id}
+              tagName={tag.name}
+              removeTag={props.removeTag}
+            />
+        )) : null}
       </td>
       <td>{props.page.snippet ? formatTextField(props.page.snippet) : '' }</td>
       <td>{displayTimeOpen}</td>
@@ -65,11 +78,15 @@ const PageListItem = (props) => {
 PageListItem.propTypes = {
   page: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   deletePage: React.PropTypes.func,
+  addTag: React.PropTypes.func,
+  removeTag: React.PropTypes.func,
 };
 
 PageListItem.defaultProps = {
   page: {},
   deletePage: () => {},
+  addTag: () => {},
+  removeTag: () => {},
 };
 
 export default PageListItem;
