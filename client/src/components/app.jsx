@@ -6,6 +6,7 @@ import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
 import RestoreSessionContainer from '../containers/restoreSessionContainer';
 import SearchInputContainer from '../containers/searchInputContainer';
+import BarMainContainer from '../containers/barMainContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class App extends React.Component {
         <Header />
         <RestoreSessionContainer />
         <SearchInputContainer />
+        <BarMainContainer />
         <PageListContainer />
       </div>
     );
