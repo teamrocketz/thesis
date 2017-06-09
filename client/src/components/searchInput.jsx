@@ -7,10 +7,24 @@ class SearchInput extends React.Component {
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
     this.handleTagSearch = this.handleTagSearch.bind(this);
+    this.loadTags = this.loadTags.bind(this);
   }
 
   componentWillMount() {
     this.props.requestHistory();
+    this.loadTags();
+  }
+
+  loadTags() {
+    this.props.getTags()
+    .then((tags) => {
+      this.setState({
+        tags,
+      });
+    })
+    .catch((err) => {
+      console.log('tag error: ', err);
+    });
   }
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
@@ -53,7 +67,7 @@ class SearchInput extends React.Component {
               type="button"
               onClick={this.handleTagSearch}
               className="btn btn-primary"
-            >By Tag</button>
+            >Tags</button>
           </div>
           <br />
           <button type="button" className="btn btn-link" onClick={this.props.requestHistory}>
@@ -69,12 +83,14 @@ SearchInput.propTypes = {
   requestHistory: React.PropTypes.func,
   requestSearch: React.PropTypes.func,
   tagSearch: React.PropTypes.func,
+  getTags: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
   requestHistory: () => {},
   requestSearch: () => {},
   tagSearch: () => {},
+  getTags: () => {},
 };
 
 export default SearchInput;
