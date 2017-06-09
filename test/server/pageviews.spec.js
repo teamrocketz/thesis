@@ -36,19 +36,49 @@ describe('/pageviews API', function () {
 
   describe('/', function () {
     it('retrieves a user\'s pageviews', function () {
-      return agent
-        .get('/pageviews')
+      return agent.get('/pageviews')
         .expect(200)
         .then((res) => {
           expect(res.body).to.have.lengthOf(testerPageviews.length);
         });
     });
 
-    xit('limits pageview retrieval to the specified number of records', function () {
+    it('returns pageviews in descending chronological order', function () {
+      const sortedPageviews = [...testerPageviews];
+      sortedPageviews.sort((a, b) => (b.id - a.id));
+
+      return agent.get('/pageviews')
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.deep.equal(sortedPageviews);
+        });
     });
 
-    xit('can start pageview retrieval past a specified database id', function () {
-      // test > AND 'not ='
+    xit('limits pageview retrieval to the specified number of records', function () {
+      const numResults = 5;
+
+      return agent.get('/pageviews')
+        .query({ numResults })
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.have.lengthOf(numResults);
+        });
+    });
+
+    xit('can retrieve pageviews under a specified database id', function () {
+      const beforeId = 30;
+
+      return agent.get('/pageviews')
+        .expect(200)
+        .then((res) => {
+          expect(res.body[0].id).to.be.at.least(30);
+          return agent.get('/pageviews')
+            .query({ beforeId })
+            .expect(200);
+        })
+        .then((res) => {
+          expect(res.body[0].id).to.be.below(30);
+        });
     });
   });
 
