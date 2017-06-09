@@ -1,7 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
-const Pageview = require('../../db/models/pageviews.js');
 const dbUtils = require('../lib/dbUtils.js');
+const serverUtils = require('../lib/serverUtils.js');
 
 const chai = require('chai');
 const dirtyChai = require('dirty-chai');
@@ -10,94 +10,91 @@ const expect = chai.expect;
 chai.use(dirtyChai);
 
 describe('/pageviews API', function () {
-  let expected;
+  let testerProfile;
+  let testerPageviews;
+  let agent;
 
   before(function () {
-    expected = dbUtils.readCsv('pageviews');
+    const profileData = dbUtils.readCsv('profiles');
+    const pageviewData = dbUtils.readCsv('pageviews');
+
+    testerProfile = profileData.find(profile => profile.email === 'tester@domain.com');
+    testerPageviews = pageviewData.filter(pageview => pageview.profile_id === testerProfile.id);
+
+    return serverUtils.getAuthenticatedAgent(testerProfile.email)
+      .then((newAgent) => {
+        agent = newAgent;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
-  beforeEach(function (done) {
-    dbUtils.reinitialize(done);
+  beforeEach(function () {
+    return dbUtils.reinitialize();
   });
 
-  xdescribe('/', function () {
-    it('retrieves a user\'s pageviews', function (done) {
-      Pageview.forge().fetchAll()
-        .then(function (results) {
-          expect(results.length).to.equal(expected.length);
-          expect(results.at(0).get('id')).to.equal(expected[0].id);
-          done();
-        })
-        .catch(function (err) {
-          done(err);
+  describe('/', function () {
+    it('retrieves a user\'s pageviews', function () {
+      return agent
+        .get('/pageviews')
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.have.lengthOf(testerPageviews.length);
         });
-      done();
     });
 
-    it('limits pageview retrieval to the specified number of records', function (done) {
-      done();
+    xit('limits pageview retrieval to the specified number of records', function () {
     });
 
-    it('can start pageview retrieval past a specified database id', function (done) {
+    xit('can start pageview retrieval past a specified database id', function () {
       // test > AND 'not ='
-      done();
     });
   });
 
   xdescribe('/active', function () {
-    it('retrieves a user\'s active pageviews', function (done) {
-      done();
+    it('retrieves a user\'s active pageviews', function () {
     });
   });
 
   xdescribe('/search', function () {
-    it('finds pageviews based on their title', function (done) {
-      done();
+    it('finds pageviews based on their title', function () {
     });
 
-    it('finds pageviews based on their snippet', function (done) {
-      done();
+    it('finds pageviews based on their snippet', function () {
     });
 
-    it('finds matches based on variations of a word', function (done) {
-      done();
+    it('finds matches based on variations of a word', function () {
     });
 
-    it('prioritizes title search results higher than snippet search results', function (done) {
-      done();
+    it('prioritizes title search results higher than snippet search results', function () {
     });
   });
 
   xdescribe('/visitpage', function () {
-    it('creates a new pageview record', function (done) {
-      done();
+    it('creates a new pageview record', function () {
     });
 
-    it('doesn\'t create a new pageview record if visiting the same site within 20 seconds', function (done) {
-      done();
+    it('doesn\'t create a new pageview record if visiting the same site within 20 seconds', function () {
     });
 
-    it('does create a new pageview record if visiting the same site after 20 seconds', function (done) {
-      done();
+    it('does create a new pageview record if visiting the same site after 20 seconds', function () {
     });
   });
 
   xdescribe('/deactivate', function () {
-    it('properly updates is_active', function (done) {
-      done();
+    it('properly updates is_active', function () {
     });
 
-    it('properly updates time_closed', function (done) {
-      done();
+    it('properly updates time_closed', function () {
     });
 
-    it('properly updates snippet', function (done) {
-      done();
+    it('properly updates snippet', function () {
     });
   });
 
   xdescribe('/delete', function () {
-    it('deletes a page', function (done) {
+    it('deletes a page', function () {
     //   const profileId = 100000;
     //   // make sure it exists first
     //   Pageview.where({ id: profileId }).fetch()
@@ -112,13 +109,11 @@ describe('/pageviews API', function () {
     //     })
     //     .then(function (result) {
     //       expect(result).to.equal(null);
-    //       done();
     //     })
     //     .catch(function (err) {
     //       done(err);
     //     });
     // });
-      done();
     });
   });
 });
