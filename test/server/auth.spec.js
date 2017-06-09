@@ -23,9 +23,9 @@ describe('Authentication', function () {
 
   let profileData;
 
-  beforeEach(function (done) {
+  beforeEach(function () {
     profileData = dbUtils.readCsv('profiles');
-    dbUtils.reinitialize(done);
+    return dbUtils.reinitialize();
   });
 
   describe('Passport', function () {

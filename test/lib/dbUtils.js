@@ -2,29 +2,21 @@ const fs = require('fs');
 const knex = require('knex')(require('../../knexfile'));
 const path = require('path');
 
-exports.reinitialize = (done) => {
+exports.reinitialize = () => (
   knex.migrate.rollback()
     .then(() => knex.migrate.latest())
     .then(() => knex.seed.run())
-    .then(() => {
-      done();
-    })
     .catch((err) => {
       console.log('error in migration:', err);
-      done();
-    });
-};
-
-exports.wipe = (done) => {
-  knex.migrate.rollback()
-    .then(() => {
-      done();
     })
+);
+
+exports.wipe = () => (
+  knex.migrate.rollback()
     .catch((err) => {
-      console.log(err);
-      done();
-    });
-};
+      console.log('error in rollback:', err);
+    })
+);
 
 // read the contents of a seed CSV into an array of objects
 // array = 1 row

@@ -10,44 +10,39 @@ const expect = chai.expect;
 chai.use(dirtyChai);
 
 describe('Profile model', function () {
-  let expected;
+  let profileData;
 
   before(function () {
-    expected = dbUtils.readCsv('profiles');
+    profileData = dbUtils.readCsv('profiles');
   });
 
-  beforeEach(function (done) {
-    dbUtils.reinitialize(done);
+  beforeEach(function () {
+    return dbUtils.reinitialize();
   });
 
-  it('Should be able to retrieve test data', function (done) {
-    Profile.forge().fetchAll()
+  it('Should be able to retrieve test data', function () {
+    return Profile.forge().fetchAll()
       .then(function (results) {
-        expect(results.length).to.equal(expected.length);
-        expect(results.at(0).get('id')).to.equal(expected[0].id);
-        done();
-      })
-      .catch(function (err) {
-        done(err);
+        expect(results.length).to.equal(profileData.length);
+        expect(results.at(0).get('id')).to.equal(profileData[0].id);
       });
   });
 
-  it('Should verify that all usernames are unique', function (done) {
+  it('Should verify that all usernames are unique', function () {
     // Insert a user with an e-mail that already exists
-    Profile.forge({ email: 'bob@domain.com' }).save()
+    return Profile.forge({ email: 'bob@domain.com' }).save()
       .then(function () {
-        done(new Error('was not supposed to succeed'));
+        throw new Error('was not supposed to succeed');
       })
       .catch(function (err) {
         expect(err).to.be.an('error');
         expect(err).to.match(/duplicate key value violates unique constraint/);
-        done();
       });
   });
 
-  it('Should be able to update an already existing record', function (done) {
+  it('Should be able to update an already existing record', function () {
     const profileId = 100000;
-    Profile.where({ id: profileId }).fetch()
+    return Profile.where({ id: profileId }).fetch()
       .then(function (result) {
         expect(result.get('id')).to.equal(profileId);
       })
@@ -61,17 +56,13 @@ describe('Profile model', function () {
       .then(function (result) {
         expect(result.get('first')).to.equal('James');
         expect(result.get('last')).to.equal('Davenport');
-        done();
-      })
-      .catch(function (err) {
-        done(err);
       });
   });
 
-  it('Should be able to delete a record', function (done) {
+  it('Should be able to delete a record', function () {
     const profileId = 100000;
     // make sure it exists first
-    Profile.where({ id: profileId }).fetch()
+    return Profile.where({ id: profileId }).fetch()
       .then(function (result) {
         if (result === null) {
           throw new Error('profile was not in database');
@@ -83,10 +74,6 @@ describe('Profile model', function () {
       })
       .then(function (result) {
         expect(result).to.equal(null);
-        done();
-      })
-      .catch(function (err) {
-        done(err);
       });
   });
 });
