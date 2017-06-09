@@ -7,7 +7,6 @@ const MAX_RESULTS_PAGEVIEWS = 200;
 
 //  gets all from current user or 99999 in test mode ie no browser cookes
 module.exports.getAll = (req, res) => {
-  console.log('pageviews getAll fired');
   models.Pageview.where({
     profile_id: req.user.id,
   })
@@ -52,20 +51,19 @@ module.exports.getActive = (req, res) => {
         });
       })
       .catch((err) => {
-        console.log('deactivate error: ', err);
+        console.log('deactivate error:', err);
+        res.status(503).send('error');
       });
     }
   })
   .catch((err) => {
-    console.log('getActive error: ', err);
+    console.log('getActive error:', err);
     res.status(503).send('error');
   });
 };
 
 
 module.exports.search = (req, res) => {
-  console.log('pageviews search fired');
-
   const sql = `
     SELECT id, url, title, time_open, is_active, icon, snippet
     FROM (
@@ -86,7 +84,7 @@ module.exports.search = (req, res) => {
     res.status(200).send(pageviewsResult.rows);
   })
   .catch((err) => {
-    console.log('search error: ', err);
+    console.log('search error:', err);
     res.status(503).send('error');
   });
 };
@@ -154,9 +152,8 @@ module.exports.deactivatePage = (req, res) => {
     res.status(200).send('OK');
   })
   .catch((err) => {
-    console.log(err);
+    console.log('deactivate page error:', err);
     res.status(500).send('error');
-    return undefined;
   });
 };
 
@@ -176,7 +173,7 @@ module.exports.deletePage = (req, res) => {
     res.sendStatus(200);
   })
   .catch((err) => {
-    console.log('deletePage error: ', err);
+    console.log('deletePage error:', err);
     res.status(500).send('error');
   });
 };
