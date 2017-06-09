@@ -20,7 +20,7 @@
 }
 
 .row {
-  background-color: lightgray;
+  background-color: white;
 }
 
 .session {
@@ -42,10 +42,14 @@
   margin-right: 2px;
 }
 
+.close {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto', sans-serif;
 }
 p, div, body, head {
     font-family: 'Roboto', sans-serif;
 }
-

@@ -22,26 +22,24 @@ class PageList extends Component {
     const renderList = () => (
       <table className="table table-condensed table-striped">
         <thead>
-          <tr>
+          <tr className="row">
             <th />
-            <th id="title" onClick={this.sort}>Title</th>
-            <th id="snippet" onClick={this.sort}>Snippet</th>
+            <th>Title</th>
+            <th />
             <th>Time visited</th>
             <th>Open since</th>
             <th />
           </tr>
         </thead>
-        <tbody>
-          { this.props.pages.map(page => (
-            <PageListItem
-              key={page.id}
-              page={page}
-              addTag={this.props.addTag}
-              removeTag={this.props.removeTag}
-              deletePage={this.props.deletePage}
-            />
-          )) }
-        </tbody>
+        { this.props.pages.map(page => (
+          <PageListItem
+            key={page.id}
+            page={page}
+            addTag={this.props.addTag}
+            removeTag={this.props.removeTag}
+            deletePage={this.props.deletePage}
+          />
+        )) }
       </table>
     );
 

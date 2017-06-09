@@ -2,7 +2,8 @@ import React from 'react';
 
 const Tag = props => (
   <div className="tag pull-left">
-    {props.tagName} <button
+    {props.tagName}
+    <button
       className="close"
       aria-label="Close"
       onClick={() => {
