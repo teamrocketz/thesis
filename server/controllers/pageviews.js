@@ -3,17 +3,23 @@ const db = require('../../db');
 const models = require('../../db/models');
 const utils = require('./controllerUtils');
 
-const MAX_RESULTS_PAGEVIEWS = 50;
+const DEFAULT_RESULT_SIZE = 30;
 
 //  gets all from current user or 99999 in test mode ie no browser cookes
 module.exports.getAll = (req, res) => {
-  models.Pageview.where({
-    profile_id: req.user.id,
-    // numResults: req.query.numResults,
-    // beforeId: req.query.beforeId,
-  })
+  const numResults = req.query.numResults || DEFAULT_RESULT_SIZE;
+
+  let query = models.Pageview.where({ profile_id: req.user.id });
+  if (req.query.minId) {
+    query = query.where('id', '>=', req.query.minId);
+  }
+  if (req.query.maxId) {
+    query = query.where('id', '<=', req.query.maxId);
+  }
+
+  query
   .orderBy('-id')
-  .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
+  .query(qb => qb.limit(numResults))
   .fetchAll({
     withRelated: ['tags'],
   })
@@ -35,7 +41,7 @@ module.exports.getActive = (req, res) => {
     is_active: true,
   })
   .orderBy('-id')
-  .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
+  .query(qb => qb.limit(DEFAULT_RESULT_SIZE))
   .fetchAll({
     withRelated: ['tags'],
   })
@@ -78,7 +84,7 @@ module.exports.search = (req, res) => {
     ) search
     WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
     ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) ASC
-    LIMIT ${MAX_RESULTS_PAGEVIEWS};
+    LIMIT ${DEFAULT_RESULT_SIZE};
   `;
 
   db.knex.raw(sql)

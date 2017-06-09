@@ -54,30 +54,36 @@ describe('/pageviews API', function () {
         });
     });
 
-    xit('limits pageview retrieval to the specified number of records', function () {
+    it('limits pageview retrieval to the specified number of records', function () {
       const numResults = 5;
 
       return agent.get('/pageviews')
-        .query({ numResults })
         .expect(200)
+        .then((res) => {
+          expect(res.body.length).to.be.above(numResults);
+          return agent.get('/pageviews')
+            .query({ numResults })
+            .expect(200);
+        })
         .then((res) => {
           expect(res.body).to.have.lengthOf(numResults);
         });
     });
 
-    xit('can retrieve pageviews under a specified database id', function () {
-      const beforeId = 30;
+    it('can retrieve pageviews within a specified id range', function () {
+      let minId = null;
+      let maxId = null;
 
-      return agent.get('/pageviews')
-        .expect(200)
+      return agent.get('/pageviews').expect(200)
         .then((res) => {
-          expect(res.body[0].id).to.be.at.least(30);
+          minId = res.body[res.body.length - 1].id + 1;
+          maxId = res.body[0].id - 1;
           return agent.get('/pageviews')
-            .query({ beforeId })
-            .expect(200);
+            .query({ minId, maxId });
         })
         .then((res) => {
-          expect(res.body[0].id).to.be.below(30);
+          expect(res.body[res.body.length - 1].id).to.be.at.least(minId);
+          expect(res.body[0].id).to.be.at.most(maxId);
         });
     });
   });

@@ -6,13 +6,14 @@ const router = express.Router();
 
 // All GET functions return pageviews in descending chronological order
 
-// Request: GET /pageviews/search?query={string}
+// Request: GET /?[minId={number}]&[maxId={nunber}]&[numResults={number}]
 // Returns: [ {pageView1}, ..., {pageViewN} ]
-//    Returns all of the user's pageViews
+//    All of the user's pageViews within the specified id range
+//    up to a max of numResults
 router.route('/')
   .get(middleware.auth.verify, PageviewController.getAll);
 
-// Request: GET /pageviews/search?query={string}
+// Request: GET /active
 // Returns: [ {pageView1}, ..., {pageViewN} ]
 //    All pageViews which the user currently has open
 router.route('/active')
