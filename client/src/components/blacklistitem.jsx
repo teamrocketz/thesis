@@ -7,9 +7,11 @@ const BlacklistItem = props =>
       <td>
         <button
           type="submit"
+          className="close"
+          aria-label="Close"
           onClick={() => props.deleteDomain(props.domain.domain)}
         >
-          <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
+          <span aria-hidden="true">&times;</span>
         </button>
       </td>
     </tr>

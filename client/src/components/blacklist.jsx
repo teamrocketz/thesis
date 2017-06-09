@@ -18,7 +18,6 @@ class Blacklist extends React.Component {
   }
 
   handleDomainChange(e) {
-    e.preventDefault();   // this line can probably be deleted
     this.setState({ domain: e.target.value });
   }
 
@@ -46,8 +45,8 @@ class Blacklist extends React.Component {
     if (this.state.formError) { error = formError; }
 
     return (
-      <div className="col-md-4 pull-left">
-        <h5>Blacklist</h5>
+      <div className="col-md-4">
+        <h2>Blacklist</h2>
         <form
           className="navbar-form navbar-left"
           onSubmit={this.addBlacklist}
@@ -65,10 +64,11 @@ class Blacklist extends React.Component {
           <br />
         </form>
         {error}
-        <table className="table table-condensed table-striped">
+        <table className="table table-condensed">
           <thead>
             <tr>
-              <th>Domain</th>
+              <th />
+              <th />
             </tr>
           </thead>
           <tbody>
