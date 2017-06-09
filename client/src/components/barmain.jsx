@@ -25,17 +25,30 @@ class BarMain extends Component {
 
 
     const renderBar = () => {
-
-      // debugger;
       
       let newPage;
-      // let domain;
+      let max = 0;
+
+      let domains = [];
+
+      for (var page in this.props)
 
 
-      const pages = this.props.pages.slice(0, 10).map(function(page, i) {
+      for (var i = 0; i < this.props.pages.length; i++) {
+        let page = this.props.pages[i];
         let timeEnd = page.time_closed || Date.now();
-        let timeLength = (timeEnd - Date.parse(page.time_open))/ 216000;
-        let domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'unknown';
+        let timeLength = (timeEnd - Date.parse(page.time_open));
+        if (timeLength > max) {
+          max = timeLength;
+        }
+      };
+
+      console.log('max = ', max);
+
+      const pages = this.props.pages.map(function(page, i) {
+        let timeEnd = page.time_closed || Date.now();
+        let timeLength = (timeEnd - Date.parse(page.time_open))/ max;
+        let domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
         console.log(timeLength);
         console.log(domain)
         newPage = {
@@ -69,7 +82,39 @@ class BarMain extends Component {
       return (
         <VictoryBar
           data={pages}
-          labelComponent={<VictoryLabel angle={90} verticalAnchor="middle" textAnchor="end"/>}
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [{
+                  target: "labels",
+                  mutation: () => {
+                    console.log('clickedo')
+                    }
+                  }];
+                }
+              }
+            }
+          ]}
+
+          height={200}
+          padding={10}
+          scale={{x: "linear", y: "linear"}}
+          style={{
+            data: {
+              padding: 0,
+              fill: "black",
+            },
+            labels: {
+              fontSize: 8,
+              angle: 90,
+              verticalAnchor: "middle",
+              textAnchor: "beginning",
+            },
+            parent: {
+              border: "1px solid #ccc", 
+            },
+          }}
         />);
     };
 
