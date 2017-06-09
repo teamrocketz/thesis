@@ -3,11 +3,12 @@ import TimeAgo from 'react-timeago';
 import TagGenerator from './tagGenerator';
 import Tag from './tag';
 
-const MAX_TEXT_DISPLAY_LENGTH = 60;
+const MAX_TITLE_DISPLAY_LENGTH = 50;
+const MAX_SNIPPET_DISPLAY_LENGTH = 200;
 
-const formatTextField = (field) => {
-  if (field.length > MAX_TEXT_DISPLAY_LENGTH) {
-    return `${field.slice(0, MAX_TEXT_DISPLAY_LENGTH)}...`;
+const formatTextField = (field, length) => {
+  if (field.length > length) {
+    return `${field.slice(0, length)}...`;
   }
   return field;
 };
@@ -38,17 +39,18 @@ const PageListItem = (props) => {
           width="32"
           height="32"
           alt={props.page.title}
+          className="pull-left"
         />
         <TagGenerator pageId={props.page.id} addTag={props.addTag} />
       </td>
-      <td>
+      <td className="col-sm-2">
         <a
           href={props.page.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="pull-left"
+          className="title pull-left"
         >
-          {formatTextField(props.page.title)}
+          {formatTextField(props.page.title, MAX_TITLE_DISPLAY_LENGTH)}
         </a><br />
         {props.page.tags ?
           props.page.tags.map(tag => (
@@ -61,7 +63,7 @@ const PageListItem = (props) => {
             />
         )) : null}
       </td>
-      <td>{props.page.snippet ? formatTextField(props.page.snippet) : '' }</td>
+      <td className="col-sm-2">{props.page.snippet ? formatTextField(props.page.snippet, MAX_SNIPPET_DISPLAY_LENGTH) : '' }</td>
       <td>{displayTimeOpen}</td>
       <td>{openSince}</td>
       <td>
