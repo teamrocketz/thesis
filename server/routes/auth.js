@@ -13,6 +13,11 @@ router.route('/home')
     res.render('landing.ejs');
   });
 
+router.route('/getextension')
+  .get((req, res) => {
+    res.render('getextension.ejs');
+  });
+
 router.route('/login')
   .get((req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') });
