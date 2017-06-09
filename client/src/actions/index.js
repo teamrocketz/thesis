@@ -45,7 +45,6 @@ export const tagSearch = query => ({
   }),
 });
 
-
 export const addTag = (name, pageId) => ({
   type: 'ADD_TAG',
   payload: axios.post('/tags/addtag', {

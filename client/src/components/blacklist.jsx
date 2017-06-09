@@ -54,10 +54,10 @@ class Blacklist extends React.Component {
           <div className="form-group">
             <input
               type="text"
-              className="form-control"
               name="domain"
               value={this.state.domain}
               onChange={this.handleDomainChange}
+              className="form-control"
             />
           </div>
           <button type="submit" className="btn btn-primary">Add to blacklist</button>
@@ -74,8 +74,8 @@ class Blacklist extends React.Component {
           <tbody>
             { this.props.blacklist.map(domain => (
               <BlacklistItem
-                domain={domain}
                 key={domain.id}
+                domain={domain}
                 deleteDomain={this.props.whitelistDomain}
               />
             )) }
