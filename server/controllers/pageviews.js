@@ -3,14 +3,16 @@ const db = require('../../db');
 const models = require('../../db/models');
 const utils = require('./controllerUtils');
 
-const MAX_RESULTS_PAGEVIEWS = 200;
+const MAX_RESULTS_PAGEVIEWS = 50;
 
 //  gets all from current user or 99999 in test mode ie no browser cookes
 module.exports.getAll = (req, res) => {
   models.Pageview.where({
     profile_id: req.user.id,
+    // numResults: req.query.numResults,
+    // beforeId: req.query.beforeId,
   })
-  .orderBy('-time_open')
+  .orderBy('-id')
   .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
   .fetchAll({
     withRelated: ['tags'],
@@ -32,7 +34,7 @@ module.exports.getActive = (req, res) => {
     profile_id: req.user.id,
     is_active: true,
   })
-  .orderBy('-time_open')
+  .orderBy('-id')
   .query(qb => qb.limit(MAX_RESULTS_PAGEVIEWS))
   .fetchAll({
     withRelated: ['tags'],
