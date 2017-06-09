@@ -17,11 +17,6 @@ module.exports.getAll = (req, res) => {
     withRelated: ['tags'],
   })
   .then((pageviews) => {
-    // console.log(pageviews.models[0].relations);
-    // pageviews.models.forEach((page) => {
-    //   console.log(page.relations.tags.models);
-    //   console.log('\n');
-    // });
     res.status(200).send(pageviews);
   })
   .catch((err) => {

@@ -38,9 +38,11 @@ export const requestSearch = query => ({
   }),
 });
 
-export const sortPages = field => ({
-  type: 'SORT_PAGES',
-  payload: field,
+export const tagSearch = query => ({
+  type: 'TAG_SEARCH',
+  payload: axios.post('/tags/search', {
+    query,
+  }),
 });
 
 export const addTag = (name, pageId) => ({
@@ -58,4 +60,9 @@ export const removeTag = (name, pageId, tagId) => ({
     pageId,
     tagId,
   }),
+});
+
+export const sortPages = field => ({
+  type: 'SORT_PAGES',
+  payload: field,
 });

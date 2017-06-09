@@ -12,7 +12,7 @@ class Logout extends React.Component {
     return (
       <div>
         <a
-          href={this.state.logout}
+          href={this.state.logout} // Can this be achieved without state?
         >
           <h4 className="pull-right">Logout</h4>
         </a>

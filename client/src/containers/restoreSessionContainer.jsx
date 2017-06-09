@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-
-import RestoreSession from '../components/restoreSession.jsx';
+import RestoreSession from '../components/restoreSession.jsx'; // does this need to be jsx
 
 function openSessionTabs() {
   axios.get('/pageviews/active')
@@ -11,7 +10,7 @@ function openSessionTabs() {
     });
   })
   .catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 }
 
