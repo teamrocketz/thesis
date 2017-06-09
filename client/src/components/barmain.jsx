@@ -31,8 +31,6 @@ class BarMain extends Component {
 
       let domains = [];
 
-      for (var page in this.props)
-
 
       for (var i = 0; i < this.props.pages.length; i++) {
         let page = this.props.pages[i];
@@ -85,11 +83,11 @@ class BarMain extends Component {
           events={[{
             target: "data",
             eventHandlers: {
-              onClick: () => {
+              onMouseEnter: () => {
                 return [{
                   target: "labels",
                   mutation: () => {
-                    console.log('clickedo')
+                    console.log('mouso entro')
                     }
                   }];
                 }
@@ -97,7 +95,7 @@ class BarMain extends Component {
             }
           ]}
 
-          height={200}
+          height={50}
           padding={10}
           scale={{x: "linear", y: "linear"}}
           style={{
