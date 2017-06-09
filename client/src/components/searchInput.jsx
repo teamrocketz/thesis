@@ -3,7 +3,7 @@ import React from 'react';
 class SearchInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { query: '' };
+    this.state = {};
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
     this.handleTagSearch = this.handleTagSearch.bind(this);
@@ -29,11 +29,8 @@ class SearchInput extends React.Component {
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
 
-  handleTagSearch() {
-    if (this.state.query) {
-      this.props.tagSearch(this.state.query);
-      this.setState({ query: '' });
-    }
+  handleTagSearch(tag) {
+    this.props.tagSearch(tag);
   }
 
   handleSearchRequest(e) {
