@@ -75,11 +75,11 @@ class SearchInput extends React.Component {
             <button type="submit" className="btn btn-primary">Search</button>
           </div>
           <div className="Select Select--single is-searchable">
-            <h4>Tags</h4>
             <Select
               name="form-field-name"
               value="Tags"
               clearable={false}
+              placeholder="Tags"
               options={this.state.tags}
               onChange={this.handleTagSearch}
             />
