@@ -9,8 +9,9 @@
 }
 
 .navbar {
-  padding-top: 15px;
-  padding: 10px;
+  padding-top: 0.1%;
+  padding-left: 9%;
+  padding-right: 9%;
 }
 
 .card {
@@ -27,7 +28,9 @@
   vertical-align: center;
 }
 .align-top {
-  padding-top: 10px;
+  padding-top: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
 }
 
 .close:hover {
