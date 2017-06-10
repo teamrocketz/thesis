@@ -1,4 +1,5 @@
 import React from 'react';
+// import Select from 'react-select';
 import BlacklistItem from './blacklistitem';
 import { isDomain } from '../containers/blacklistContainer';
 
@@ -46,7 +47,6 @@ class Blacklist extends React.Component {
 
     return (
       <div className="col-md-4">
-        <h2>Blacklist</h2>
         <form
           className="navbar-form navbar-left"
           onSubmit={this.addBlacklist}

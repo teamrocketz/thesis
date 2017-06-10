@@ -16,26 +16,19 @@ class SearchInput extends React.Component {
 
   handleSearchRequest(e) {
     e.preventDefault();
-    if (e.target.query.value === '') {
+    if (this.state.query === '') {
       this.props.requestHistory();
     } else {
-      this.props.requestSearch(e.target.query.value);
+      this.props.requestSearch(this.state.query);
     }
   }
 
   render() {
     return (
       <div className="row span-12">
-        <div className="col-sm-1">
-          <button
-            type="submit"
-            className="btn btn-default"
-          >
-            <span className="glyphicon glyphicon-search" aria-hidden="false" />
-          </button>
-        </div>
+        <div className="col-sm-1" />
         <form
-          className="col-md-11"
+          className="col-md-9"
           role="search"
           onSubmit={this.handleSearchRequest}
         >
@@ -47,14 +40,29 @@ class SearchInput extends React.Component {
             className="form-control"
           />
         </form>
-        <div className="col-sm-2">
+        <div className="col-sm-1">
           <button
-            type="button"
-            className="btn btn-link"
-            onClick={this.props.requestHistory}
+            type="submit"
+            className="btn btn-default"
+            onClick={this.handleSearchRequest}
           >
-          Show All
+            <span
+              role="button"
+              className="glyphicon glyphicon-search"
+              aria-hidden="false"
+            />
           </button>
+        </div>
+        <div className="row span-12">
+          <div className="col-sm-2 pull-right">
+            <button
+              type="button"
+              className="btn btn-link"
+              onClick={this.props.requestHistory}
+            >
+            Show All
+            </button>
+          </div>
         </div>
       </div>
     );
