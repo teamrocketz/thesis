@@ -21,6 +21,7 @@ class App extends React.Component {
           render={() => (
             <div>
               <SearchInputContainer />
+              <BarMainContainer />
               <PageListContainer />
             </div>
           )}

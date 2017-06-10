@@ -75,11 +75,6 @@ class BarMain extends Component {
         <div>
           <br />
           <h2>Domains in history</h2>
-          <BarInfo
-            numberDomains={domains.length}
-            numberPages={this.props.pages.length}
-            favorite={favorite}
-          />
           <VictoryBar
             data={domains}
             events={[{
@@ -92,8 +87,8 @@ class BarMain extends Component {
               }
             ]}
 
-            height={55}
-            padding={{top: 3, bottom: 8, left: 8, right: 8}}
+            height={65}
+            padding={{top: 30, bottom: 8, left: 15, right: 8}}
             scale={{x: "linear", y: "sqrt"}}
 
             style={{
@@ -124,6 +119,11 @@ class BarMain extends Component {
                 border: "1px solid #ccc",
               },
             }}
+          />
+          <BarInfo
+            numberDomains={domains.length}
+            numberPages={this.props.pages.length}
+            favorite={favorite}
           />
         </div>
         );
