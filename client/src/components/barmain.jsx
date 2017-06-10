@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-import { VictoryBar, VictoryLabel } from 'victory';
+import { VictoryBar, VictoryLabel, Bar } from 'victory';
+
+import BarInfo from './barinfo';
+import CustomBar from './barcustom';
 
 import parseDomain from 'parse-domain';
 
@@ -11,6 +14,7 @@ class BarMain extends Component {
   }
 
 
+
   render() {
 
     const renderLoading = () => (
@@ -19,101 +23,110 @@ class BarMain extends Component {
       </div>
     );
 
-    // var pages = [];
-
     console.log('well see this: ', this.props.pages);
 
-
     const renderBar = () => {
-      
-      let newPage;
-      let max = 0;
 
       let domains = [];
-
+      let timeOnDomains = {};
+      let newPage;
+      let max = 0;
+      let favorite;
+      let j = 0;
 
       for (var i = 0; i < this.props.pages.length; i++) {
         let page = this.props.pages[i];
+        let domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
+        if (!parseDomain(page.url)) {
+          console.log(page.url);
+        }
         let timeEnd = page.time_closed || Date.now();
         let timeLength = (timeEnd - Date.parse(page.time_open));
-        if (timeLength > max) {
-          max = timeLength;
+        if (timeOnDomains[domain]) {
+          timeOnDomains[domain] += timeLength;
+          if (timeOnDomains[domain] > max) {
+            max = timeOnDomains[domain];
+            favorite = domain[0].toUpperCase() + domain.slice(1);
+          }
+        } else if (!timeOnDomains[domain]) {
+          timeOnDomains[domain] = timeLength;
+          if (timeOnDomains[domain] > max) {
+            max = timeOnDomains[domain];
+            favorite = domain[0].toUpperCase() + domain.slice(1);
+          }
         }
       };
 
-      console.log('max = ', max);
-
-      const pages = this.props.pages.map(function(page, i) {
-        let timeEnd = page.time_closed || Date.now();
-        let timeLength = (timeEnd - Date.parse(page.time_open))/ max;
-        let domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
-        console.log(timeLength);
-        console.log(domain)
-        newPage = {
-          x: i,
-          y: timeLength,
-          label: domain,
-        };
-        return newPage;    
-      })
-
-      // for (let pago in this.props.pages) {
-      //   console.log('page: ', pago);
-      //   newPage = {
-      //     x: 1,
-      //     y: 2,
-      //     label: 'funLabel',
-      //   };
-      //   console.log('newPage: ', newPage);
-      //   pages.push(newPage);
-      // };
-
-      const data2 = [
-        {x: 1, y: 3, label: "Alpha"},
-        {x: 2, y: 4, label: "Bravo"},
-        {x: 3, y: 6, label: "Charlie"},
-        {x: 4, y: 3, label: "Delta"},
-        {x: 5, y: 7, label: "Echo"},
-      ]
-
-
+      for (var domain in timeOnDomains) {
+        if (domain !== 'other') {
+          newPage = {
+            x: j,
+            y: timeOnDomains[domain]/max,
+            // label: domain,
+            domain: domain,
+          };
+          j++;
+          console.log(domain);
+          domains.push(newPage);
+        }
+      };
+/////////////////
       return (
-        <VictoryBar
-          data={pages}
-          events={[{
-            target: "data",
-            eventHandlers: {
-              onMouseEnter: () => {
-                return [{
-                  target: "labels",
-                  mutation: () => {
-                    console.log('mouso entro')
-                    }
-                  }];
+        <div>
+          <br />
+          <h2>Domains in history</h2>
+          <BarInfo
+            numberDomains={domains.length}
+            numberPages={this.props.pages.length}
+            favorite={favorite}
+          />
+          <VictoryBar
+            data={domains}
+            events={[{
+              target: "data",
+              eventHandlers: {
+                onMouseEnter: (datum) => {
+                    console.log('hi', datum.domain);
+                  }
                 }
               }
-            }
-          ]}
+            ]}
 
-          height={50}
-          padding={10}
-          scale={{x: "linear", y: "linear"}}
-          style={{
-            data: {
-              padding: 0,
-              fill: "black",
-            },
-            labels: {
-              fontSize: 8,
-              angle: 90,
-              verticalAnchor: "middle",
-              textAnchor: "beginning",
-            },
-            parent: {
-              border: "1px solid #ccc", 
-            },
-          }}
-        />);
+            height={55}
+            padding={{top: 3, bottom: 8, left: 8, right: 8}}
+            scale={{x: "linear", y: "sqrt"}}
+
+            style={{
+              data: {
+                padding: 0,
+                fill: () => {
+                  const colors = [
+                    "#455A64",
+                    "#607D8B",
+                    "#CFD8DC",
+                    "#FF5722",
+                    "#212121",
+                    "#757575",
+                    "#BDBDBD",
+                  ]
+                  let r = Math.floor(Math.random()*7);
+                  return colors[r];
+                },
+              },
+              labels: {
+                fontSize: 6,
+                angle: 60,
+                verticalAnchor: "end",
+                textAnchor: "end",
+                // text: "domain",
+              },
+              parent: {
+                border: "1px solid #ccc",
+              },
+            }}
+          />
+        </div>
+        );
     };
 
     if (this.props.error) {
