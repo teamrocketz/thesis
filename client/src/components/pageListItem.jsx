@@ -3,11 +3,12 @@ import TimeAgo from 'react-timeago';
 import TagGenerator from './tagGenerator';
 import Tag from './tag';
 
-const MAX_TEXT_DISPLAY_LENGTH = 60;
+const MAX_TITLE_DISPLAY_LENGTH = 80;
+const MAX_SNIPPET_DISPLAY_LENGTH = 200;
 
-const formatTextField = (field) => {
-  if (field.length > MAX_TEXT_DISPLAY_LENGTH) {
-    return `${field.slice(0, MAX_TEXT_DISPLAY_LENGTH)}...`;
+const formatTextField = (field, length) => {
+  if (field.length > length) {
+    return `${field.slice(0, length)}...`;
   }
   return field;
 };
@@ -31,47 +32,60 @@ const PageListItem = (props) => {
   const displayTimeOpen = dateFormatter(Date.parse(props.page.time_open));
 
   return (
-    <tr>
-      <td>
-        <img
-          src={props.page.icon}
-          width="32"
-          height="32"
-          alt={props.page.title}
-        />
-        <TagGenerator pageId={props.page.id} addTag={props.addTag} />
-      </td>
-      <td>
-        <a
-          href={props.page.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {formatTextField(props.page.title)}
-        </a>
-        {props.page.tags ?
-          props.page.tags.map(tag => (
-            <Tag
-              key={tag.id}
-              tagId={tag.id}
-              pageId={props.page.id}
-              tagName={tag.name}
-              removeTag={props.removeTag}
-            />
-        )) : null}
-      </td>
-      <td>{props.page.snippet ? formatTextField(props.page.snippet) : '' }</td>
-      <td>{displayTimeOpen}</td>
-      <td>{openSince}</td>
-      <td>
-        <button
-          type="submit"
-          onClick={() => props.deletePage(props.page.id)}
-        >
-          <img className="page-list-item-icon" src="/assets/x-icon.png" alt="Delete entry" />
-        </button>
-      </td>
-    </tr>
+    <tbody>
+      <tr className="row">
+        <td>
+          <img
+            src={props.page.icon}
+            width="32"
+            height="32"
+            alt={props.page.title}
+          />
+        </td>
+        <td className="col-md-4">
+          <a
+            href={props.page.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="title"
+          >
+            {formatTextField(props.page.title, MAX_TITLE_DISPLAY_LENGTH)}
+          </a><br />
+          {props.page.tags ?
+            props.page.tags.map(tag => (
+              <Tag
+                key={tag.id}
+                tagId={tag.id}
+                pageId={props.page.id}
+                tagName={tag.name}
+                removeTag={props.removeTag}
+              />
+          )) : null}
+        </td>
+        <td>
+          <TagGenerator pageId={props.page.id} addTag={props.addTag} />
+        </td>
+        <td>{displayTimeOpen}</td>
+        <td>{openSince}</td>
+        <td>
+          <button
+            type="submit"
+            className="close"
+            aria-label="Close"
+            onClick={() => props.deletePage(props.page.id)}
+          ><span aria-hidden="true">&times;</span>
+          </button>
+        </td>
+      </tr>
+      <tr className="row">
+        <td />
+        <td className="col-sm-6">{props.page.snippet ? formatTextField(props.page.snippet, MAX_SNIPPET_DISPLAY_LENGTH) : '' }</td>
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+    </tbody>
   );
 };
 

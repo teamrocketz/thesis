@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Header from './header';
-import Logout from './logout';
 import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
 import RestoreSessionContainer from '../containers/restoreSessionContainer';
@@ -17,13 +15,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <BlacklistContainer />
-        <br /><br /><br /><br />
-        <Logout />
-        <Header />
         <RestoreSessionContainer />
         <SearchInputContainer />
-        <BarMainContainer />
+        <BlacklistContainer />
         <PageListContainer />
       </div>
     );

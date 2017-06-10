@@ -4,6 +4,7 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
+    case 'TAG_SEARCH_PENDING':
     case 'REQUEST_HISTORY_PENDING':
     case 'REQUEST_SEARCH_PENDING':
       return {
@@ -12,6 +13,7 @@ export default function (state = {
         error: '',
       };
 
+    case 'TAG_SEARCH_REJECTED':
     case 'REMOVE_TAG_REJECTED':
     case 'ADD_TAG_REJECTED':
     case 'REQUEST_HISTORY_REJECTED':
@@ -21,7 +23,7 @@ export default function (state = {
         isLoading: false,
         error: action.payload.response.statusText,
       };
-
+    case 'TAG_SEARCH_FULFILLED':
     case 'REQUEST_HISTORY_FULFILLED':
     case 'REQUEST_SEARCH_FULFILLED':
       return {

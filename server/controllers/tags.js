@@ -37,3 +37,31 @@ module.exports.removeTag = (req, res) => {
     res.status(500).send(err);
   });
 };
+
+module.exports.searchTag = (req, res) => {
+  models.Tag.where({
+    name: req.body.query,
+    profile_id: req.user.id,
+  })
+  .fetchAll()
+  .then((results) => {
+    const pageViews = [];
+    results.forEach((tag) => {
+      pageViews.push(tag.attributes.pageview_id);
+    });
+    return pageViews;
+  })
+  .then((pageIDs) => {
+    models.Pageview.where('id', 'IN', pageIDs)
+    .orderBy('-time_open')
+    .fetchAll({
+      withRelated: ['tags'],
+    })
+    .then((pages) => {
+      res.status(200).send(pages);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+  });
+};

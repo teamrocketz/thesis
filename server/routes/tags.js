@@ -12,4 +12,8 @@ router.route('/addtag')
 router.route('/removetag')
   .post(middleware.auth.verify, TagController.removeTag);
 
+// Request: tag name, user ID
+router.route('/search')
+  .post(middleware.auth.verify, TagController.searchTag);
+
 module.exports = router;
