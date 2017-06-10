@@ -4,6 +4,7 @@ import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
 import RestoreSessionContainer from '../containers/restoreSessionContainer';
 import SearchInputContainer from '../containers/searchInputContainer';
+import TagListContainer from '../containers/tagListContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,9 +15,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <RestoreSessionContainer />
         <SearchInputContainer />
         <BlacklistContainer />
+        <TagListContainer />
+        <RestoreSessionContainer />
         <PageListContainer />
       </div>
     );
