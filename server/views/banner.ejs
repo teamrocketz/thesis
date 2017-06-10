@@ -11,15 +11,35 @@
     <style>
     </style>
     <nav class="navbar navbar-light bg-faded">
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand col-md-8" href="/">
         <img src="/assets/haultlogoweb.png" width="150" class="d-inline-block align-top" alt="">
       </a>
-      <a href="/logout" class="d-inline-block align-top pull-right">
+      <a class="d-inline-block align-top col-md-2">
+        <button onClick="restoreSession()" type="button" class="btn btn-success btn-lg">
+          Restore Active Sessions
+        </button>
+      </a>
+      <a href="/logout" class="d-inline-block align-top col-md-2 pull-right">
         <button type="button" class="btn btn-primary btn-lg">
           Logout
         </button>
       </a>
     </nav>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function restoreSession() {
+        console.log('hey from onclick function');
+        axios.get('/pageviews/active')
+          .then((res) => {
+            res.data.forEach((page) => {
+              window.open(page.url, '_blank');
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      };
+    </script>
 </head>
 <body>
 <div class="container">
