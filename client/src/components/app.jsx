@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
@@ -29,10 +29,6 @@ class App extends React.Component {
           render={() => (
             <div>
               <BlacklistContainer />
-              <Link
-                to="/"
-                role="button"
-              >Back to Browser History</Link>
             </div>
           )}
         />
