@@ -26,9 +26,9 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div className="row span-8">
+      <div className="row span-9">
         <form
-          className="col-md-5"
+          className="col-md-8"
           role="search"
           onSubmit={this.handleSearchRequest}
         >
@@ -55,7 +55,6 @@ class SearchInput extends React.Component {
         </div>
         <TagListContainer />
         <div className="row span-12">
-          <div className="col-sm-4" />
           <div className="col-sm-1">
             <button
               type="button"
@@ -65,6 +64,7 @@ class SearchInput extends React.Component {
             Show All
             </button>
           </div>
+          <div className="col-sm-4" />
           <div className="col-sm-6" />
         </div>
       </div>

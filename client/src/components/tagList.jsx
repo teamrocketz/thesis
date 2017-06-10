@@ -35,7 +35,7 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div className="col-md-4 pull-right">
+      <div className="col-md-3 pull-right">
         <div className="Select Select--single is-searchable">
           <Select
             name="form-field-name"
