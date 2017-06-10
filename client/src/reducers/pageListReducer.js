@@ -1,5 +1,7 @@
 export default function (state = {
   pages: [],
+  currentPage: 0,
+  pageRanges: [],
   tags: [],
   isLoading: false,
   error: '',
@@ -10,6 +12,8 @@ export default function (state = {
     case 'REQUEST_SEARCH_PENDING':
       return {
         pages: state.pages,
+        currentPage: 0,
+        pageRanges: [],
         tags: state.tags,
         isLoading: true,
         error: '',
@@ -22,6 +26,8 @@ export default function (state = {
     case 'REQUEST_SEARCH_REJECTED':
       return {
         pages: state.pages,
+        currentPage: 0,
+        pageRanges: [],
         tags: state.tags,
         isLoading: false,
         error: action.payload.response.statusText,
@@ -31,14 +37,74 @@ export default function (state = {
     case 'REQUEST_SEARCH_FULFILLED':
       return {
         pages: action.payload.data,
+        currentPage: 1,
+        pageRanges: [{
+          minId: action.payload.data[action.payload.data.length - 1].id,
+          maxId: action.payload.data[0].id,
+        }],
         tags: state.tags,
         isLoading: false,
         error: '',
       };
 
+    case 'PREVIOUS_PAGE':
+      return {
+        pages: state.pages,
+        currentPage: state.currentPage - 1,
+        pageRanges: state.pageRanges,
+        tags: state.tags,
+        isLoading: state.isLoading,
+        error: state.error,
+      };
+
+    case 'NEXT_PAGE':
+      return {
+        pages: state.pages,
+        currentPage: state.currentPage + 1,
+        pageRanges: state.pageRanges,
+        tags: state.tags,
+        isLoading: state.isLoading,
+        error: state.error,
+      };
+
+    case 'LOAD_AND_SHOW_NEXT_PAGE_PENDING':
+      return {
+        pages: state.pages,
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
+        tags: state.tags,
+        isLoading: true,
+        error: state.error,
+      };
+
+    case 'LOAD_AND_SHOW_NEXT_PAGE_REJECTED':
+      return {
+        pages: state.pages,
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
+        tags: state.tags,
+        isLoading: true,
+        error: 'Failed to load additional data.',
+      };
+
+    case 'LOAD_AND_SHOW_NEXT_PAGE_FULFILLED':
+      return {
+        pages: state.pages.concat(action.payload.data),
+        currentPage: state.currentPage + 1,
+        pageRanges: state.pageRanges.concat({
+          minId: action.payload.data[action.payload.data.length - 1].id,
+          maxId: action.payload.data[0].id,
+        }),
+        tags: state.tags,
+        isLoading: false,
+        error: state.error,
+      };
+
     case 'GET_TAGS_FULFILLED':
       return {
         pages: state.pages,
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
         tags: action.payload.data,
         isLoading: false,
         error: '',
@@ -49,6 +115,8 @@ export default function (state = {
         pages: state.pages.filter(page =>
           page.id !== JSON.parse(action.payload.config.data).id,
         ),
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
         tags: state.tags,
         isLoading: false,
         error: '',
@@ -58,6 +126,8 @@ export default function (state = {
       return {
         pages: state.pages.sort((x, y) =>
           x[action.payload].charCodeAt(0) - y[action.payload].charCodeAt(0)).slice(0),
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
         tags: state.tags,
         isLoading: false,
         error: '',
@@ -71,6 +141,8 @@ export default function (state = {
           }
           return page;
         }),
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
         tags: state.tags,
         isLoading: false,
         error: '',
@@ -86,6 +158,8 @@ export default function (state = {
           }
           return page;
         }),
+        currentPage: state.currentPage,
+        pageRanges: state.pageRanges,
         tags: state.tags,
         isLoading: false,
         error: '',

@@ -1,19 +1,29 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deletePage, sortPages, addTag, removeTag } from '../actions/index';
+import { deletePage, sortPages, addTag, removeTag, previousPage, nextPage, loadAndShowNextPage } from '../actions/index';
 
 import PageList from '../components/pageList';
 
 function mapStateToProps(state) {
   return {
     pages: state.pageList.pages,
+    currentPage: state.pageList.currentPage,
+    pageRanges: state.pageList.pageRanges,
     isLoading: state.pageList.isLoading,
     error: state.pageList.error,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ deletePage, sortPages, addTag, removeTag }, dispatch);
+  return bindActionCreators({
+    deletePage,
+    sortPages,
+    addTag,
+    removeTag,
+    previousPage,
+    nextPage,
+    loadAndShowNextPage,
+  }, dispatch);
 }
 
 const PageListContainer = connect(mapStateToProps, mapDispatchToProps)(PageList);

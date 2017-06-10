@@ -38,6 +38,21 @@ export const requestSearch = query => ({
   }),
 });
 
+export const previousPage = () => ({
+  type: 'PREVIOUS_PAGE',
+});
+
+export const nextPage = () => ({
+  type: 'SHOW_NEXT_PAGE',
+});
+
+export const loadAndShowNextPage = maxId => ({
+  type: 'LOAD_AND_SHOW_NEXT_PAGE',
+  payload: axios.get('/pageviews', {
+    params: { maxId },
+  }),
+});
+
 export const getTags = () => ({
   type: 'GET_TAGS',
   payload: axios.get('/tags/'),

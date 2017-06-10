@@ -23,6 +23,7 @@ class App extends React.Component {
               <SearchInputContainer />
               <BarMainContainer />
               <PageListContainer />
+              <div><p /></div>
             </div>
           )}
         />
