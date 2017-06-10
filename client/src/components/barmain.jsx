@@ -62,7 +62,7 @@ class BarMain extends Component {
           newPage = {
             x: j,
             y: timeOnDomains[domain]/max,
-            // label: domain,
+            label: domain,
             domain: domain,
           };
           j++;
