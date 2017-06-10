@@ -1,4 +1,5 @@
 import React from 'react';
+import TagListContainer from '../containers/tagListContainer';
 
 class SearchInput extends React.Component {
   constructor(props) {
@@ -25,10 +26,9 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div className="row span-12">
-        <div className="col-sm-1" />
+      <div className="row span-8">
         <form
-          className="col-md-9"
+          className="col-md-5"
           role="search"
           onSubmit={this.handleSearchRequest}
         >
@@ -53,8 +53,10 @@ class SearchInput extends React.Component {
             />
           </button>
         </div>
+        <TagListContainer />
         <div className="row span-12">
-          <div className="col-sm-2 pull-right">
+          <div className="col-sm-4" />
+          <div className="col-sm-1">
             <button
               type="button"
               className="btn btn-link"
@@ -63,6 +65,7 @@ class SearchInput extends React.Component {
             Show All
             </button>
           </div>
+          <div className="col-sm-6" />
         </div>
       </div>
     );

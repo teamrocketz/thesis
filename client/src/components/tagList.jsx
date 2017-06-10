@@ -47,22 +47,17 @@ class SearchInput extends React.Component {
           />
         </div>
         <br />
-        <button type="button" className="btn btn-link" onClick={this.props.requestHistory}>
-          Clear Tags
-        </button>
       </div>
     );
   }
 }
 
 SearchInput.propTypes = {
-  requestHistory: React.PropTypes.func,
   tagSearch: React.PropTypes.func,
   getTags: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
-  requestHistory: () => {},
   tagSearch: () => {},
   getTags: () => {},
 };
