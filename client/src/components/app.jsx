@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Link } from 'react-router-dom';
 
 import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
@@ -13,9 +14,28 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <SearchInputContainer />
-        <BlacklistContainer />
-        <PageListContainer />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <div>
+              <SearchInputContainer />
+              <PageListContainer />
+            </div>
+          )}
+        />
+        <Route
+          path="/settings"
+          render={() => (
+            <div>
+              <BlacklistContainer />
+              <Link
+                to="/"
+                role="button"
+              >Back to Browser History</Link>
+            </div>
+          )}
+        />
       </div>
     );
   }

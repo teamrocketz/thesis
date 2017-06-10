@@ -26,6 +26,10 @@ app.use('/blacklist', routes.blacklist);
 app.use('/extension', routes.extensionAuth);
 app.use('/pageviews', routes.pageviews);
 app.use('/tags', routes.tags);
+app.route('/*')
+  .get(middleware.auth.verify, (req, res) => {
+    res.render('index.ejs');
+  });
 
 // app.use('/api/profiles', routes.profiles);
 

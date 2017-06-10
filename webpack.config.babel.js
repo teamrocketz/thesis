@@ -25,6 +25,9 @@ const config = {
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
 };
 
 export default config;

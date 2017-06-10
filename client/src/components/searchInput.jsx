@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TagListContainer from '../containers/tagListContainer';
 
 class SearchInput extends React.Component {
@@ -26,46 +27,58 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div className="row span-9">
-        <form
-          className="col-md-8"
-          role="search"
-          onSubmit={this.handleSearchRequest}
-        >
-          <input
-            type="text"
-            name="query"
-            value={this.state.query}
-            onChange={this.handleQueryChange}
-            className="form-control"
-          />
-        </form>
-        <div className="col-sm-1">
-          <button
-            type="submit"
-            className="btn btn-default"
-            onClick={this.handleSearchRequest}
-          >
-            <span
+      <div className="container">
+        <div className="row span-9">
+          <div className="col-sm-1 pull-right">
+            <Link
+              to="/settings"
               role="button"
-              className="glyphicon glyphicon-search"
-              aria-hidden="false"
-            />
-          </button>
+              className="btn btn-link pull-right"
+            >
+            Manage Blocked Domains
+            </Link>
+          </div>
         </div>
-        <TagListContainer />
-        <div className="row span-12">
+        <div className="row span-9">
+          <form
+            className="col-md-8"
+            role="search"
+            onSubmit={this.handleSearchRequest}
+          >
+            <input
+              type="text"
+              name="query"
+              value={this.state.query}
+              onChange={this.handleQueryChange}
+              className="form-control"
+            />
+          </form>
           <div className="col-sm-1">
             <button
-              type="button"
-              className="btn btn-link"
-              onClick={this.props.requestHistory}
+              type="submit"
+              className="btn btn-default"
+              onClick={this.handleSearchRequest}
             >
-            Show All
+              <span
+                role="button"
+                className="glyphicon glyphicon-search"
+                aria-hidden="false"
+              />
             </button>
           </div>
-          <div className="col-sm-4" />
-          <div className="col-sm-6" />
+          <TagListContainer />
+          <div className="row span-12">
+            <div className="col-sm-1">
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={this.props.requestHistory}
+              >
+              Show All
+              </button>
+            </div>
+            <div className="col-sm-10" />
+          </div>
         </div>
       </div>
     );
