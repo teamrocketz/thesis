@@ -1,11 +1,41 @@
+/*--------Table of Contents--------
+
+If you are making Styling changes, please take the time to
+index the areas you are working on and edit the table of contents
+as needed.
+
+1. Global
+2. Landing Page Header
+3.1 Landing Page Images
+3.2 Info Cards
+4. Tags
+5. Footer
+6. Login
+7. Signup
+8. Extension Download Page
+
+A. Color Palette
+--------Table of Contents--------*/
+
+
+
+/*-------- 1. Global--------*/
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+p, div, body, head {}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #CFD8DC;
+}
+
 .page-list-item-icon {
   height: 15px;
   width: 15px;
   padding: 0px;
-}
-
-.jumbotron {
-  background-color: white;
 }
 
 .navbar {
@@ -19,39 +49,285 @@
   padding-right: 50px;
 }
 
-.row {
-  background-color: white;
-}
-
 .session {
   margin-top: 20px;
   vertical-align: center;
 }
+
 .align-top {
   padding-top: 1%;
   padding-left: 1%;
   padding-right: 1%;
 }
 
-.close:hover {
-  color: red;
+.italic {
+  font-style: italic;
 }
 
+
+/*-------- 1. Global--------*/
+
+/*-------- 2. Landing Page Header--------*/
+.btn-signup {
+  background-color: #607D8B;
+  border: 0px;
+  color: #cfd8dc;
+}
+.btn-signup:hover {
+  background-color: #CFD8DC;
+  color: #212121;
+}
+
+.btn-login {
+  background-color: #607D8B;
+  border: 0px;
+  color: #cfd8dc;
+}
+.btn-login:hover {
+  background-color: #CFD8DC;
+  color: #212121;
+}
+
+.navbar-landing {
+  background-color: #09121b;
+}
+/*-------- 2. Landing Page Header--------*/
+
+/*-------- 3. Landing Page--------*/
+.btn-hault {
+  background-color: #FF5722;
+  border: 0px;
+}
+.btn-hault:hover {
+ background-color: #607D8B;
+ color: #212121;
+}
+
+.jumbotron {
+  color: #b4e6ff;
+  margin: 0;
+}
+
+.leavethis {
+  height: 400px;
+}
+
+.lead {
+  text-align: center;
+}
+
+.pad-section {
+  background-color: #CFD8DC;
+  border-top: 1px solid #09121b;
+  padding: 50px 0;
+}
+
+.pad-section img {
+  width: 100%;
+}
+
+.text-center h1 {
+  color: #b4e6ff;
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+/*-------- 3.1 Landing Page Images --------*/
+#home {
+  background: url('./landing_page3.jpg');
+  background-size: cover;
+  display: table;
+  height: 100%;
+  padding-top: 90px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#services .glyphicon, .panel-heading .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#information {
+  background: url('./landing_page2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 606px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#organization-photo {
+  background: url('./organization.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 700px;
+  position: relative;
+  padding: 9% 0;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#computers {
+  background: url('./computer.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 600px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+/*-------- 3.1 Landing Page Images--------*/
+
+/*-------- 3.2 Info Cards--------*/
+.panel-body-hist {
+  height: 90px;
+  color: #212121;
+}
+.panel-body-sesh {
+  height: 120px;
+}
+.panel-body-browse {
+  height: 100px;
+}
+
+#information .panel, #organization-photo .panel, #computers .panel {
+  opacity: 0.85;
+}
+/*-------- 3.2 Info Cards--------*/
+
+/*-------- 4. Tag --------*/
 .tag {
-  margin-left: 2px;
-  margin-right: 2px;
   background-color: rgba(0,0,0,0.1);
   border-radius: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.close:hover {
+  color: red;
 }
 
 .close {
   margin-left: 2px;
   margin-right
 }
+/*-------- 4. Tag --------*/
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+/*-------- 5. Footer --------*/
+.footer .hault, .subfoot .hault {
+  color: #FF5722;
 }
-p, div, body, head {
-    font-family: 'Roboto', sans-serif;
+
+.footer {
+  background-color: #09121b;
+  padding-top: 5px;
+  text-align: center;
 }
+
+.subfoot {
+  height: 3%;
+}
+
+.footer a {
+  color: #607D8B;
+  margin: 0 1%;
+}
+/*-------- 5. Footer--------*/
+
+/*-------- 6. Login--------*/
+.login-txt {
+  text-align: center;
+  margin: 5px 0 2px 0;
+}
+
+.login-form {
+  margin-top: 15%;
+}
+
+#login {
+  background: url('./login.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.login {
+  background-color: rgba(245, 245, 245, .83);
+  border: 2px solid #607D8B;
+  border-radius: 10px;
+  color: #212121;
+  font-family: 'Lato', sans-serif;
+  margin-top: 15%;
+}
+/*-------- 6. Login--------*/
+
+/*-------- 7. Signup--------*/
+#signup {
+  background: url('./signup.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.signup {
+  background-color: rgba(245, 245, 245, .83);
+  border: 2px solid #607D8B;
+  border-radius: 10px;
+  color: #212121;
+  font-family: 'Lato', sans-serif;
+  margin-top: 15%;
+}
+/*-------- 7. Signup--------*/
+
+/*-------- 8. Extension Download Page --------*/
+.arrow {
+  margin-top: -30px;
+}
+
+.logo-ext {
+  margin-top: 10px;
+}
+/*-------- 8. Extension Download Page --------*/
+
+
+
+/*-------- A. Color Palette--------*/
+
+.dark-primary-color    { background: #455A64; }
+.default-primary-color { background: #607D8B; }
+.light-primary-color   { background: #CFD8DC; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #FF5722; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #757575; }
+.divider-color         { border-color: #BDBDBD; }

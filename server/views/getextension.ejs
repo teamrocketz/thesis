@@ -1,17 +1,21 @@
 <% include head.ejs%>
 
-  <div class="card text-center">
-  <div class="card-block">
-    <img src="/assets/getarrow_left.png" height="200" alt="chrome" className="pull-left"/>
-    <img src="/assets/extension_blank.png" height="400" alt="chrome" className="pull-center"/>
-    <img src="/assets/getarrow_right.png" height="200" alt="chrome" className="pull-right"/>
-    <h4 class="card-title">Get the extension!</h4>
-    <p class="card-text">Click "Add extension" — it's super quick!</p>
-    <p class="card-text">Next, you'll create your account or login if you already have one.</p>
-  </div>
-  <div class="card-footer">
-    <br />After installing, <a href="/signup">click here</a> to continue
-  </div>
-</div>
+  <div class="signup col-sm-offset-4 col-sm-4">
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+      <img src="/assets/logo.png" height="300" alt="chrome" class="logo-ext img-responsive center-block"/>
+    </a><br>
 
-<% include foot.ejs%>
+    <img src="/assets/getarrow_left.png" height="200" alt="chrome" class="arrow pull-left"/>
+
+    <img src="/assets/getarrow_right.png" height="200" alt="chrome" class="arrow pull-right"/>
+
+    <div class="card text-center">
+      <h4 class="card-title">Get the extension!</h4>
+      <p class="card-text">Download Hault from the Chrome Web Store and click 'Sign Up' Below to get started!</p>
+    </div>
+    <div class="card-footer text-center">
+      <br />After installing, <a href="/signup">click here</a> to continue
+    </div>
+  </div>
+
+<% include subFoot.ejs%>
