@@ -305,11 +305,11 @@ html, body {
 
 .login {
   background-color: rgba(245, 245, 245, .83);
-  border: 2px solid #607D8B;
+  border: 1px solid #607D8B;
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 /*-------- 6. Login--------*/
 
@@ -328,11 +328,11 @@ html, body {
 
 .signup {
   background-color: rgba(245, 245, 245, .83);
-  border: 2px solid #607D8B;
+  border: 1px solid #607D8B;
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 /*-------- 7. Signup--------*/
 
