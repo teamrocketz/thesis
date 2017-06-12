@@ -1,17 +1,52 @@
+/*--------Table of Contents--------
+
+If you are making Styling changes, please take the time to
+index the areas you are working on and edit the table of contents
+as needed.
+
+1. Global
+2. Landing Page Header
+3.1 Landing Page Images
+3.2 Info Cards
+4. Tags
+5. Footer
+6. Login
+7. Signup
+8. Extension Download Page
+
+A. Color Palette
+--------Table of Contents--------*/
+
+
+
+/*-------- 1. Global--------*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+p, div, body, head {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
 .page-list-item-icon {
   height: 15px;
   width: 15px;
   padding: 0px;
 }
 
-.jumbotron {
-  background-color: white;
-}
-
 .navbar {
   padding-top: 0.1%;
   padding-left: 9%;
   padding-right: 9%;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .card {
@@ -19,39 +54,307 @@
   padding-right: 50px;
 }
 
-.row {
-  background-color: white;
-}
-
 .session {
   margin-top: 20px;
   vertical-align: center;
 }
+
 .align-top {
   padding-top: 1%;
   padding-left: 1%;
   padding-right: 1%;
 }
 
-.close:hover {
-  color: red;
+.italic {
+  font-style: italic;
 }
 
+.form-control-tags {
+  display: block;
+  width: 100%;
+  height: 24px;
+  padding: 2px 2px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+/*-------- 1. Global--------*/
+
+/*-------- 2. Landing Page Header--------*/
+.btn-signup {
+  background-color: #607D8B;
+  border: 0px;
+  color: #f5f5f5;
+}
+.btn-signup:hover {
+  background-color: #f5f5f5;
+  color: #212121;
+}
+
+.btn-login {
+  background-color: #607D8B;
+  border: 0px;
+  color: #f5f5f5;
+}
+.btn-login:hover {
+  background-color: #f5f5f5;
+  color: #212121;
+}
+
+.navbar-landing {
+  background-color: #09121b;
+}
+/*-------- 2. Landing Page Header--------*/
+
+/*-------- 3. Landing Page--------*/
+.btn-hault {
+  background-color: #FF5722;
+  border: 0px;
+}
+.btn-hault:hover {
+ background-color: #f5f5f5;
+ color: #212121;
+}
+
+.jumbotron {
+  color: #f5f5f5;
+  margin: 0;
+}
+
+.leavethis {
+  height: 10em;
+}
+
+.leavethis-sm {
+  height: 20px;
+}
+
+.lead {
+  text-align: center;
+}
+
+.pad-section {
+  background-color: #f5f5f5;
+  border-top: 1px solid #09121b;
+  padding: 50px 0;
+}
+
+.pad-section img {
+  width: 100%;
+}
+
+.text-center h1 {
+  color: #f5f5f5;
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+/*-------- 3.1 Landing Page Images --------*/
+#home {
+  background: url('./landing_page3.jpg');
+  background-size: cover;
+  display: table;
+  height: 100%;
+  padding-top: 1em;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#services .glyphicon, .panel-heading .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#information {
+  background: url('./landing_page2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 606px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#organization-photo {
+  background: url('./organization.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 700px;
+  position: relative;
+  padding: 9% 0;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+#computers {
+  background: url('./computer.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 600px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+/*-------- 3.1 Landing Page Images--------*/
+
+/*-------- 3.2 Info Cards--------*/
+.panel-body-hist {
+  height: 90px;
+  color: #212121;
+}
+.panel-body-sesh {
+  height: 120px;
+}
+.panel-body-browse {
+  height: 100px;
+}
+
+#information .panel, #organization-photo .panel, #computers .panel {
+  opacity: 0.95;
+}
+/*-------- 3.2 Info Cards--------*/
+
+/*-------- 4. Tag --------*/
 .tag {
-  margin-left: 2px;
-  margin-right: 2px;
   background-color: rgba(0,0,0,0.1);
   border-radius: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.close:hover {
+  color: red;
 }
 
 .close {
   margin-left: 2px;
   margin-right
 }
+/*-------- 4. Tag --------*/
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+/*-------- 5. Footer --------*/
+.footer .hault, .subfoot .hault {
+  color: #FF5722;
 }
-p, div, body, head {
-    font-family: 'Roboto', sans-serif;
+
+.footer {
+  background-color: #09121b;
+  padding-top: 5px;
+  text-align: center;
 }
+
+.subfoot {
+  height: 3%;
+}
+
+.footer a {
+  color: #607D8B;
+  margin: 0 1%;
+}
+/*-------- 5. Footer--------*/
+
+/*-------- 6. Login--------*/
+.login-txt {
+  text-align: center;
+  margin: 5px 0 2px 0;
+}
+
+.login-form {
+  margin-top: 15%;
+}
+
+#login {
+  background: url('./login.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.login {
+  background-color: rgba(245, 245, 245, .83);
+  border: 2px solid #607D8B;
+  border-radius: 10px;
+  color: #212121;
+  font-family: 'Lato', sans-serif;
+  margin-top: 10%;
+}
+/*-------- 6. Login--------*/
+
+/*-------- 7. Signup--------*/
+#signup {
+  background: url('./signup.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: table;
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.signup {
+  background-color: rgba(245, 245, 245, .83);
+  border: 2px solid #607D8B;
+  border-radius: 10px;
+  color: #212121;
+  font-family: 'Lato', sans-serif;
+  margin-top: 10%;
+}
+/*-------- 7. Signup--------*/
+
+/*-------- 8. Extension Download Page --------*/
+.arrow {
+  margin-top: -30px;
+}
+
+.logo-ext {
+  margin-top: 10px;
+}
+/*-------- 8. Extension Download Page --------*/
+
+
+
+/*-------- A. Color Palette--------*/
+
+.dark-primary-color    { background: #455A64; }
+.default-primary-color { background: #607D8B; }
+.light-primary-color   { background: #CFD8DC; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #FF5722; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #757575; }
+.divider-color         { border-color: #BDBDBD; }

@@ -1,8 +1,8 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 
 import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
-import RestoreSessionContainer from '../containers/restoreSessionContainer';
 import SearchInputContainer from '../containers/searchInputContainer';
 import BarMainContainer from '../containers/barMainContainer';
 
@@ -15,10 +15,24 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <RestoreSessionContainer />
-        <SearchInputContainer />
-        <BlacklistContainer />
-        <PageListContainer />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <div>
+              <SearchInputContainer />
+              <PageListContainer />
+            </div>
+          )}
+        />
+        <Route
+          path="/settings"
+          render={() => (
+            <div>
+              <BlacklistContainer />
+            </div>
+          )}
+        />
       </div>
     );
   }

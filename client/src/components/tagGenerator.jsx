@@ -34,7 +34,7 @@ class TagGenerator extends React.Component {
             name="tag"
             value={this.state.tag}
             onChange={this.handleTagInput}
-            className="form-control pull-right"
+            className="form-control-tags pull-right"
           />
           <div>
             <button type="submit" className="btn btn-xs btn-link pull-right">Add Tag</button>

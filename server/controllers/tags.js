@@ -1,5 +1,18 @@
 const models = require('../../db/models');
 
+module.exports.getTags = (req, res) => {
+  models.Tag.where({
+    profile_id: req.user.id,
+  })
+  .fetchAll()
+  .then((tags) => {
+    res.status(200).send(tags);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+};
+
 module.exports.addTag = (req, res) => {
   models.Tag.forge({
     name: req.body.name,
