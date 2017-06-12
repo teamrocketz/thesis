@@ -6,13 +6,8 @@ import PageListItem from '../components/pageListItem';
 class PageList extends Component {
   constructor(props) {
     super(props);
-    this.sort = this.sort.bind(this);
     this.handleClickPreviousPage = this.handleClickPreviousPage.bind(this);
     this.handleClickNextPage = this.handleClickNextPage.bind(this);
-  }
-
-  sort(e) {
-    this.props.sortPages(e.target.id);
   }
 
   handleClickPreviousPage() {
@@ -105,7 +100,6 @@ PageList.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
-  sortPages: React.PropTypes.func,
   removeTag: React.PropTypes.func,
   addTag: React.PropTypes.func,
   previousPage: React.PropTypes.func,
@@ -120,7 +114,6 @@ PageList.defaultProps = {
   pages: [],
   error: '',
   deletePage: () => {},
-  sortPages: () => {},
   removeTag: () => {},
   addTag: () => {},
   previousPage: () => {},

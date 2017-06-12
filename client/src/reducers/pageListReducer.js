@@ -118,12 +118,6 @@ export default function (state = initialState, action) {
         error: '',
       });
 
-    case 'SORT_PAGES':
-      return utils.updateObject(state, {
-        pages: state.pages.sort((x, y) =>
-          x[action.payload].charCodeAt(0) - y[action.payload].charCodeAt(0)).slice(0),
-      });
-
     /*---------------------------------------
       Asynchronous failures
     ---------------------------------------*/

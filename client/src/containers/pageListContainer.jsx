@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deletePage, sortPages, addTag, removeTag, previousPage, nextPage, loadAndShowNextPage } from '../actions/index';
+import { deletePage, addTag, removeTag, previousPage, nextPage, loadAndShowNextPage } from '../actions/index';
 
 import PageList from '../components/pageList';
 
@@ -17,7 +17,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     deletePage,
-    sortPages,
     addTag,
     removeTag,
     previousPage,

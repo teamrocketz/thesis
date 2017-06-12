@@ -81,8 +81,3 @@ export const removeTag = (name, pageId, tagId) => ({
     tagId,
   }),
 });
-
-export const sortPages = field => ({
-  type: 'SORT_PAGES',
-  payload: field,
-});
