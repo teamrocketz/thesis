@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import TagListContainer from '../containers/tagListContainer';
 
 class SearchInput extends React.Component {
   constructor(props) {
@@ -6,7 +8,6 @@ class SearchInput extends React.Component {
     this.state = { query: '' };
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
-    this.handleTagSearch = this.handleTagSearch.bind(this);
   }
 
   componentWillMount() {
@@ -15,51 +16,70 @@ class SearchInput extends React.Component {
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
 
-  handleTagSearch() {
-    if (this.state.query) {
-      this.props.tagSearch(this.state.query);
-      this.setState({ query: '' });
-    }
-  }
-
   handleSearchRequest(e) {
     e.preventDefault();
-    if (e.target.query.value === '') {
+    if (this.state.query === '') {
       this.props.requestHistory();
     } else {
-      this.props.requestSearch(e.target.query.value);
+      this.props.requestSearch(this.state.query);
     }
   }
 
   render() {
     return (
-      <div className="col-md-4 pull-left">
-        <h2>Search</h2>
-        <form
-          className="navbar-form navbar-left"
-          role="search"
-          onSubmit={this.handleSearchRequest}
-        >
-          <input
-            type="text"
-            name="query"
-            value={this.state.query}
-            onChange={this.handleQueryChange}
-            className="form-control"
-          />
-          <div className="input-group-btn form-group">
-            <button type="submit" className="btn btn-primary">Search</button>
-            <button
-              type="button"
-              onClick={this.handleTagSearch}
-              className="btn btn-primary"
-            >By Tag</button>
+      <div className="container">
+        <div className="row span-9">
+          <div className="col-sm-1 pull-right">
+            <Link
+              to="/settings"
+              role="button"
+              className="btn btn-link pull-right"
+            >
+            Manage Blocked Domains
+            </Link>
           </div>
-          <br />
-          <button type="button" className="btn btn-link" onClick={this.props.requestHistory}>
-            Show all
-          </button>
-        </form>
+        </div>
+        <div className="row span-9">
+          <form
+            className="col-md-8"
+            role="search"
+            onSubmit={this.handleSearchRequest}
+          >
+            <input
+              type="text"
+              name="query"
+              value={this.state.query}
+              onChange={this.handleQueryChange}
+              className="form-control"
+            />
+          </form>
+          <div className="col-sm-1">
+            <button
+              type="submit"
+              className="btn btn-default"
+              onClick={this.handleSearchRequest}
+            >
+              <span
+                role="button"
+                className="glyphicon glyphicon-search"
+                aria-hidden="false"
+              />
+            </button>
+          </div>
+          <TagListContainer />
+          <div className="row span-12">
+            <div className="col-sm-1">
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={this.props.requestHistory}
+              >
+              Show All
+              </button>
+            </div>
+            <div className="col-sm-10" />
+          </div>
+        </div>
       </div>
     );
   }
@@ -68,13 +88,11 @@ class SearchInput extends React.Component {
 SearchInput.propTypes = {
   requestHistory: React.PropTypes.func,
   requestSearch: React.PropTypes.func,
-  tagSearch: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
   requestHistory: () => {},
   requestSearch: () => {},
-  tagSearch: () => {},
 };
 
 export default SearchInput;

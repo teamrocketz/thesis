@@ -21,15 +21,18 @@ A. Color Palette
 
 /*-------- 1. Global--------*/
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
-p, div, body, head {}
+p, div, body, head {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
 
 html, body {
   width: 100%;
   height: 100%;
-  background-color: #CFD8DC;
+  background-color: #f5f5f5;
 }
 
 .page-list-item-icon {
@@ -42,6 +45,8 @@ html, body {
   padding-top: 0.1%;
   padding-left: 9%;
   padding-right: 9%;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .card {
@@ -64,6 +69,24 @@ html, body {
   font-style: italic;
 }
 
+.form-control-tags {
+  display: block;
+  width: 100%;
+  height: 24px;
+  padding: 2px 2px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
 
 /*-------- 1. Global--------*/
 
@@ -71,20 +94,20 @@ html, body {
 .btn-signup {
   background-color: #607D8B;
   border: 0px;
-  color: #cfd8dc;
+  color: #f5f5f5;
 }
 .btn-signup:hover {
-  background-color: #CFD8DC;
+  background-color: #f5f5f5;
   color: #212121;
 }
 
 .btn-login {
   background-color: #607D8B;
   border: 0px;
-  color: #cfd8dc;
+  color: #f5f5f5;
 }
 .btn-login:hover {
-  background-color: #CFD8DC;
+  background-color: #f5f5f5;
   color: #212121;
 }
 
@@ -99,17 +122,21 @@ html, body {
   border: 0px;
 }
 .btn-hault:hover {
- background-color: #607D8B;
+ background-color: #f5f5f5;
  color: #212121;
 }
 
 .jumbotron {
-  color: #b4e6ff;
+  color: #f5f5f5;
   margin: 0;
 }
 
 .leavethis {
-  height: 400px;
+  height: 10em;
+}
+
+.leavethis-sm {
+  height: 20px;
 }
 
 .lead {
@@ -117,7 +144,7 @@ html, body {
 }
 
 .pad-section {
-  background-color: #CFD8DC;
+  background-color: #f5f5f5;
   border-top: 1px solid #09121b;
   padding: 50px 0;
 }
@@ -127,7 +154,7 @@ html, body {
 }
 
 .text-center h1 {
-  color: #b4e6ff;
+  color: #f5f5f5;
   font-size: 4.5em;
   font-weight: 700;
   margin: 0;
@@ -140,7 +167,7 @@ html, body {
   background-size: cover;
   display: table;
   height: 100%;
-  padding-top: 90px;
+  padding-top: 1em;
   position: relative;
   width: 100%;
   -webkit-background-size: cover;
@@ -211,7 +238,7 @@ html, body {
 }
 
 #information .panel, #organization-photo .panel, #computers .panel {
-  opacity: 0.85;
+  opacity: 0.95;
 }
 /*-------- 3.2 Info Cards--------*/
 
@@ -282,7 +309,7 @@ html, body {
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 15%;
+  margin-top: 10%;
 }
 /*-------- 6. Login--------*/
 
@@ -305,7 +332,7 @@ html, body {
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 15%;
+  margin-top: 10%;
 }
 /*-------- 7. Signup--------*/
 

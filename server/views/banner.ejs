@@ -6,20 +6,43 @@
     <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="https://unpkg.com/react-select/dist/react-select.css">
     <link rel="stylesheet" href="/assets/styles.css">
-<!--     <style>
-        body        { padding-left:8%; padding-right:8%; }
-    </style> -->
-    <nav class="navbar navbar-light bg-faded">
-      <a class="navbar-brand" href="/">
-        <img src="/assets/haultlogoweb.png" width="150" class="d-inline-block align-top" alt="">
-      </a>
-      <a href="/logout" class="d-inline-block align-top pull-right">
-        <button type="button" class="btn btn-primary btn-lg">
-          Logout
-        </button>
-      </a>
+    <style>
+    </style>
+    <nav class="navbar navbar-landing">
+      <div class="row">
+        <a class="navbar-brand col-md-1" href="/">
+          <img src="/assets/haultlogoweb.png" width="150" class="d-inline-block align-top" alt="">
+        </a>
+        <a class="navbar-brand col-md-7" />
+        <a class="d-inline-block align-top col-md-3">
+          <button onClick="restoreSession()" type="button" class="btn-lg btn-login">
+            Restore Active Sessions
+          </button>
+        </a>
+        <a href="/logout" class="d-inline-block align-top col-md-1">
+          <button type="button" class="btn-lg btn-login">
+            Logout
+          </button>
+        </a>
+      </div>
     </nav>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function restoreSession() {
+        console.log('hey from onclick function');
+        axios.get('/pageviews/active')
+          .then((res) => {
+            res.data.forEach((page) => {
+              window.open(page.url, '_blank');
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      };
+    </script>
 </head>
 <body>
 <div class="container">

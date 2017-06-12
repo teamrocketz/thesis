@@ -4,6 +4,10 @@ const TagController = require('../controllers').Tags;
 
 const router = express.Router();
 
+// Request: gets list of all tags for user
+router.route('/')
+  .get(middleware.auth.verify, TagController.getTags);
+
 // Request: tag name, user ID, page ID
 router.route('/addtag')
   .post(middleware.auth.verify, TagController.addTag);

@@ -38,6 +38,11 @@ export const requestSearch = query => ({
   }),
 });
 
+export const getTags = () => ({
+  type: 'GET_TAGS',
+  payload: axios.get('/tags/'),
+});
+
 export const tagSearch = query => ({
   type: 'TAG_SEARCH',
   payload: axios.post('/tags/search', {

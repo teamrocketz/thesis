@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise-middleware';
 
-import App from './components/app';
+import Root from './components/root';
 import reducers from './reducers/index';
 
 const createStoreWithMiddleware = applyMiddleware(promise())(createStore);
@@ -15,7 +14,5 @@ const store = createStoreWithMiddleware(reducers, {},
 /* eslint-enable */
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <Root store={store} />
   , document.getElementById('root'));

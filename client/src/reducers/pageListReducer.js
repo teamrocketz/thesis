@@ -1,5 +1,6 @@
 export default function (state = {
   pages: [],
+  tags: [],
   isLoading: false,
   error: '',
 }, action) {
@@ -9,6 +10,7 @@ export default function (state = {
     case 'REQUEST_SEARCH_PENDING':
       return {
         pages: state.pages,
+        tags: state.tags,
         isLoading: true,
         error: '',
       };
@@ -20,6 +22,7 @@ export default function (state = {
     case 'REQUEST_SEARCH_REJECTED':
       return {
         pages: state.pages,
+        tags: state.tags,
         isLoading: false,
         error: action.payload.response.statusText,
       };
@@ -28,6 +31,15 @@ export default function (state = {
     case 'REQUEST_SEARCH_FULFILLED':
       return {
         pages: action.payload.data,
+        tags: state.tags,
+        isLoading: false,
+        error: '',
+      };
+
+    case 'GET_TAGS_FULFILLED':
+      return {
+        pages: state.pages,
+        tags: action.payload.data,
         isLoading: false,
         error: '',
       };
@@ -37,6 +49,7 @@ export default function (state = {
         pages: state.pages.filter(page =>
           page.id !== JSON.parse(action.payload.config.data).id,
         ),
+        tags: state.tags,
         isLoading: false,
         error: '',
       };
@@ -45,6 +58,7 @@ export default function (state = {
       return {
         pages: state.pages.sort((x, y) =>
           x[action.payload].charCodeAt(0) - y[action.payload].charCodeAt(0)).slice(0),
+        tags: state.tags,
         isLoading: false,
         error: '',
       };
@@ -57,6 +71,7 @@ export default function (state = {
           }
           return page;
         }),
+        tags: state.tags,
         isLoading: false,
         error: '',
       };
@@ -71,6 +86,7 @@ export default function (state = {
           }
           return page;
         }),
+        tags: state.tags,
         isLoading: false,
         error: '',
       };
