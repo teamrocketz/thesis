@@ -33,6 +33,7 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "grunt-shell": "^2.1.0",
+    "helmet": "^3.6.1",
     "jquery": "^3.2.1",
     "knex": "^0.12.9",
     "load-grunt-tasks": "^3.5.2",

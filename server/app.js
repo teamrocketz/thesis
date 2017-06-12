@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(middleware.bodyParser.urlencoded({ extended: false }));
 app.use(middleware.bodyParser.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(helmet());
 
 app.use(middleware.auth.session);
 app.use(middleware.passport.initialize());
