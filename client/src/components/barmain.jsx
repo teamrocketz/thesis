@@ -21,14 +21,14 @@ class BarMain extends Component {
       let max = 0;
       let favorite;
 
+      console.log('pages: ', this.props.pages)
+
       for (let i = 0; i < this.props.pages.length; i += 1) {
         const page = this.props.pages[i];
         const domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
-        if (!parseDomain(page.url)) {
-          console.log(page.url);
-        }
-        const timeEnd = page.time_closed || Date.now();
+        const timeEnd = Date.parse(page.time_closed) || Date.now();
         const timeLength = (timeEnd - Date.parse(page.time_open));
+
         if (timeOnDomains[domain]) {
           timeOnDomains[domain] += timeLength;
           if (timeOnDomains[domain] > max) {
@@ -63,13 +63,12 @@ class BarMain extends Component {
       return (
         <div>
           <br />
-          <h2>Domains in history</h2>
+          <th>Your history</th>
           <VictoryBar
             data={domains}
             height={65}
-            padding={{ top: 30, bottom: 8, left: 15, right: 12 }}
+            padding={{ top: 36, bottom: 8, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
-
             style={{
               data: {
                 padding: 0,
@@ -92,7 +91,6 @@ class BarMain extends Component {
                 angle: 60,
                 verticalAnchor: 'end',
                 textAnchor: 'end',
-                // text: "domain",
               },
               parent: {
                 border: '1px solid #ccc',
