@@ -78,8 +78,10 @@ class PageList extends Component {
             />
           )) }
         </table>
-        {(this.props.currentPage > 1) ? renderPreviousButton() : []}
-        {renderNextButton()}
+        <div className="clearfix paginationButtons">
+          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
+          {renderNextButton()}
+        </div>
       </div>
     );
 

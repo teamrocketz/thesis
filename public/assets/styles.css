@@ -14,6 +14,7 @@ as needed.
 7. Signup
 8. Extension Download Page
 9. Graphs
+10. History/Search List
 
 A. Color Palette
 --------Table of Contents--------*/
@@ -346,8 +347,6 @@ html, body {
 .logo-ext {
   margin-top: 10px;
 }
-/*-------- 8. Extension Download Page --------*/
-
 /*-------- 9. Graphs --------*/
 
 #graph {
@@ -356,6 +355,11 @@ html, body {
 
 #graph-info {
   margin-bottom: 1%;
+
+/*-------- 10. History/Search List --------*/
+
+.paginationButtons {
+  margin-bottom: 100px;
 }
 
 /*-------- A. Color Palette--------*/
