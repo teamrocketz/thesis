@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Scroll from 'react-scroll';
 
 import PageListItem from '../components/pageListItem';
 
@@ -16,6 +17,7 @@ class PageList extends Component {
 
   handleClickPreviousPage() {
     this.props.previousPage();
+    Scroll.animateScroll.scrollToTop({ duration: 0, delay: 0 });
   }
 
   handleClickNextPage() {
@@ -25,6 +27,7 @@ class PageList extends Component {
     } else {
       this.props.nextPage();
     }
+    Scroll.animateScroll.scrollToTop({ duration: 0, delay: 0 });
   }
 
   render() {

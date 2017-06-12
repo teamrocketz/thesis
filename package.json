@@ -51,6 +51,7 @@
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-scroll": "^1.5.2",
     "react-select": "^1.0.0-rc.5",
     "react-timeago": "<3.3.0 || >3.3.0",
     "redis": "^2.7.1",

@@ -57,7 +57,7 @@ export default function (state = {
         error: state.error,
       };
 
-    case 'NEXT_PAGE':
+    case 'SHOW_NEXT_PAGE':
       return {
         pages: state.pages,
         currentPage: state.currentPage + 1,
