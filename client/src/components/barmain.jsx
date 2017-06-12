@@ -21,8 +21,6 @@ class BarMain extends Component {
       let max = 0;
       let favorite;
 
-      console.log('pages: ', this.props.pages)
-
       for (let i = 0; i < this.props.pages.length; i += 1) {
         const page = this.props.pages[i];
         const domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
@@ -44,17 +42,18 @@ class BarMain extends Component {
         }
       }
 
+
       const timeOnDomainsKeys = Object.keys(timeOnDomains);
+      console.log('tODKeys: ', timeOnDomainsKeys);
       for (let j = 0; j < timeOnDomainsKeys.length; j += 1) {
         const domainP = timeOnDomainsKeys[j];
-        if (domainP !== 'other') {
+        if (domainP) {
           newPage = {
             x: j,
             y: timeOnDomains[domainP] / max,
             label: domainP,
             domain: domainP,
           };
-          j += 1;
           console.log(domainP);
           domains.push(newPage);
         }
@@ -66,8 +65,8 @@ class BarMain extends Component {
           <th>Your history</th>
           <VictoryBar
             data={domains}
-            height={65}
-            padding={{ top: 36, bottom: 8, left: 24, right: 36 }}
+            height={60}
+            padding={{ top: 20, bottom: 8, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
             style={{
               data: {
@@ -77,20 +76,19 @@ class BarMain extends Component {
                     '#455A64',
                     '#607D8B',
                     '#CFD8DC',
-                    '#FF5722',
                     '#212121',
                     '#757575',
                     '#BDBDBD',
                   ];
-                  const r = Math.floor(Math.random() * 7);
+                  const r = Math.floor(Math.random() * 6);
                   return colors[r];
                 },
               },
               labels: {
                 fontSize: 6,
-                angle: 60,
+                // angle: 0,
                 verticalAnchor: 'end',
-                textAnchor: 'end',
+                textAnchor: 'middle',
               },
               parent: {
                 border: '1px solid #ccc',
