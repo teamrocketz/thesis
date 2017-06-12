@@ -1,47 +1,34 @@
 import React, { Component } from 'react';
+import parseDomain from 'parse-domain';
 
-import { VictoryBar, VictoryLabel, Bar } from 'victory';
+import { VictoryBar } from 'victory';
 
 import BarInfo from './barinfo';
-import CustomBar from './barcustom';
-
-import parseDomain from 'parse-domain';
 
 
 class BarMain extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
-
   render() {
-
     const renderLoading = () => (
       <div>
         Loading...
       </div>
     );
 
-    console.log('well see this: ', this.props.pages);
-
     const renderBar = () => {
-
-      let domains = [];
-      let timeOnDomains = {};
+      const domains = [];
+      const timeOnDomains = {};
       let newPage;
       let max = 0;
       let favorite;
-      let j = 0;
 
-      for (var i = 0; i < this.props.pages.length; i++) {
-        let page = this.props.pages[i];
-        let domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
+      for (let i = 0; i < this.props.pages.length; i += 1) {
+        const page = this.props.pages[i];
+        const domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
         if (!parseDomain(page.url)) {
           console.log(page.url);
         }
-        let timeEnd = page.time_closed || Date.now();
-        let timeLength = (timeEnd - Date.parse(page.time_open));
+        const timeEnd = page.time_closed || Date.now();
+        const timeLength = (timeEnd - Date.parse(page.time_open));
         if (timeOnDomains[domain]) {
           timeOnDomains[domain] += timeLength;
           if (timeOnDomains[domain] > max) {
@@ -55,68 +42,60 @@ class BarMain extends Component {
             favorite = domain[0].toUpperCase() + domain.slice(1);
           }
         }
-      };
+      }
 
-      for (var domain in timeOnDomains) {
-        if (domain !== 'other') {
+      const timeOnDomainsKeys = Object.keys(timeOnDomains);
+      for (let j = 0; j < timeOnDomainsKeys.length; j += 1) {
+        const domainP = timeOnDomainsKeys[j];
+        if (domainP !== 'other') {
           newPage = {
             x: j,
-            y: timeOnDomains[domain]/max,
-            label: domain,
-            domain: domain,
+            y: timeOnDomains[domainP] / max,
+            label: domainP,
+            domain: domainP,
           };
-          j++;
-          console.log(domain);
+          j += 1;
+          console.log(domainP);
           domains.push(newPage);
         }
-      };
-/////////////////
+      }
+
       return (
         <div>
           <br />
           <h2>Domains in history</h2>
           <VictoryBar
             data={domains}
-            events={[{
-              target: "data",
-              eventHandlers: {
-                onMouseEnter: (datum) => {
-                    console.log('hi', datum.domain);
-                  }
-                }
-              }
-            ]}
-
             height={65}
-            padding={{top: 30, bottom: 8, left: 15, right: 8}}
-            scale={{x: "linear", y: "sqrt"}}
+            padding={{ top: 30, bottom: 8, left: 15, right: 12 }}
+            scale={{ x: 'linear', y: 'sqrt' }}
 
             style={{
               data: {
                 padding: 0,
                 fill: () => {
                   const colors = [
-                    "#455A64",
-                    "#607D8B",
-                    "#CFD8DC",
-                    "#FF5722",
-                    "#212121",
-                    "#757575",
-                    "#BDBDBD",
-                  ]
-                  let r = Math.floor(Math.random()*7);
+                    '#455A64',
+                    '#607D8B',
+                    '#CFD8DC',
+                    '#FF5722',
+                    '#212121',
+                    '#757575',
+                    '#BDBDBD',
+                  ];
+                  const r = Math.floor(Math.random() * 7);
                   return colors[r];
                 },
               },
               labels: {
                 fontSize: 6,
                 angle: 60,
-                verticalAnchor: "end",
-                textAnchor: "end",
+                verticalAnchor: 'end',
+                textAnchor: 'end',
                 // text: "domain",
               },
               parent: {
-                border: "1px solid #ccc",
+                border: '1px solid #ccc',
               },
             }}
           />
@@ -126,7 +105,7 @@ class BarMain extends Component {
             favorite={favorite}
           />
         </div>
-        );
+      );
     };
 
     if (this.props.error) {
@@ -140,16 +119,13 @@ BarMain.propTypes = {
   isLoading: React.PropTypes.bool,
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
-  deletePage: React.PropTypes.func,
-  sortPages: React.PropTypes.func,
 };
 
 BarMain.defaultProps = {
   isLoading: false,
   pages: [],
   error: '',
-  deletePage: () => {},
-  sortPages: () => {},
 };
 
 export default BarMain;
+

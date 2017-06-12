@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
-class BarInfo extends Component {
-  constructor(props) {
-    super(props);
-  }
+const BarInfo = props => (
+  <div className="container">
+    <div className="row">
+      <div className="col-sm-4">Favorite site: {props.favorite}</div>
+      <div className="col-sm-4">Total sites visited: {props.numberDomains}</div>
+      <div className="col-sm-4">Unique pages : {props.numberPages}</div>
+    </div>
+  </div>
+);
 
-
-  render () {
-
-    let currentSite = 'changeMeOnHover'
-
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-4">Favorite site: {this.props.favorite}</div>
-          <div className="col-sm-4">Total sites visited: {this.props.numberDomains}</div>
-          <div className="col-sm-4">Unique pages : {this.props.numberPages}</div>
-        </div>
-      </div>
-
-    )
-  }
-
-}
 
 export default BarInfo;
+
+BarInfo.propTypes = {
+  favorite: React.PropTypes.string, // eslint-disable-line react/forbid-prop-types
+  numberDomains: React.PropTypes.number,
+  numberPages: React.PropTypes.number,
+};
+
+BarInfo.defaultProps = {
+  favorite: '',
+  numberDomains: 0,
+  numberPages: 0,
+};

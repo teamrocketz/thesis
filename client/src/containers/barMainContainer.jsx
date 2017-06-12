@@ -19,3 +19,4 @@ function mapDispatchToProps(dispatch) {
 const BarMainContainer = connect(mapStateToProps, mapDispatchToProps)(BarMain);
 
 export default BarMainContainer;
+
