@@ -6,9 +6,9 @@ import BarMain from '../components/barmain';
 
 function mapStateToProps(state) {
   return {
-    pages: state.barMain.pages,
-    isLoading: state.barMain.isLoading,
-    error: state.barMain.error,
+    pages: state.pageList.pages,
+    isLoading: state.pageList.isLoading,
+    error: state.pageList.error,
   };
 }
 
