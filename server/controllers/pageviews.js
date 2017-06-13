@@ -73,17 +73,24 @@ module.exports.getActive = (req, res) => {
 
 module.exports.search = (req, res) => {
   const sql = `
-    SELECT id, url, title, time_open, is_active, icon, snippet
+    SELECT *
     FROM (
-      SELECT
-        *,
-        setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
-      AS document
-      FROM pageviews
-      WHERE profile_id = ${req.user.id}
-    ) search
-    WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
-    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) ASC
+      SELECT id, url, title, time_open, is_active, icon, snippet,
+        ROW_NUMBER() OVER
+          (ORDER BY ts_rank(search_inner.document, plainto_tsquery('${req.query.query}')) ASC)
+          AS search_id
+      FROM (
+        SELECT
+          *,
+          setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
+            AS document
+        FROM pageviews
+        WHERE profile_id = ${req.user.id}
+      ) AS search_inner
+      WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
+      ORDER BY ts_rank(search_inner.document, plainto_tsquery('${req.query.query}')) ASC
+    ) search_outer
+    WHERE search_id >= ${req.query.minSearchId || 0}
     LIMIT ${DEFAULT_RESULT_SIZE};
   `;
 
