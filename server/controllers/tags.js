@@ -1,5 +1,7 @@
 const models = require('../../db/models');
 
+const DEFAULT_RESULT_SIZE = 30;
+
 module.exports.getTags = (req, res) => {
   models.Tag.where({
     profile_id: req.user.id,
@@ -65,8 +67,19 @@ module.exports.searchTag = (req, res) => {
     return pageViews;
   })
   .then((pageIDs) => {
-    models.Pageview.where('id', 'IN', pageIDs)
-    .orderBy('-time_open')
+    const numResults = req.body.numResults || DEFAULT_RESULT_SIZE;
+
+    let query = models.Pageview.where('id', 'IN', pageIDs);
+    if (req.body.minId) {
+      query = query.where('id', '>=', req.body.minId);
+    }
+    if (req.body.maxId) {
+      query = query.where('id', '<=', req.body.maxId);
+    }
+
+    query
+    .orderBy('-id')
+    .query(qb => qb.limit(numResults))
     .fetchAll({
       withRelated: ['tags'],
     })
