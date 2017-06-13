@@ -47,6 +47,7 @@ router.route('/index')
 
 router.route('/logout')
   .get((req, res) => {
+    req.session.destroy();
     req.logOut();
     res.redirect('/');
   });
