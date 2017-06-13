@@ -8,8 +8,10 @@ const requestCurrentView = (state) => {
   const options = {};
 
   if (state.pageList.currentPage > (state.pageList.pageRanges.length)) {
+    const maxId = state.pageList.pageRanges[state.pageList.currentPage - 2].minId - 1;
+    const maxIdTag = state.pageList.view.isSearch ? 'maxSearchId' : 'maxId';
     Object.assign(options, {
-      maxId: state.pageList.pageRanges[state.pageList.currentPage - 2].minId - 1,
+      [maxIdTag]: maxId,
     });
   }
 
