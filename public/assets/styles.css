@@ -13,6 +13,7 @@ as needed.
 6. Login
 7. Signup
 8. Extension Download Page
+9. Graphs
 
 A. Color Palette
 --------Table of Contents--------*/
@@ -112,7 +113,7 @@ html, body {
 }
 
 .navbar-landing {
-  background-color: #09121b;
+  background-color: #080e1a;
 }
 /*-------- 2. Landing Page Header--------*/
 
@@ -132,7 +133,7 @@ html, body {
 }
 
 .leavethis {
-  height: 10em;
+  height: 11em;
 }
 
 .leavethis-sm {
@@ -305,11 +306,11 @@ html, body {
 
 .login {
   background-color: rgba(245, 245, 245, .83);
-  border: 2px solid #607D8B;
+  border: 1px solid #607D8B;
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 /*-------- 6. Login--------*/
 
@@ -328,11 +329,11 @@ html, body {
 
 .signup {
   background-color: rgba(245, 245, 245, .83);
-  border: 2px solid #607D8B;
+  border: 1px solid #607D8B;
   border-radius: 10px;
   color: #212121;
   font-family: 'Lato', sans-serif;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 /*-------- 7. Signup--------*/
 
@@ -346,7 +347,15 @@ html, body {
 }
 /*-------- 8. Extension Download Page --------*/
 
+/*-------- 9. Graphs --------*/
 
+#graph {
+  margin-bottom: 0%;
+}
+
+#graph-info {
+  margin-bottom: 1%;
+}
 
 /*-------- A. Color Palette--------*/
 

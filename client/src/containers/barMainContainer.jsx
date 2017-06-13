@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deletePage, sortPages } from '../actions/index';
+import { requestHistory } from '../actions/index';
 
 import BarMain from '../components/barmain';
 
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ deletePage, sortPages }, dispatch);
+  return bindActionCreators({ requestHistory }, dispatch);
 }
 
 const BarMainContainer = connect(mapStateToProps, mapDispatchToProps)(BarMain);

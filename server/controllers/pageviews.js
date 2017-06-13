@@ -71,13 +71,13 @@ module.exports.search = (req, res) => {
     FROM (
       SELECT
         *,
-        setweight(to_tsvector(title), 'A'), setweight(to_tsvector(snippet), 'B')
+        setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
       AS document
       FROM pageviews
       WHERE profile_id = ${req.user.id}
     ) search
-    WHERE search.document @@ plainto_tsquery('${req.query.query}')
-    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) DESC
+    WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
+    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) ASC
     LIMIT ${MAX_RESULTS_PAGEVIEWS};
   `;
 
