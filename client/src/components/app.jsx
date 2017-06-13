@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import BlacklistContainer from '../containers/blacklistContainer';
 import PageListContainer from '../containers/pageListContainer';
 import SearchInputContainer from '../containers/searchInputContainer';
+import BarMainContainer from '../containers/barMainContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
           render={() => (
             <div>
               <SearchInputContainer />
+              <BarMainContainer />
               <PageListContainer />
             </div>
           )}
