@@ -135,7 +135,7 @@ html, body {
 }
 
 .leavethis {
-  height: 11em;
+  height: 0em;
 }
 
 .leavethis-sm {
@@ -225,6 +225,10 @@ html, body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+}
+
+#laptop {
+  padding-top: 4%;
 }
 /*-------- 3.1 Landing Page Images--------*/
 
