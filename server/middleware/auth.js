@@ -9,7 +9,7 @@ module.exports.verify = (req, res, next) => {
   }
   if (!req.headers.extension) {
     res.redirect('/home');
-  } else if (req.headers.extension) {
+  } else if (req.headers.extension && !req.body.icon) {
     res.redirect('/extension/login');
   }
   return undefined;
