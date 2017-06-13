@@ -33,7 +33,5 @@ app.route('/*')
     res.render('index.ejs');
   });
 
-// app.use('/api/profiles', routes.profiles);
-
 module.exports = app;
 

@@ -7,15 +7,15 @@ const router = express.Router();
 router.post('/login', (req, res, next) => {
   middleware.passport.authenticate('local-login', (err, user) => {
     if (err) {
-      return res.send('error');
+      return res.status(404).send('error');
     } else if (!user) {
-      return res.send('noUser');
+      return res.status(404).send('noUser');
     } req.logIn(user, (error) => {
       if (error) {
         console.log(error);
-        return res.send('error');
+        return res.status(404).send('error');
       }
-      return res.send('loggedIn');
+      return res.status(200).send('loggedIn');
     });
     return undefined;
   })(req, res, next);
