@@ -71,7 +71,7 @@ module.exports.search = (req, res) => {
     FROM (
       SELECT
         *,
-        setweight(to_tsvector(title), 'A') || setweight(to_tsvector(snippet), 'B')
+        setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
       AS document
       FROM pageviews
       WHERE profile_id = ${req.user.id}
