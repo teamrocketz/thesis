@@ -30,7 +30,7 @@ class SearchInput extends React.Component {
   }
 
   handleTagSearch(e) {
-    this.props.tagSearch(e.label);
+    this.props.tagSearchViewAndRequest(e.label);
   }
 
   render() {
@@ -53,12 +53,12 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
-  tagSearch: React.PropTypes.func,
+  tagSearchViewAndRequest: React.PropTypes.func,
   getTags: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
-  tagSearch: () => {},
+  tagSearchViewAndRequest: () => {},
   getTags: () => {},
 };
 

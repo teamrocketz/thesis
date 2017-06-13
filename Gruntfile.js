@@ -11,7 +11,7 @@ module.exports = (grunt) => {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'dbConfig/**/*.js'],
+      target: ['Gruntfile.js', 'client/**/*.js', 'client/**/*.jsx', 'db/**/*.js', 'server/**/*.js', 'test/**/*.js'],
     },
 
     // mochacli supports forcing color output in a subshell
@@ -51,9 +51,9 @@ module.exports = (grunt) => {
       'client-build': 'webpack',
       'client-dev': 'webpack --watch --color',
       dbMigrate: 'knex migrate:latest',
-      server: 'nodemon server',
-      'server-debug': 'nodemon --inspect server',
-      'server-debug-brk': 'nodemon --inspect --debug-brk server',
+      server: 'nodemon --ignore test --ignore client server',
+      'server-debug': 'nodemon --ignore test --ignore client --inspect server',
+      'server-debug-brk': 'nodemon --ignore test --ignore client --inspect --debug-brk server',
       // see: https://github.com/pghalliday/grunt-mocha-test#using-node-flags
       // for an explanation of why these are here, rather than in mocha configs above
       test: 'NODE_ENV=test ./node_modules/.bin/grunt test-run',

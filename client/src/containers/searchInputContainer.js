@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { requestHistory, requestSearch, getTags, tagSearch } from '../actions/index';
+import { historyViewAndRequest, searchViewAndRequest, getTags, tagSearch } from '../actions/index';
 import SearchInput from '../components/searchInput';
 
 export const formatTags = (tags) => { // eslint-disable-line
@@ -16,7 +16,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ requestHistory, requestSearch, getTags, tagSearch }, dispatch);
+  return bindActionCreators({
+    historyViewAndRequest,
+    searchViewAndRequest,
+    getTags,
+    tagSearch,
+  }, dispatch);
 }
 
 const SearchInputContainer = connect(mapStateToProps, mapDispatchToProps)(SearchInput);
