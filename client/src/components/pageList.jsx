@@ -45,8 +45,18 @@ class PageList extends Component {
       </button>
     );
 
+    let listHeader = '';
+    if (this.props.view.isAllHistory) {
+      listHeader = `All browsing history: Page ${this.props.currentPage}`;
+    } else if (this.props.view.isSearch) {
+      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage}`;
+    } else if (this.props.view.isTagSearch) {
+      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage}`;
+    }
+
     const renderList = () => (
       <div className="clearfix">
+        <h3>{listHeader}</h3>
         <table className="table table-condensed table-striped">
           <thead>
             <tr className="row">
@@ -86,13 +96,20 @@ class PageList extends Component {
 }
 
 PageList.propTypes = {
-  isLoading: React.PropTypes.bool,
+  view: React.PropTypes.shape({
+    isAllHistory: React.PropTypes.bool,
+    isSearch: React.PropTypes.bool,
+    isTagSearch: React.PropTypes.bool,
+    searchQuery: React.PropTypes.string,
+    tagSearchQuery: React.PropTypes.string,
+  }),
+  pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentPage: React.PropTypes.number,
   pageRanges: React.PropTypes.arrayOf(React.PropTypes.shape({
     minId: React.PropTypes.number,
     maxId: React.PropTypes.number,
   })),
-  pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  isLoading: React.PropTypes.bool,
   error: React.PropTypes.string,
   deletePage: React.PropTypes.func,
   removeTag: React.PropTypes.func,
@@ -102,10 +119,17 @@ PageList.propTypes = {
 };
 
 PageList.defaultProps = {
-  isLoading: false,
+  view: {
+    isAllHistory: false,
+    isSearch: false,
+    isTagSearch: false,
+    searchQuery: null,
+    tagSearchQuery: null,
+  },
+  pages: [],
   currentPage: 0,
   pageRanges: [],
-  pages: [],
+  isLoading: false,
   error: '',
   deletePage: () => {},
   removeTag: () => {},

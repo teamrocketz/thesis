@@ -6,7 +6,7 @@ import PageList from '../components/pageList';
 
 function mapStateToProps(state) {
   return {
-    view: state.view,
+    view: state.pageList.view,
     pages: state.pageList.pages,
     currentPage: state.pageList.currentPage,
     pageRanges: state.pageList.pageRanges,
