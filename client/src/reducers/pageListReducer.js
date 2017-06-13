@@ -56,8 +56,8 @@ export default function (state = initialState, action) {
         pages: action.payload.data,
         currentPage: 1,
         pageRanges: [{
-          minId: action.payload.data[action.payload.data.length - 1].id,
-          maxId: action.payload.data[0].id,
+          startIndex: 0,
+          endIndex: action.payload.data.length - 1,
         }],
         isLoading: false,
       });
@@ -85,8 +85,8 @@ export default function (state = initialState, action) {
       return utils.updateObject(state, {
         pages: state.pages.concat(action.payload.data),
         pageRanges: state.pageRanges.concat({
-          minId: action.payload.data[action.payload.data.length - 1].id,
-          maxId: action.payload.data[0].id,
+          startIndex: state.pages.length,
+          endIndex: state.pages.length + (action.payload.data.length - 1),
         }),
         isLoading: false,
       });

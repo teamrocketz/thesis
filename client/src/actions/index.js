@@ -1,35 +1,47 @@
 import axios from 'axios';
 
+const PAGE_SIZE = 30;
+
 // helper function for history/search actions
 // fetches pageviews from the server
 
 const requestCurrentView = (state) => {
   let url;
-  const options = {};
+  const options = {
+    numResults: PAGE_SIZE,
+  };
 
-  if (state.pageList.currentPage > (state.pageList.pageRanges.length)) {
-    const maxId = state.pageList.pageRanges[state.pageList.currentPage - 2].minId - 1;
-    const maxIdTag = state.pageList.view.isSearch ? 'maxSearchId' : 'maxId';
-    Object.assign(options, {
-      [maxIdTag]: maxId,
-    });
+  const view = state.pageList.view;
+  const pages = state.pageList.pages;
+
+  if (state.pageList.currentPage > state.pageList.pageRanges.length) {
+    if (view.isSearch) {
+      Object.assign(options, {
+        minSearchId: parseInt(pages[pages.length - 1].search_id, 10) + 1,
+      });
+    } else {
+      Object.assign(options, {
+        maxId: pages[pages.length - 1].id - 1,
+      });
+    }
   }
 
-  if (state.pageList.view.isAllHistory) {
+  if (view.isAllHistory) {
     url = '/pageviews';
-  } else if (state.pageList.view.isSearch) {
+  } else if (view.isSearch) {
     url = '/pageviews/search';
-    Object.assign(options, { query: state.pageList.view.searchQuery });
-  } else if (state.pageList.view.isTagSearch) {
+    Object.assign(options, { query: view.searchQuery });
+  } else if (view.isTagSearch) {
     url = '/tags/search';
-    Object.assign(options, { query: state.pageList.view.tagSearchQuery });
+    Object.assign(options, { query: view.tagSearchQuery });
   }
 
-  if (state.pageList.view.isAllHistory || state.pageList.view.isSearch) {
+  if (view.isAllHistory || view.isSearch) {
     return axios.get(url, { params: options });
-  } else if (state.pageList.view.isTagSearch) {
+  } else if (view.isTagSearch) {
     return axios.post(url, options);
   }
+
   return Promise.reject('Unknown view state');
 };
 

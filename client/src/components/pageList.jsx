@@ -72,10 +72,10 @@ class PageList extends Component {
               <th />
             </tr>
           </thead>
-          { this.props.pages.filter(page => (
-              page.id >= this.props.pageRanges[this.props.currentPage - 1].minId &&
-              page.id <= this.props.pageRanges[this.props.currentPage - 1].maxId
-          )).map(page => (
+          { this.props.pages.slice(
+              this.props.pageRanges[this.props.currentPage - 1].startIndex,
+              this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
+          ).map(page => (
             <PageListItem
               key={page.id}
               page={page}
@@ -110,8 +110,8 @@ PageList.propTypes = {
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentPage: React.PropTypes.number,
   pageRanges: React.PropTypes.arrayOf(React.PropTypes.shape({
-    minId: React.PropTypes.number,
-    maxId: React.PropTypes.number,
+    startIndex: React.PropTypes.number,
+    endIndex: React.PropTypes.number,
   })),
   isLoading: React.PropTypes.bool,
   error: React.PropTypes.string,

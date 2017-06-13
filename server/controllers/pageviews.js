@@ -91,7 +91,7 @@ module.exports.search = (req, res) => {
       ORDER BY ts_rank(search_inner.document, plainto_tsquery('${req.query.query}')) ASC
     ) search_outer
     WHERE search_id >= ${req.query.minSearchId || 0}
-    LIMIT ${DEFAULT_RESULT_SIZE};
+    LIMIT ${req.query.numResults || DEFAULT_RESULT_SIZE};
   `;
 
   db.knex.raw(sql)
