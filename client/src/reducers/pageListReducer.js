@@ -1,6 +1,13 @@
 import utils from '../utils';
 
 const initialState = {
+  view: {
+    isAllHistory: false,
+    isSearch: false,
+    searchQuery: null,
+    isTagSearch: false,
+    tagSearchQuery: null,
+  },
   pages: [],
   currentPage: 0,
   pageRanges: [],
@@ -11,6 +18,23 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    /*---------------------------------------
+      View switching
+    ---------------------------------------*/
+
+    case 'SET_ALL_HISTORY_VIEW':
+    case 'SET_SEARCH_VIEW':
+    case 'SET_TAG_SEARCH_VIEW':
+      return utils.updateObject(state, {
+        view: utils.updateObject(state.view, {
+          isAllHistory: (action.type === 'SET_ALL_HISTORY_VIEW'),
+          isSearch: (action.type === 'SET_SEARCH_VIEW'),
+          searchQuery: (action.type === 'SET_SEARCH_VIEW') ? action.query : null,
+          isTagSearch: (action.type === 'SET_TAG_SEARCH_VIEW'),
+          tagSearchQuery: (action.type === 'SET_TAG_SEARCH_VIEW') ? action.query : null,
+        }),
+      });
+
     /*---------------------------------------
       History fetching
     ---------------------------------------*/
@@ -42,25 +66,24 @@ export default function (state = initialState, action) {
       Pagination
     ---------------------------------------*/
 
-    case 'PREVIOUS_PAGE':
+    case 'DECREMENT_PAGE':
       return utils.updateObject(state, { currentPage: state.currentPage - 1 });
 
-    case 'SHOW_NEXT_PAGE':
+    case 'INCREMENT_PAGE':
       return utils.updateObject(state, { currentPage: state.currentPage + 1 });
 
-    case 'LOAD_AND_SHOW_NEXT_PAGE_PENDING':
+    case 'LOAD_NEXT_PAGE_PENDING':
       return utils.updateObject(state, { isLoading: true });
 
-    case 'LOAD_AND_SHOW_NEXT_PAGE_REJECTED':
+    case 'LOAD_NEXT_PAGE_REJECTED':
       return utils.updateObject(state, {
         isLoading: true,
-        error: 'Failed to load additional data.',
+        error: 'Failed to load next page.',
       });
 
-    case 'LOAD_AND_SHOW_NEXT_PAGE_FULFILLED':
+    case 'LOAD_NEXT_PAGE_FULFILLED':
       return utils.updateObject(state, {
         pages: state.pages.concat(action.payload.data),
-        currentPage: state.currentPage + 1,
         pageRanges: state.pageRanges.concat({
           minId: action.payload.data[action.payload.data.length - 1].id,
           maxId: action.payload.data[0].id,

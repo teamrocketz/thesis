@@ -11,7 +11,7 @@ class SearchInput extends React.Component {
   }
 
   componentWillMount() {
-    this.props.requestHistory();
+    this.props.historyViewAndRequest();
   }
 
   handleQueryChange(e) { this.setState({ query: e.target.value }); }
@@ -19,9 +19,9 @@ class SearchInput extends React.Component {
   handleSearchRequest(e) {
     e.preventDefault();
     if (this.state.query === '') {
-      this.props.requestHistory();
+      this.props.historyViewAndRequest();
     } else {
-      this.props.requestSearch(this.state.query);
+      this.props.searchViewAndRequest(this.state.query);
     }
   }
 
@@ -72,7 +72,7 @@ class SearchInput extends React.Component {
               <button
                 type="button"
                 className="btn btn-link"
-                onClick={this.props.requestHistory}
+                onClick={this.props.historyViewAndRequest}
               >
               Show All
               </button>
@@ -86,13 +86,13 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
-  requestHistory: React.PropTypes.func,
-  requestSearch: React.PropTypes.func,
+  historyViewAndRequest: React.PropTypes.func,
+  searchViewAndRequest: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
-  requestHistory: () => {},
-  requestSearch: () => {},
+  historyViewAndRequest: () => {},
+  searchViewAndRequest: () => {},
 };
 
 export default SearchInput;

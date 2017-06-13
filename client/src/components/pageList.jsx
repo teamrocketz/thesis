@@ -16,12 +16,7 @@ class PageList extends Component {
   }
 
   handleClickNextPage() {
-    if (this.props.currentPage === (this.props.pageRanges.length)) {
-      const maxIdOfNextPage = this.props.pageRanges[this.props.currentPage - 1].minId - 1;
-      this.props.loadAndShowNextPage(maxIdOfNextPage);
-    } else {
-      this.props.nextPage();
-    }
+    this.props.nextPage();
     Scroll.animateScroll.scrollToTop({ duration: 0, delay: 0 });
   }
 
@@ -104,7 +99,6 @@ PageList.propTypes = {
   addTag: React.PropTypes.func,
   previousPage: React.PropTypes.func,
   nextPage: React.PropTypes.func,
-  loadAndShowNextPage: React.PropTypes.func,
 };
 
 PageList.defaultProps = {
@@ -118,7 +112,6 @@ PageList.defaultProps = {
   addTag: () => {},
   previousPage: () => {},
   nextPage: () => {},
-  loadAndShowNextPage: () => {},
 };
 
 export default PageList;
