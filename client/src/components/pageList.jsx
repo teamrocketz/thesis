@@ -29,7 +29,7 @@ class PageList extends Component {
 
     const renderPreviousButton = () => (
       <button
-        className="btn btn-default btn-primary pull-left"
+        className="btn btn-link pull-left"
         onClick={this.handleClickPreviousPage}
       >
         Previous Page
@@ -38,7 +38,7 @@ class PageList extends Component {
 
     const renderNextButton = () => (
       <button
-        className="btn btn-default btn-primary pull-right"
+        className="btn btn-link pull-right"
         onClick={this.handleClickNextPage}
       >
         Next Page
@@ -57,6 +57,10 @@ class PageList extends Component {
     const renderList = () => (
       <div className="clearfix">
         <h3>{listHeader}</h3>
+        <div className="clearfix paginationButtons">
+          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
+          {renderNextButton()}
+        </div>
         <table className="table table-condensed table-striped">
           <thead>
             <tr className="row">

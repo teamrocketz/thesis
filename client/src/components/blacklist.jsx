@@ -65,7 +65,7 @@ class Blacklist extends React.Component {
                 className="form-control"
               />
             </div>
-            <button type="submit" className="btn btn-primary">Add to blacklist</button>
+            <button type="submit" className="btn btn-login">Add to blacklist</button>
             <br />
           </form>
           {error}
