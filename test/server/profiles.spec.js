@@ -6,7 +6,7 @@ const request = require('supertest');
 const app = require('../../server/app.js');
 const dbUtils = require('../lib/dbUtils.js');
 
-describe('Profiles API', function () {
+xdescribe('Profiles API', function () {
   beforeEach(function (done) {
     dbUtils.reinitialize(done);
   });
