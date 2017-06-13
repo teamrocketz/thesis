@@ -125,6 +125,7 @@ html, body {
 .btn-hault:hover {
  background-color: #f5f5f5;
  color: #212121;
+ text-decoration: none;
 }
 
 .jumbotron {
@@ -167,7 +168,7 @@ html, body {
   background: url('./landing_page3.jpg');
   background-size: cover;
   display: table;
-  height: 650px;
+  height: 700px;
   padding-top: 1em;
   position: relative;
   width: 100%;
