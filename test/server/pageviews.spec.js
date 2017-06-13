@@ -50,7 +50,10 @@ describe('/pageviews API', function () {
       return agent.get('/pageviews')
         .expect(200)
         .then((res) => {
-          expect(res.body).to.deep.equal(sortedPageviews);
+          const areProperlyOrdered = res.body.every((pageview, index) => (
+            pageview.id === sortedPageviews[index].id
+          ));
+          expect(areProperlyOrdered).to.be.true();
         });
     });
 
