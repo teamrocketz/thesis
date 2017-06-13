@@ -7,6 +7,9 @@
     "start": "grunt server",
     "test": "grunt verify"
   },
+  "engines": {
+    "node": "7.10.0"
+  },
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
