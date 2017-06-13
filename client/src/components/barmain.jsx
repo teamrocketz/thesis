@@ -56,9 +56,14 @@ class BarMain extends Component {
       }
 
       return (
-        <div id="graph">
-          <br />
+        <div>
+          <BarInfo
+            numberDomains={domains.length}
+            numberPages={this.props.pages.length}
+            favorite={favorite}
+          />
           <VictoryBar
+            id="graph"
             data={domains}
             height={50}
             padding={{ top: 20, bottom: 8, left: 24, right: 36 }}
@@ -89,11 +94,6 @@ class BarMain extends Component {
                 border: '0px solid #ccc',
               },
             }}
-          />
-          <BarInfo
-            numberDomains={domains.length}
-            numberPages={this.props.pages.length}
-            favorite={favorite}
           />
         </div>
       );

@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const BarInfo = props => (
-  <div className="container text-center">
+  <div className="container text-center" id="graph-info">
     <div className="row">
       <div className="col-sm-4">Favorite Site: <b>{props.favorite}</b></div>
       <div className="col-sm-4">Total Sites Visited: {props.numberDomains}</div>

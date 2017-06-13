@@ -350,7 +350,11 @@ html, body {
 /*-------- 9. Graphs --------*/
 
 #graph {
-  margin-bottom: 2%;
+  margin-bottom: 0%;
+}
+
+#graph-info {
+  margin-bottom: 1%;
 }
 
 /*-------- A. Color Palette--------*/
