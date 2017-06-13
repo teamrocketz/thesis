@@ -13,6 +13,7 @@ as needed.
 6. Login
 7. Signup
 8. Extension Download Page
+9. Graphs
 
 A. Color Palette
 --------Table of Contents--------*/
@@ -346,7 +347,11 @@ html, body {
 }
 /*-------- 8. Extension Download Page --------*/
 
+/*-------- 9. Graphs --------*/
 
+#graph {
+  margin-bottom: 2%;
+}
 
 /*-------- A. Color Palette--------*/
 

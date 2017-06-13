@@ -9,9 +9,7 @@ import BarInfo from './barinfo';
 class BarMain extends Component {
   render() {
     const renderLoading = () => (
-      <div>
-        Loading...
-      </div>
+      <div />
     );
 
     const renderBar = () => {
@@ -44,7 +42,6 @@ class BarMain extends Component {
 
 
       const timeOnDomainsKeys = Object.keys(timeOnDomains);
-      console.log('tODKeys: ', timeOnDomainsKeys);
       for (let j = 0; j < timeOnDomainsKeys.length; j += 1) {
         const domainP = timeOnDomainsKeys[j];
         if (domainP) {
@@ -54,18 +51,16 @@ class BarMain extends Component {
             label: domainP,
             domain: domainP,
           };
-          console.log(domainP);
           domains.push(newPage);
         }
       }
 
       return (
-        <div>
+        <div id="graph">
           <br />
-          <th>Your history</th>
           <VictoryBar
             data={domains}
-            height={60}
+            height={50}
             padding={{ top: 20, bottom: 8, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
             style={{
@@ -86,12 +81,12 @@ class BarMain extends Component {
               },
               labels: {
                 fontSize: 6,
-                // angle: 0,
+                // angle: 2,
                 verticalAnchor: 'end',
                 textAnchor: 'middle',
               },
               parent: {
-                border: '1px solid #ccc',
+                border: '0px solid #ccc',
               },
             }}
           />
