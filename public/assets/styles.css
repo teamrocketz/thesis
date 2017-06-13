@@ -359,10 +359,11 @@ html, body {
 
 #graph-info {
   margin-bottom: 1%;
+}
 
 /*-------- 10. History/Search List --------*/
 
-.paginationButtons {
+.bottomPaginationButtons {
   margin-bottom: 100px;
 }
 

@@ -57,7 +57,7 @@ class PageList extends Component {
     const renderList = () => (
       <div className="clearfix">
         <h3>{listHeader}</h3>
-        <div className="clearfix paginationButtons">
+        <div className="clearfix">
           {(this.props.currentPage > 1) ? renderPreviousButton() : []}
           {renderNextButton()}
         </div>
@@ -85,7 +85,7 @@ class PageList extends Component {
             />
           )) }
         </table>
-        <div className="clearfix paginationButtons">
+        <div className="clearfix bottomPaginationButtons">
           {(this.props.currentPage > 1) ? renderPreviousButton() : []}
           {renderNextButton()}
         </div>
