@@ -10,6 +10,7 @@ class PageList extends Component {
     this.handleClickNextPage = this.handleClickNextPage.bind(this);
   }
 
+
   handleClickPreviousPage() {
     this.props.previousPage();
     Scroll.animateScroll.scrollToTop({ duration: 0, delay: 0 });
@@ -26,6 +27,17 @@ class PageList extends Component {
         Loading...
       </div>
     );
+
+    let listHeader = '';
+    const isLastPage = (this.props.currentPage === this.props.lastPage);
+    const lastPageNote = isLastPage ? '(Last page)' : '';
+    if (this.props.view.isAllHistory) {
+      listHeader = `All browsing history: Page ${this.props.currentPage} ${lastPageNote}`;
+    } else if (this.props.view.isSearch) {
+      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+    } else if (this.props.view.isTagSearch) {
+      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+    }
 
     const renderPreviousButton = () => (
       <button
@@ -45,22 +57,23 @@ class PageList extends Component {
       </button>
     );
 
-    let listHeader = '';
-    if (this.props.view.isAllHistory) {
-      listHeader = `All browsing history: Page ${this.props.currentPage}`;
-    } else if (this.props.view.isSearch) {
-      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage}`;
-    } else if (this.props.view.isTagSearch) {
-      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage}`;
-    }
+    // if top == true, render buttons for top of list
+    // otherwise render buttons for bottom of list
+    const renderButtons = (bottom) => {
+      const divClasses = `clearfix ${bottom ? 'bottomPaginationButtons' : ''}`;
+
+      return (
+        <div className={divClasses}>
+          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
+          {isLastPage ? [] : renderNextButton()}
+        </div>
+      );
+    };
 
     const renderList = () => (
       <div className="clearfix">
         <h3>{listHeader}</h3>
-        <div className="clearfix">
-          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
-          {renderNextButton()}
-        </div>
+        {renderButtons(false)}
         <table className="table table-condensed table-striped">
           <thead>
             <tr className="row">
@@ -85,10 +98,7 @@ class PageList extends Component {
             />
           )) }
         </table>
-        <div className="clearfix bottomPaginationButtons">
-          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
-          {renderNextButton()}
-        </div>
+        {renderButtons(true)}
       </div>
     );
 
@@ -109,6 +119,7 @@ PageList.propTypes = {
   }),
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentPage: React.PropTypes.number,
+  lastPage: React.PropTypes.number,
   pageRanges: React.PropTypes.arrayOf(React.PropTypes.shape({
     startIndex: React.PropTypes.number,
     endIndex: React.PropTypes.number,
@@ -132,6 +143,7 @@ PageList.defaultProps = {
   },
   pages: [],
   currentPage: 0,
+  lastPage: -1,
   pageRanges: [],
   isLoading: false,
   error: '',

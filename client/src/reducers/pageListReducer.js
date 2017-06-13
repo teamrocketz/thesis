@@ -4,12 +4,13 @@ const initialState = {
   view: {
     isAllHistory: false,
     isSearch: false,
-    searchQuery: null,
     isTagSearch: false,
+    searchQuery: null,
     tagSearchQuery: null,
   },
   pages: [],
   currentPage: 0,
+  lastPage: -1,
   pageRanges: [],
   tags: [],
   isLoading: false,
@@ -44,6 +45,7 @@ export default function (state = initialState, action) {
     case 'REQUEST_SEARCH_PENDING':
       return utils.updateObject(state, {
         currentPage: 0,
+        lastPage: -1,
         pageRanges: [],
         isLoading: true,
         error: '',
@@ -53,11 +55,12 @@ export default function (state = initialState, action) {
     case 'REQUEST_HISTORY_FULFILLED':
     case 'REQUEST_SEARCH_FULFILLED':
       return utils.updateObject(state, {
-        pages: action.payload.data,
+        pages: action.payload.data.pages,
         currentPage: 1,
+        lastPage: action.payload.data.isLastPage ? 1 : -1,
         pageRanges: [{
           startIndex: 0,
-          endIndex: action.payload.data.length - 1,
+          endIndex: action.payload.data.pages.length - 1,
         }],
         isLoading: false,
       });
@@ -83,11 +86,12 @@ export default function (state = initialState, action) {
 
     case 'LOAD_NEXT_PAGE_FULFILLED':
       return utils.updateObject(state, {
-        pages: state.pages.concat(action.payload.data),
+        pages: state.pages.concat(action.payload.data.pages),
         pageRanges: state.pageRanges.concat({
           startIndex: state.pages.length,
-          endIndex: state.pages.length + (action.payload.data.length - 1),
+          endIndex: state.pages.length + (action.payload.data.pages.length - 1),
         }),
+        lastPage: action.payload.data.isLastPage ? state.currentPage : -1,
         isLoading: false,
       });
 

@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     view: state.pageList.view,
     pages: state.pageList.pages,
     currentPage: state.pageList.currentPage,
+    lastPage: state.pageList.lastPage,
     pageRanges: state.pageList.pageRanges,
     isLoading: state.pageList.isLoading,
     error: state.pageList.error,

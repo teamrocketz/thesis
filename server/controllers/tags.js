@@ -1,6 +1,5 @@
 const models = require('../../db/models');
-
-const DEFAULT_RESULT_SIZE = 30;
+const utils = require('./controllerUtils');
 
 module.exports.getTags = (req, res) => {
   models.Tag.where({
@@ -67,7 +66,9 @@ module.exports.searchTag = (req, res) => {
     return pageViews;
   })
   .then((pageIDs) => {
-    const numResults = req.body.numResults || DEFAULT_RESULT_SIZE;
+    const numResults =
+      parseInt(req.body.numResults, 10) ||
+      utils.DEFAULT_PAGEVIEW_QUERY_RESULT_SIZE;
 
     let query = models.Pageview.where('id', 'IN', pageIDs);
     if (req.body.minId) {
@@ -79,14 +80,15 @@ module.exports.searchTag = (req, res) => {
 
     query
     .orderBy('-id')
-    .query(qb => qb.limit(numResults))
+    .query(qb => qb.limit(numResults + 1))
     .fetchAll({
       withRelated: ['tags'],
     })
-    .then((pages) => {
-      res.status(200).send(pages);
+    .then((pageviews) => {
+      utils.sendPageviews(res, pageviews, numResults);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).send(err);
     });
   });
