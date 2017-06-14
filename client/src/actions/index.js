@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const PAGE_SIZE = 50;
+// const MAX_RESULTS = 10000;
 
 // helper function for history/search actions
 // fetches pageviews from the server
@@ -26,7 +27,7 @@ const requestCurrentView = (state) => {
     }
   }
 
-  if (view.isAllHistory) {
+  if (view.isUnfilteredHistory) {
     url = '/pageviews';
   } else if (view.isSearch) {
     url = '/pageviews/search';
@@ -36,7 +37,7 @@ const requestCurrentView = (state) => {
     Object.assign(options, { query: view.tagSearchQuery });
   }
 
-  if (view.isAllHistory || view.isSearch) {
+  if (view.isUnfilteredHistory || view.isSearch) {
     return axios.get(url, { params: options });
   } else if (view.isTagSearch) {
     return axios.post(url, options);
@@ -59,7 +60,7 @@ const requestCurrentView = (state) => {
 //
 // Updating the view therefore requires a separate synchronous action.
 
-const setAllHistoryView = () => ({ type: 'SET_ALL_HISTORY_VIEW' });
+const setUnfilteredHistoryView = () => ({ type: 'SET_UNFILTERED_HISTORY_VIEW' });
 const setSearchView = query => ({ type: 'SET_SEARCH_VIEW', query });
 const setTagSearchView = query => ({ type: 'SET_TAG_SEARCH_VIEW', query });
 
@@ -80,7 +81,7 @@ const tagSearch = state => ({
 
 export const historyViewAndRequest = () => (
   (dispatch, getState) => {
-    dispatch(setAllHistoryView());
+    dispatch(setUnfilteredHistoryView());
     dispatch(requestHistory(getState()));
   }
 );
