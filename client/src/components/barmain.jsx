@@ -62,15 +62,11 @@ class BarMain extends Component {
 
       return (
         <div>
-          <BarInfo
-            numberDomains={domains.length}
-            numberPages={currentPages.length}
-            favorite={favorite}
-          />
+          <div className="container text-center">Time Spent Per Domain</div>
           <VictoryBar
             id="graph"
             data={domains}
-            height={50}
+            height={60}
             padding={{ top: 30, bottom: 8, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
             style={{
@@ -99,6 +95,11 @@ class BarMain extends Component {
                 border: '0px solid #ccc',
               },
             }}
+          />
+          <BarInfo
+            numberDomains={domains.length}
+            numberPages={currentPages.length}
+            favorite={favorite}
           />
         </div>
       );
