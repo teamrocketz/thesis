@@ -1,4 +1,5 @@
 const models = require('../../db/models');
+const utils = require('./controllerUtils');
 
 module.exports.getTags = (req, res) => {
   models.Tag.where({
@@ -65,15 +66,29 @@ module.exports.searchTag = (req, res) => {
     return pageViews;
   })
   .then((pageIDs) => {
-    models.Pageview.where('id', 'IN', pageIDs)
-    .orderBy('-time_open')
+    const numResults =
+      parseInt(req.body.numResults, 10) ||
+      utils.DEFAULT_PAGEVIEW_QUERY_RESULT_SIZE;
+
+    let query = models.Pageview.where('id', 'IN', pageIDs);
+    if (req.body.minId) {
+      query = query.where('id', '>=', req.body.minId);
+    }
+    if (req.body.maxId) {
+      query = query.where('id', '<=', req.body.maxId);
+    }
+
+    query
+    .orderBy('-id')
+    .query(qb => qb.limit(numResults + 1))
     .fetchAll({
       withRelated: ['tags'],
     })
-    .then((pages) => {
-      res.status(200).send(pages);
+    .then((pageviews) => {
+      utils.sendPageviews(res, pageviews, numResults);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).send(err);
     });
   });

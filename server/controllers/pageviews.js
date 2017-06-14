@@ -3,11 +3,9 @@ const db = require('../../db');
 const models = require('../../db/models');
 const utils = require('./controllerUtils');
 
-const DEFAULT_RESULT_SIZE = 30;
-
 //  gets all from current user or 99999 in test mode ie no browser cookes
 module.exports.getAll = (req, res) => {
-  const numResults = req.query.numResults || DEFAULT_RESULT_SIZE;
+  const numResults = parseInt(req.query.numResults, 10) || utils.DEFAULT_PAGEVIEW_QUERY_RESULT_SIZE;
 
   let query = models.Pageview.where({ profile_id: req.user.id });
   if (req.query.minId) {
@@ -19,12 +17,12 @@ module.exports.getAll = (req, res) => {
 
   query
   .orderBy('-id')
-  .query(qb => qb.limit(numResults))
+  .query(qb => qb.limit(numResults + 1))
   .fetchAll({
     withRelated: ['tags'],
   })
   .then((pageviews) => {
-    res.status(200).send(pageviews);
+    utils.sendPageviews(res, pageviews, numResults);
   })
   .catch((err) => {
     console.log('getAll error: ', err);
@@ -41,7 +39,7 @@ module.exports.getActive = (req, res) => {
     is_active: true,
   })
   .orderBy('-id')
-  .query(qb => qb.limit(DEFAULT_RESULT_SIZE))
+  .query(qb => qb.limit(utils.DEFAULT_PAGEVIEW_QUERY_RESULT_SIZE))
   .fetchAll({
     withRelated: ['tags'],
   })
@@ -72,24 +70,33 @@ module.exports.getActive = (req, res) => {
 
 
 module.exports.search = (req, res) => {
+  const numResults = parseInt(req.query.numResults, 10) || utils.DEFAULT_PAGEVIEW_QUERY_RESULT_SIZE;
+
   const sql = `
-    SELECT id, url, title, time_open, is_active, icon, snippet
+    SELECT *
     FROM (
-      SELECT
-        *,
-        setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
-      AS document
-      FROM pageviews
-      WHERE profile_id = ${req.user.id}
-    ) search
-    WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
-    ORDER BY ts_rank(search.document, plainto_tsquery('${req.query.query}')) ASC
-    LIMIT ${DEFAULT_RESULT_SIZE};
+      SELECT id, url, title, time_open, is_active, icon, snippet,
+        ROW_NUMBER() OVER
+          (ORDER BY ts_rank(search_inner.document, plainto_tsquery('${req.query.query}')) ASC)
+          AS search_id
+      FROM (
+        SELECT
+          *,
+          setweight(to_tsvector(title), 'B') || setweight(to_tsvector(snippet), 'A')
+            AS document
+        FROM pageviews
+        WHERE profile_id = ${req.user.id}
+      ) AS search_inner
+      WHERE to_tsvector(title) @@ plainto_tsquery('${req.query.query}') OR to_tsvector(snippet) @@ plainto_tsquery('${req.query.query}')
+      ORDER BY ts_rank(search_inner.document, plainto_tsquery('${req.query.query}')) ASC
+    ) search_outer
+    WHERE search_id >= ${req.query.minSearchId || 0}
+    LIMIT ${numResults + 1};
   `;
 
   db.knex.raw(sql)
   .then((pageviewsResult) => {
-    res.status(200).send(pageviewsResult.rows);
+    utils.sendPageviews(res, pageviewsResult.rows, numResults);
   })
   .catch((err) => {
     console.log('search error:', err);

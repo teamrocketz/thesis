@@ -10,6 +10,7 @@ class PageList extends Component {
     this.handleClickNextPage = this.handleClickNextPage.bind(this);
   }
 
+
   handleClickPreviousPage() {
     this.props.previousPage();
     Scroll.animateScroll.scrollToTop({ duration: 0, delay: 0 });
@@ -26,6 +27,17 @@ class PageList extends Component {
         Loading...
       </div>
     );
+
+    let listHeader = '';
+    const isLastPage = (this.props.currentPage === this.props.lastPage);
+    const lastPageNote = isLastPage ? '(Last page)' : '';
+    if (this.props.view.isAllHistory) {
+      listHeader = `All browsing history: Page ${this.props.currentPage} ${lastPageNote}`;
+    } else if (this.props.view.isSearch) {
+      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+    } else if (this.props.view.isTagSearch) {
+      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+    }
 
     const renderPreviousButton = () => (
       <button
@@ -45,22 +57,23 @@ class PageList extends Component {
       </button>
     );
 
-    let listHeader = '';
-    if (this.props.view.isAllHistory) {
-      listHeader = `All browsing history: Page ${this.props.currentPage}`;
-    } else if (this.props.view.isSearch) {
-      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage}`;
-    } else if (this.props.view.isTagSearch) {
-      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage}`;
-    }
+    // if bottom == true, render buttons for bottom of list
+    // otherwise render buttons for top of list
+    const renderButtons = (bottom) => {
+      const divClasses = `clearfix ${bottom ? 'bottomPaginationButtons' : ''}`;
+
+      return (
+        <div className={divClasses}>
+          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
+          {isLastPage ? [] : renderNextButton()}
+        </div>
+      );
+    };
 
     const renderList = () => (
       <div className="clearfix">
         <h3>{listHeader}</h3>
-        <div className="clearfix paginationButtons">
-          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
-          {renderNextButton()}
-        </div>
+        {renderButtons(false)}
         <table className="table table-condensed table-striped">
           <thead>
             <tr className="row">
@@ -72,10 +85,10 @@ class PageList extends Component {
               <th />
             </tr>
           </thead>
-          { this.props.pages.filter(page => (
-              page.id >= this.props.pageRanges[this.props.currentPage - 1].minId &&
-              page.id <= this.props.pageRanges[this.props.currentPage - 1].maxId
-          )).map(page => (
+          { this.props.pages.slice(
+              this.props.pageRanges[this.props.currentPage - 1].startIndex,
+              this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
+          ).map(page => (
             <PageListItem
               key={page.id}
               page={page}
@@ -85,10 +98,7 @@ class PageList extends Component {
             />
           )) }
         </table>
-        <div className="clearfix paginationButtons">
-          {(this.props.currentPage > 1) ? renderPreviousButton() : []}
-          {renderNextButton()}
-        </div>
+        {renderButtons(true)}
       </div>
     );
 
@@ -109,9 +119,10 @@ PageList.propTypes = {
   }),
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentPage: React.PropTypes.number,
+  lastPage: React.PropTypes.number,
   pageRanges: React.PropTypes.arrayOf(React.PropTypes.shape({
-    minId: React.PropTypes.number,
-    maxId: React.PropTypes.number,
+    startIndex: React.PropTypes.number,
+    endIndex: React.PropTypes.number,
   })),
   isLoading: React.PropTypes.bool,
   error: React.PropTypes.string,
@@ -132,6 +143,7 @@ PageList.defaultProps = {
   },
   pages: [],
   currentPage: 0,
+  lastPage: -1,
   pageRanges: [],
   isLoading: false,
   error: '',
