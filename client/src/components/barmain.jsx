@@ -100,6 +100,9 @@ class BarMain extends Component {
             numberDomains={domains.length}
             numberPages={currentPages.length}
             favorite={favorite}
+            chartAllResults={this.props.chartAllResults}
+            chartPageResultsDispatcher={this.props.chartPageResultsDispatcher}
+            chartAllResultsDispatcher={this.props.chartAllResultsDispatcher}
           />
         </div>
       );
@@ -121,6 +124,9 @@ BarMain.propTypes = {
   })),
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
+  chartAllResults: React.PropTypes.bool,
+  chartAllResultsDispatcher: React.PropTypes.func,
+  chartPageResultsDispatcher: React.PropTypes.func,
 };
 
 BarMain.defaultProps = {
@@ -129,6 +135,9 @@ BarMain.defaultProps = {
   pageRanges: [],
   pages: [],
   error: '',
+  chartAllResults: false,
+  chartPageResultsDispatcher: () => {},
+  chartAllResultsDispatcher: () => {},
 };
 
 export default BarMain;
