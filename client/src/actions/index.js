@@ -55,9 +55,14 @@ const requestCurrentView = (state) => {
 //
 // The reason these are two steps is that redux-promise-middleware ONLY retains the “type” and
 // “payload” action properties when creating it’s asynchronous actions (_PENDING, _FULFILLED,
-// _REJECTED), so those reducers don’t have any info about what the query was.
+// _REJECTED).  However, the reducers need access to more than the query results -- they need
+// to know what the query itself was.
 //
-// Updating the view therefore requires a separate synchronous action.
+// Therefore we split these actions into two sub-actions -- one synchronous action to store the
+// query itself in the redux store, and an asynchronous action, in which the reducers
+// reference the store in order to see what the query was.
+//
+// We use Redux-thunk to access the added functionality of nested / chained actions.
 
 const setUnfilteredHistoryView = () => ({ type: 'SET_UNFILTERED_HISTORY_VIEW' });
 const setSearchView = query => ({ type: 'SET_SEARCH_VIEW', query });

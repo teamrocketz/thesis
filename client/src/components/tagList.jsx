@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { formatTags } from '../containers/tagListContainer';
 
-class SearchInput extends React.Component {
+class TagList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { tags: [] };
@@ -53,16 +53,16 @@ class SearchInput extends React.Component {
   }
 }
 
-SearchInput.propTypes = {
+TagList.propTypes = {
+  getTags: React.PropTypes.func,
   setQueryField: React.PropTypes.func,
   tagSearchViewAndRequest: React.PropTypes.func,
-  getTags: React.PropTypes.func,
 };
 
-SearchInput.defaultProps = {
+TagList.defaultProps = {
+  getTags: () => {},
   setQueryField: () => {},
   tagSearchViewAndRequest: () => {},
-  getTags: () => {},
 };
 
-export default SearchInput;
+export default TagList;
