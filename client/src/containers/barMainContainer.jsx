@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { requestHistory, chartAllResultsDispatcher, chartPageResultsDispatcher } from '../actions/index';
+import { chartAllResultsDispatcher, chartPageResultsDispatcher } from '../actions/index';
 
 import BarMain from '../components/barmain';
 
@@ -17,7 +17,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    requestHistory, chartAllResultsDispatcher, chartPageResultsDispatcher }, dispatch);
+    chartAllResultsDispatcher,
+    chartPageResultsDispatcher,
+  }, dispatch);
 }
 
 const BarMainContainer = connect(mapStateToProps, mapDispatchToProps)(BarMain);

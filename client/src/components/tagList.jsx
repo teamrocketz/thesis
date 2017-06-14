@@ -16,9 +16,9 @@ class SearchInput extends React.Component {
 
   loadTags() {
     this.props.getTags()
-    .then((tags) => { // eslint-disable-line
-      return formatTags(tags.action.payload.data);
-    })
+    .then(tags => (
+      formatTags(tags.action.payload.data)
+    ))
     .then((formedTags) => {
       this.setState({
         tags: formedTags,
@@ -30,6 +30,7 @@ class SearchInput extends React.Component {
   }
 
   handleTagSearch(e) {
+    this.props.setQueryField('');
     this.props.tagSearchViewAndRequest(e.label);
   }
 
@@ -53,11 +54,13 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
+  setQueryField: React.PropTypes.func,
   tagSearchViewAndRequest: React.PropTypes.func,
   getTags: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
+  setQueryField: () => {},
   tagSearchViewAndRequest: () => {},
   getTags: () => {},
 };
