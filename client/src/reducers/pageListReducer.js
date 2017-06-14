@@ -1,5 +1,9 @@
 import utils from '../utils';
 
+const PAGE_SIZE = 50;
+let newPages;
+let newPageRanges;
+
 const initialState = {
   view: {
     isUnfilteredHistory: false,
@@ -11,6 +15,7 @@ const initialState = {
   pages: [],
   currentPage: 0,
   lastPage: -1,
+  chartAllResults: false,
   pageRanges: [],
   tags: [],
   isLoading: false,
@@ -34,6 +39,7 @@ export default function (state = initialState, action) {
           isTagSearch: (action.type === 'SET_TAG_SEARCH_VIEW'),
           tagSearchQuery: (action.type === 'SET_TAG_SEARCH_VIEW') ? action.query : null,
         }),
+        chartAllResults: false,
       });
 
     /*---------------------------------------
@@ -81,7 +87,7 @@ export default function (state = initialState, action) {
     case 'LOAD_NEXT_PAGE_REJECTED':
       return utils.updateObject(state, {
         isLoading: true,
-        error: 'Failed to load next page.',
+        error: 'Failed to load all results for chart.',
       });
 
     case 'LOAD_NEXT_PAGE_FULFILLED':
@@ -92,6 +98,50 @@ export default function (state = initialState, action) {
           endIndex: state.pages.length + (action.payload.data.pages.length - 1),
         }),
         lastPage: action.payload.data.isLastPage ? state.currentPage : -1,
+        isLoading: false,
+      });
+
+    /*---------------------------------------
+      Chart scope toggle
+    ---------------------------------------*/
+
+    case 'CHART_PAGE_RESULTS':
+      return utils.updateObject(state, { chartAllResults: false });
+
+    case 'UPDATE_VIEW_ALL_RESULTS':
+      return utils.updateObject(state, { chartAllResults: true });
+
+    case 'LOAD_ALL_RESULTS_PENDING':
+      return utils.updateObject(state, { isLoading: true });
+
+    case 'LOAD_ALL_RESULTS_REJECTED':
+      return utils.updateObject(state, {
+        isLoading: true,
+        error: 'Failed to load next page.',
+      });
+
+    case 'LOAD_ALL_RESULTS_FULFILLED':
+      newPages = action.payload.data.pages;
+      newPageRanges = [];
+      for (let i = 0; i < newPages.length; i += PAGE_SIZE) {
+        const startIndex = state.pages.length + i;
+
+        let endIndex;
+        if ((i + PAGE_SIZE) >= newPages.length) {
+          endIndex = (state.pages.length - 1) + newPages.length;
+        } else {
+          endIndex = startIndex + (PAGE_SIZE - 1);
+        }
+
+        newPageRanges.push({ startIndex, endIndex });
+      }
+
+      return utils.updateObject(state, {
+        pages: state.pages.concat(action.payload.data.pages),
+        pageRanges: state.pageRanges.concat({
+          startIndex: state.pages.length,
+          endIndex: state.pages.length + (action.payload.data.pages.length - 1),
+        }),
         isLoading: false,
       });
 
