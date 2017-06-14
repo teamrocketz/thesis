@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PAGE_SIZE = 30;
+const PAGE_SIZE = 50;
 
 // helper function for history/search actions
 // fetches pageviews from the server
