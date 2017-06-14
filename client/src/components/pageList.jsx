@@ -31,7 +31,7 @@ class PageList extends Component {
     let listHeader = '';
     const isLastPage = (this.props.currentPage === this.props.lastPage);
     const lastPageNote = isLastPage ? '(Last page)' : '';
-    if (this.props.view.isAllHistory) {
+    if (this.props.view.isUnfilteredHistory) {
       listHeader = `All browsing history: Page ${this.props.currentPage} ${lastPageNote}`;
     } else if (this.props.view.isSearch) {
       listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
@@ -111,7 +111,7 @@ class PageList extends Component {
 
 PageList.propTypes = {
   view: React.PropTypes.shape({
-    isAllHistory: React.PropTypes.bool,
+    isUnfilteredHistory: React.PropTypes.bool,
     isSearch: React.PropTypes.bool,
     isTagSearch: React.PropTypes.bool,
     searchQuery: React.PropTypes.string,
@@ -135,7 +135,7 @@ PageList.propTypes = {
 
 PageList.defaultProps = {
   view: {
-    isAllHistory: false,
+    isUnfilteredHistory: false,
     isSearch: false,
     isTagSearch: false,
     searchQuery: null,

@@ -2,7 +2,7 @@ import utils from '../utils';
 
 const initialState = {
   view: {
-    isAllHistory: false,
+    isUnfilteredHistory: false,
     isSearch: false,
     isTagSearch: false,
     searchQuery: null,
@@ -23,12 +23,12 @@ export default function (state = initialState, action) {
       View switching
     ---------------------------------------*/
 
-    case 'SET_ALL_HISTORY_VIEW':
+    case 'SET_UNFILTERED_HISTORY_VIEW':
     case 'SET_SEARCH_VIEW':
     case 'SET_TAG_SEARCH_VIEW':
       return utils.updateObject(state, {
         view: utils.updateObject(state.view, {
-          isAllHistory: (action.type === 'SET_ALL_HISTORY_VIEW'),
+          isUnfilteredHistory: (action.type === 'SET_UNFILTERED_HISTORY_VIEW'),
           isSearch: (action.type === 'SET_SEARCH_VIEW'),
           searchQuery: (action.type === 'SET_SEARCH_VIEW') ? action.query : null,
           isTagSearch: (action.type === 'SET_TAG_SEARCH_VIEW'),
