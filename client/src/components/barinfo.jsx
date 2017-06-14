@@ -7,7 +7,7 @@ class BarInfo extends React.Component {
 
         <button
           tabIndex={0}
-          className="btn btn-link btn-no-border"
+          className="btn btn-link btn-no-outline"
           onClick={this.props.chartPageResultsDispatcher}
         >Show current page history only
         </button>
@@ -18,7 +18,7 @@ class BarInfo extends React.Component {
       return (
         <button
           tabIndex={0}
-          className="btn btn-link btn-no-border"
+          className="btn btn-link btn-no-outline"
           onClick={this.props.chartAllResultsDispatcher}
         >Show all history
         </button>
