@@ -6,6 +6,17 @@ module.exports.getTags = (req, res) => {
     profile_id: req.user.id,
   })
   .fetchAll()
+  .then((data) => {
+    const tags = [];
+    const tagNames = {};
+    data.forEach((tag) => {
+      if (!tagNames[tag.attributes.name]) {
+        tagNames[tag.attributes.name] = true;
+        tags.push(tag);
+      }
+    });
+    return tags;
+  })
   .then((tags) => {
     res.status(200).send(tags);
   })
