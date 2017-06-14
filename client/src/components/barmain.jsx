@@ -19,8 +19,13 @@ class BarMain extends Component {
       let max = 0;
       let favorite;
 
-      for (let i = 0; i < this.props.pages.length; i += 1) {
-        const page = this.props.pages[i];
+      const currentPages = this.props.pages.slice(
+        this.props.pageRanges[this.props.currentPage - 1].startIndex,
+        this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
+      );
+
+      for (let i = 0; i < currentPages.length; i += 1) {
+        const page = currentPages[i];
         const domain = parseDomain(page.url) ? parseDomain(page.url).domain : 'other';
         const timeEnd = Date.parse(page.time_closed) || Date.now();
         const timeLength = (timeEnd - Date.parse(page.time_open));
@@ -59,14 +64,14 @@ class BarMain extends Component {
         <div>
           <BarInfo
             numberDomains={domains.length}
-            numberPages={this.props.pages.length}
+            numberPages={currentPages.length}
             favorite={favorite}
           />
           <VictoryBar
             id="graph"
             data={domains}
             height={50}
-            padding={{ top: 20, bottom: 8, left: 24, right: 36 }}
+            padding={{ top: 30, bottom: 8, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
             style={{
               data: {
@@ -86,7 +91,7 @@ class BarMain extends Component {
               },
               labels: {
                 fontSize: 6,
-                // angle: 2,
+                angle: 30,
                 verticalAnchor: 'end',
                 textAnchor: 'middle',
               },
@@ -108,12 +113,19 @@ class BarMain extends Component {
 
 BarMain.propTypes = {
   isLoading: React.PropTypes.bool,
+  currentPage: React.PropTypes.number,
+  pageRanges: React.PropTypes.arrayOf(React.PropTypes.shape({
+    startIndex: React.PropTypes.number,
+    endIndex: React.PropTypes.number,
+  })),
   pages: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   error: React.PropTypes.string,
 };
 
 BarMain.defaultProps = {
   isLoading: false,
+  currentPage: 0,
+  pageRanges: [],
   pages: [],
   error: '',
 };
