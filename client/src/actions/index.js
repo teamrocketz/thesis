@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const PAGE_SIZE = 50;
-// const MAX_RESULTS = 10000;
+const MAX_RESULTS = 10000;
 
 // helper function for history/search actions
 // fetches pageviews from the server
@@ -9,13 +9,14 @@ const PAGE_SIZE = 50;
 const requestCurrentView = (state) => {
   let url;
   const options = {
-    numResults: PAGE_SIZE,
+    numResults: state.pageList.chartAllResults ? MAX_RESULTS : PAGE_SIZE,
   };
 
   const view = state.pageList.view;
   const pages = state.pageList.pages;
 
-  if (state.pageList.currentPage > state.pageList.pageRanges.length) {
+  if ((state.pageList.currentPage > state.pageList.pageRanges.length) ||
+      (state.pageList.chartAllResults)) {
     if (view.isSearch) {
       Object.assign(options, {
         minSearchId: parseInt(pages[pages.length - 1].search_id, 10) + 1,
@@ -123,6 +124,28 @@ export const nextPage = () => (
     const state = getState();
     if (state.pageList.currentPage > state.pageList.pageRanges.length) {
       dispatch(loadNextPage(state));
+    }
+  }
+);
+
+/*---------------------------------------
+  Chart scope toggle
+---------------------------------------*/
+
+export const chartPageResultsDispatcher = () => ({ type: 'CHART_PAGE_RESULTS' });
+const updateViewAllResults = () => ({ type: 'UPDATE_VIEW_ALL_RESULTS' });
+
+const loadAllResults = state => ({
+  type: 'LOAD_ALL_RESULTS',
+  payload: requestCurrentView(state),
+});
+
+export const chartAllResultsDispatcher = () => (
+  (dispatch, getState) => {
+    dispatch(updateViewAllResults());
+    const state = getState();
+    if (state.pages.length < MAX_RESULTS) {
+      dispatch(loadAllResults(state));
     }
   }
 );
