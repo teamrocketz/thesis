@@ -4,24 +4,24 @@ class BarInfo extends React.Component {
   renderChartAllResults() {
     if (this.props.chartAllResults) {
       return (
-        <div
-          role="button"
+
+        <button
           tabIndex={0}
-          className="col-sm-4"
+          className="btn btn-link btn-no-border"
           onClick={this.props.chartPageResultsDispatcher}
         >Show current page history only
-        </div>
+        </button>
+
       );
     }
     if (!this.props.chartAllResults) {
       return (
-        <div
-          role="button"
+        <button
           tabIndex={0}
-          className="col-sm-4"
+          className="btn btn-link btn-no-border"
           onClick={this.props.chartAllResultsDispatcher}
         >Show all history
-        </div>
+        </button>
       );
     }
     return undefined;
@@ -31,9 +31,9 @@ class BarInfo extends React.Component {
     return (
       <div className="container text-left" id="graph-info">
         <div className="row">
-          <div className="col-sm-4">Most Visited: {this.props.favorite}</div>
-          <div className="col-sm-4">Total Sites: {this.props.numberDomains}</div>
-          <div className="col-sm-4">Unique Pages: {this.props.numberPages}</div>
+          <div className="col-sm-3">Most Visited: {this.props.favorite}</div>
+          <div className="col-sm-3">Total Sites: {this.props.numberDomains}</div>
+          <div className="col-sm-3">Unique Pages: {this.props.numberPages}</div>
           {this.renderChartAllResults()}
         </div>
       </div>
