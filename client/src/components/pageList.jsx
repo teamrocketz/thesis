@@ -57,8 +57,8 @@ class PageList extends Component {
       </button>
     );
 
-    // if top == true, render buttons for top of list
-    // otherwise render buttons for bottom of list
+    // if bottom == true, render buttons for bottom of list
+    // otherwise render buttons for top of list
     const renderButtons = (bottom) => {
       const divClasses = `clearfix ${bottom ? 'bottomPaginationButtons' : ''}`;
 

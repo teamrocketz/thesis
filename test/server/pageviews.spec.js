@@ -39,7 +39,7 @@ describe('/pageviews API', function () {
       return agent.get('/pageviews')
         .expect(200)
         .then((res) => {
-          expect(res.body).to.have.lengthOf(testerPageviews.length);
+          expect(res.body.pages).to.have.lengthOf(testerPageviews.length);
         });
     });
 
@@ -50,7 +50,7 @@ describe('/pageviews API', function () {
       return agent.get('/pageviews')
         .expect(200)
         .then((res) => {
-          const areProperlyOrdered = res.body.every((pageview, index) => (
+          const areProperlyOrdered = res.body.pages.every((pageview, index) => (
             pageview.id === sortedPageviews[index].id
           ));
           expect(areProperlyOrdered).to.be.true();
@@ -63,13 +63,13 @@ describe('/pageviews API', function () {
       return agent.get('/pageviews')
         .expect(200)
         .then((res) => {
-          expect(res.body.length).to.be.above(numResults);
+          expect(res.body.pages.length).to.be.above(numResults);
           return agent.get('/pageviews')
             .query({ numResults })
             .expect(200);
         })
         .then((res) => {
-          expect(res.body).to.have.lengthOf(numResults);
+          expect(res.body.pages).to.have.lengthOf(numResults);
         });
     });
 
@@ -79,14 +79,14 @@ describe('/pageviews API', function () {
 
       return agent.get('/pageviews').expect(200)
         .then((res) => {
-          minId = res.body[res.body.length - 1].id + 1;
-          maxId = res.body[0].id - 1;
+          minId = res.body.pages[res.body.pages.length - 1].id + 1;
+          maxId = res.body.pages[0].id - 1;
           return agent.get('/pageviews')
             .query({ minId, maxId });
         })
         .then((res) => {
-          expect(res.body[res.body.length - 1].id).to.be.at.least(minId);
-          expect(res.body[0].id).to.be.at.most(maxId);
+          expect(res.body.pages[res.body.pages.length - 1].id).to.be.at.least(minId);
+          expect(res.body.pages[0].id).to.be.at.most(maxId);
         });
     });
   });
