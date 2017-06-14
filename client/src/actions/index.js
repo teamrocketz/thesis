@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const PAGE_SIZE = 50;
-const MAX_RESULTS = 10000;
+import utils from '../utils';
 
 // helper function for history/search actions
 // fetches pageviews from the server
@@ -9,7 +7,7 @@ const MAX_RESULTS = 10000;
 const requestCurrentView = (state) => {
   let url;
   const options = {
-    numResults: state.pageList.chartAllResults ? MAX_RESULTS : PAGE_SIZE,
+    numResults: state.pageList.chartAllResults ? utils.MAX_RESULTS : utils.PAGE_SIZE,
   };
 
   const view = state.pageList.view;
@@ -144,7 +142,7 @@ export const chartAllResultsDispatcher = () => (
   (dispatch, getState) => {
     dispatch(updateViewAllResults());
     const state = getState();
-    if (state.pageList.pages.length < MAX_RESULTS) {
+    if (state.pageList.pages.length < utils.MAX_RESULTS) {
       dispatch(loadAllResults(state));
     }
   }

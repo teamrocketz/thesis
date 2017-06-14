@@ -1,6 +1,5 @@
 import utils from '../utils';
 
-const PAGE_SIZE = 50;
 let newPages;
 let newPageRanges;
 
@@ -124,14 +123,14 @@ export default function (state = initialState, action) {
       newPages = action.payload.data.pages;
       newPageRanges = [];
 
-      for (let i = 0; i < newPages.length; i += PAGE_SIZE) {
+      for (let i = 0; i < newPages.length; i += utils.PAGE_SIZE) {
         const startIndex = state.pages.length + i;
 
         let endIndex;
-        if ((i + PAGE_SIZE) >= newPages.length) {
+        if ((i + utils.PAGE_SIZE) >= newPages.length) {
           endIndex = (state.pages.length - 1) + newPages.length;
         } else {
-          endIndex = startIndex + (PAGE_SIZE - 1);
+          endIndex = startIndex + (utils.PAGE_SIZE - 1);
         }
 
         newPageRanges.push({ startIndex, endIndex });

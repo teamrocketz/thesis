@@ -4,6 +4,13 @@ function updateObject(oldObject, newValues) {
   return Object.assign({}, oldObject, newValues);
 }
 
-const utils = { updateObject };
+const PAGE_SIZE = 50;
+const MAX_RESULTS = 10000;
+
+const utils = {
+  updateObject,
+  PAGE_SIZE,
+  MAX_RESULTS,
+};
 
 export default utils;
