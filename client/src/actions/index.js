@@ -177,17 +177,6 @@ export const removeTag = (name, pageId, tagId) => ({
 });
 
 /*---------------------------------------
-  Other actions
----------------------------------------*/
-
-export const deletePage = id => ({
-  type: 'DELETE_PAGE',
-  payload: axios.post('/pageviews/delete', {
-    id,
-  }),
-});
-
-/*---------------------------------------
   Blacklist
 ---------------------------------------*/
 
@@ -208,4 +197,20 @@ export const whitelistDomain = domain => ({
 export const getBlacklist = () => ({
   type: 'GET_BLACKLIST',
   payload: axios.get('/blacklist/'),
+});
+
+/*---------------------------------------
+  Other actions
+---------------------------------------*/
+
+export const deletePage = id => ({
+  type: 'DELETE_PAGE',
+  payload: axios.post('/pageviews/delete', {
+    id,
+  }),
+});
+
+export const setQueryField = query => ({
+  type: 'SET_QUERY_FIELD',
+  query,
 });

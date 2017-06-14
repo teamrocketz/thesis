@@ -1,6 +1,12 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { historyViewAndRequest, searchViewAndRequest, getTags, tagSearch } from '../actions/index';
+import {
+  historyViewAndRequest,
+  searchViewAndRequest,
+  getTags,
+  tagSearch,
+  setQueryField,
+} from '../actions/index';
 import SearchInput from '../components/searchInput';
 
 export const formatTags = (tags) => { // eslint-disable-line
@@ -12,6 +18,7 @@ export const formatTags = (tags) => { // eslint-disable-line
 function mapStateToProps(state) {
   return {
     tags: state.pageList.tags,
+    queryField: state.searchInput.queryField,
   };
 }
 
@@ -21,6 +28,7 @@ function mapDispatchToProps(dispatch) {
     searchViewAndRequest,
     getTags,
     tagSearch,
+    setQueryField,
   }, dispatch);
 }
 
