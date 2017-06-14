@@ -7,6 +7,8 @@ import BarMain from '../components/barmain';
 function mapStateToProps(state) {
   return {
     pages: state.pageList.pages,
+    currentPage: state.pageList.currentPage,
+    pageRanges: state.pageList.pageRanges,
     isLoading: state.pageList.isLoading,
     error: state.pageList.error,
   };
