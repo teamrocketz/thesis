@@ -13,16 +13,21 @@ class BarMain extends Component {
     );
 
     const renderBar = () => {
+      let currentPages = [];
       const domains = [];
       const timeOnDomains = {};
       let newPage;
       let max = 0;
       let favorite;
 
-      const currentPages = this.props.pages.slice(
-        this.props.pageRanges[this.props.currentPage - 1].startIndex,
-        this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
-      );
+      if (!this.props.chartAllResults) {
+        currentPages = this.props.pages.slice(
+          this.props.pageRanges[this.props.currentPage - 1].startIndex,
+          this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
+        );
+      } else {
+        currentPages = this.props.pages;
+      }
 
       for (let i = 0; i < currentPages.length; i += 1) {
         const page = currentPages[i];

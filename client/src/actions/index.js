@@ -144,7 +144,7 @@ export const chartAllResultsDispatcher = () => (
   (dispatch, getState) => {
     dispatch(updateViewAllResults());
     const state = getState();
-    if (state.pages.length < MAX_RESULTS) {
+    if (state.pageList.pages.length < MAX_RESULTS) {
       dispatch(loadAllResults(state));
     }
   }

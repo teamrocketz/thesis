@@ -123,6 +123,7 @@ export default function (state = initialState, action) {
     case 'LOAD_ALL_RESULTS_FULFILLED':
       newPages = action.payload.data.pages;
       newPageRanges = [];
+
       for (let i = 0; i < newPages.length; i += PAGE_SIZE) {
         const startIndex = state.pages.length + i;
 
@@ -137,12 +138,10 @@ export default function (state = initialState, action) {
       }
 
       return utils.updateObject(state, {
-        pages: state.pages.concat(action.payload.data.pages),
-        pageRanges: state.pageRanges.concat({
-          startIndex: state.pages.length,
-          endIndex: state.pages.length + (action.payload.data.pages.length - 1),
-        }),
+        pages: state.pages.concat(newPages),
+        pageRanges: state.pageRanges.concat(newPageRanges),
         isLoading: false,
+        lastPage: state.pageRanges.length + newPageRanges.length,
       });
 
     /*---------------------------------------
