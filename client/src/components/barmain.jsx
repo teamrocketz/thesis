@@ -5,6 +5,7 @@ import { VictoryBar } from 'victory';
 
 import BarInfo from './barinfo';
 
+const NUM_BARS = 25;
 
 class BarMain extends Component {
   render() {
@@ -16,7 +17,7 @@ class BarMain extends Component {
       let currentPages = [];
       const domains = [];
       const timeOnDomains = {};
-      let newPage;
+      // let newDomain;
       let max = 0;
       let favorite;
 
@@ -50,20 +51,18 @@ class BarMain extends Component {
         }
       }
 
+      const domainNames = Array.from(Object.keys(timeOnDomains));
+      domainNames.sort((a, b) => (timeOnDomains[b] - timeOnDomains[a]));
+      const topDomains = domainNames.slice(0, NUM_BARS);
 
-      const timeOnDomainsKeys = Object.keys(timeOnDomains);
-      for (let j = 0; j < timeOnDomainsKeys.length; j += 1) {
-        const domainP = timeOnDomainsKeys[j];
-        if (domainP) {
-          newPage = {
-            x: j,
-            y: timeOnDomains[domainP] / max,
-            label: domainP,
-            domain: domainP,
-          };
-          domains.push(newPage);
-        }
-      }
+      topDomains.forEach((domain, idx) => {
+        domains.push({
+          x: idx,
+          y: timeOnDomains[domain] / max,
+          label: domain,
+          domain,
+        });
+      });
 
       return (
         <div>
