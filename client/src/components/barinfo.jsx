@@ -7,7 +7,7 @@ class BarInfo extends React.Component {
 
         <button
           tabIndex={0}
-          className="btn btn-link btn-no-outline"
+          className="btn-no-outline btn btn-link"
           onClick={this.props.chartPageResultsDispatcher}
         >Show current page history only
         </button>
@@ -18,7 +18,7 @@ class BarInfo extends React.Component {
       return (
         <button
           tabIndex={0}
-          className="btn btn-link btn-no-outline"
+          className="btn-no-outline btn btn-link"
           onClick={this.props.chartAllResultsDispatcher}
         >Show all history
         </button>
@@ -29,12 +29,14 @@ class BarInfo extends React.Component {
 
   render() {
     return (
-      <div className="container text-left" id="graph-info">
-        <div className="row">
-          <div className="col-sm-3">Most Visited: {this.props.favorite}</div>
-          <div className="col-sm-3">Total Sites: {this.props.numberDomains}</div>
-          <div className="col-sm-3">Unique Pages: {this.props.numberPages}</div>
-          {this.renderChartAllResults()}
+      <div className="container text-center" id="graph-info">
+        <div className="row align-middle">
+          <div className="col-sm-3 smallbd">Most Visited: {this.props.favorite}</div>
+          <div className="col-sm-3 smallbd">Total Sites: {this.props.numberDomains}</div>
+          <div className="col-sm-3 smallbd">Unique Pages: {this.props.numberPages}</div>
+          <div className="col-sm-3">
+            {this.renderChartAllResults()}
+          </div>
         </div>
       </div>
     );

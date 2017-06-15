@@ -14,11 +14,25 @@ const formatTextField = (field, length) => {
 };
 
 // NOTE: pages.time_open is what goes in the "Time Visited" column of the table
+const formatter = (value, unit) => {
+  let unitVar;
+  if (value !== 1) {
+    unitVar = `${unit}s`;
+  } else {
+    unitVar = unit;
+  }
+  return `${value} ${unitVar}`;
+};
+
 const PageListItem = (props) => {
   let openSince = <span className="text-muted">(closed)</span>;
   if (props.page.is_active) {
     // TODO: set openSince to the actual duration, perhaps using 'timeago' npm module
-    openSince = <TimeAgo date={props.page.time_open} minPeriod="60" />;
+    openSince = (<span>Open for <TimeAgo
+      date={props.page.time_open}
+      minPeriod="60"
+      formatter={formatter}
+    /></span>);
   }
 
   const dateFormatter = new Intl.DateTimeFormat('en', {
