@@ -1,8 +1,11 @@
 import utils from '../utils';
 
+let newPages;
+let newPageRanges;
+
 const initialState = {
   view: {
-    isAllHistory: false,
+    isUnfilteredHistory: false,
     isSearch: false,
     isTagSearch: false,
     searchQuery: null,
@@ -11,6 +14,7 @@ const initialState = {
   pages: [],
   currentPage: 0,
   lastPage: -1,
+  chartAllResults: false,
   pageRanges: [],
   tags: [],
   isLoading: false,
@@ -23,17 +27,18 @@ export default function (state = initialState, action) {
       View switching
     ---------------------------------------*/
 
-    case 'SET_ALL_HISTORY_VIEW':
+    case 'SET_UNFILTERED_HISTORY_VIEW':
     case 'SET_SEARCH_VIEW':
     case 'SET_TAG_SEARCH_VIEW':
       return utils.updateObject(state, {
         view: utils.updateObject(state.view, {
-          isAllHistory: (action.type === 'SET_ALL_HISTORY_VIEW'),
+          isUnfilteredHistory: (action.type === 'SET_UNFILTERED_HISTORY_VIEW'),
           isSearch: (action.type === 'SET_SEARCH_VIEW'),
           searchQuery: (action.type === 'SET_SEARCH_VIEW') ? action.query : null,
           isTagSearch: (action.type === 'SET_TAG_SEARCH_VIEW'),
           tagSearchQuery: (action.type === 'SET_TAG_SEARCH_VIEW') ? action.query : null,
         }),
+        chartAllResults: false,
       });
 
     /*---------------------------------------
@@ -81,7 +86,7 @@ export default function (state = initialState, action) {
     case 'LOAD_NEXT_PAGE_REJECTED':
       return utils.updateObject(state, {
         isLoading: true,
-        error: 'Failed to load next page.',
+        error: 'Failed to load all results for chart.',
       });
 
     case 'LOAD_NEXT_PAGE_FULFILLED':
@@ -93,6 +98,49 @@ export default function (state = initialState, action) {
         }),
         lastPage: action.payload.data.isLastPage ? state.currentPage : -1,
         isLoading: false,
+      });
+
+    /*---------------------------------------
+      Chart scope toggle
+    ---------------------------------------*/
+
+    case 'CHART_PAGE_RESULTS':
+      return utils.updateObject(state, { chartAllResults: false });
+
+    case 'UPDATE_VIEW_ALL_RESULTS':
+      return utils.updateObject(state, { chartAllResults: true });
+
+    case 'LOAD_ALL_RESULTS_PENDING':
+      return utils.updateObject(state, { isLoading: true });
+
+    case 'LOAD_ALL_RESULTS_REJECTED':
+      return utils.updateObject(state, {
+        isLoading: true,
+        error: 'Failed to load next page.',
+      });
+
+    case 'LOAD_ALL_RESULTS_FULFILLED':
+      newPages = action.payload.data.pages;
+      newPageRanges = [];
+
+      for (let i = 0; i < newPages.length; i += utils.PAGE_SIZE) {
+        const startIndex = state.pages.length + i;
+
+        let endIndex;
+        if ((i + utils.PAGE_SIZE) >= newPages.length) {
+          endIndex = (state.pages.length - 1) + newPages.length;
+        } else {
+          endIndex = startIndex + (utils.PAGE_SIZE - 1);
+        }
+
+        newPageRanges.push({ startIndex, endIndex });
+      }
+
+      return utils.updateObject(state, {
+        pages: state.pages.concat(newPages),
+        pageRanges: state.pageRanges.concat(newPageRanges),
+        isLoading: false,
+        lastPage: state.pageRanges.length + newPageRanges.length,
       });
 
     /*---------------------------------------

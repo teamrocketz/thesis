@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { requestHistory, getTags, tagSearchViewAndRequest } from '../actions/index';
+import { getTags, tagSearchViewAndRequest, setQueryField } from '../actions/index';
 import tagList from '../components/tagList';
 
 export const formatTags = (tags) => { // eslint-disable-line
@@ -16,7 +16,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ requestHistory, getTags, tagSearchViewAndRequest }, dispatch);
+  return bindActionCreators({
+    getTags,
+    tagSearchViewAndRequest,
+    setQueryField,
+  }, dispatch);
 }
 
 const tagListContainer = connect(mapStateToProps, mapDispatchToProps)(tagList);

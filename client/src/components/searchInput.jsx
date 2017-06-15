@@ -6,7 +6,9 @@ class SearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { query: '' };
+    this.clearQueryField = this.clearQueryField.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.handleShowAllRequest = this.handleShowAllRequest.bind(this);
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
   }
 
@@ -14,14 +16,21 @@ class SearchInput extends React.Component {
     this.props.historyViewAndRequest();
   }
 
-  handleQueryChange(e) { this.setState({ query: e.target.value }); }
+  clearQueryField() { this.props.setQueryField(''); }
+
+  handleQueryChange(e) { this.props.setQueryField(e.target.value); }
+
+  handleShowAllRequest() {
+    this.clearQueryField();
+    this.props.historyViewAndRequest();
+  }
 
   handleSearchRequest(e) {
     e.preventDefault();
-    if (this.state.query === '') {
+    if (this.props.queryField === '') {
       this.props.historyViewAndRequest();
     } else {
-      this.props.searchViewAndRequest(this.state.query);
+      this.props.searchViewAndRequest(this.props.queryField);
     }
   }
 
@@ -48,7 +57,7 @@ class SearchInput extends React.Component {
             <input
               type="text"
               name="query"
-              value={this.state.query}
+              value={this.props.queryField}
               onChange={this.handleQueryChange}
               className="form-control"
             />
@@ -66,13 +75,13 @@ class SearchInput extends React.Component {
               />
             </button>
           </div>
-          <TagListContainer />
+          <TagListContainer clearQueryField={this.clearQueryField} />
           <div className="row span-12">
             <div className="col-sm-1">
               <button
                 type="button"
                 className="btn btn-link"
-                onClick={this.props.historyViewAndRequest}
+                onClick={this.handleShowAllRequest}
               >
               Show All
               </button>
@@ -86,13 +95,17 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
+  queryField: React.PropTypes.string,
   historyViewAndRequest: React.PropTypes.func,
   searchViewAndRequest: React.PropTypes.func,
+  setQueryField: React.PropTypes.func,
 };
 
 SearchInput.defaultProps = {
+  queryField: '',
   historyViewAndRequest: () => {},
   searchViewAndRequest: () => {},
+  setQueryField: () => {},
 };
 
 export default SearchInput;

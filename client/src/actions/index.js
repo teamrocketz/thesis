@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const PAGE_SIZE = 30;
+import utils from '../utils';
 
 // helper function for history/search actions
 // fetches pageviews from the server
@@ -8,13 +7,14 @@ const PAGE_SIZE = 30;
 const requestCurrentView = (state) => {
   let url;
   const options = {
-    numResults: PAGE_SIZE,
+    numResults: state.pageList.chartAllResults ? utils.MAX_RESULTS : utils.PAGE_SIZE,
   };
 
   const view = state.pageList.view;
   const pages = state.pageList.pages;
 
-  if (state.pageList.currentPage > state.pageList.pageRanges.length) {
+  if ((state.pageList.currentPage > state.pageList.pageRanges.length) ||
+      (state.pageList.chartAllResults)) {
     if (view.isSearch) {
       Object.assign(options, {
         minSearchId: parseInt(pages[pages.length - 1].search_id, 10) + 1,
@@ -26,7 +26,7 @@ const requestCurrentView = (state) => {
     }
   }
 
-  if (view.isAllHistory) {
+  if (view.isUnfilteredHistory) {
     url = '/pageviews';
   } else if (view.isSearch) {
     url = '/pageviews/search';
@@ -36,7 +36,7 @@ const requestCurrentView = (state) => {
     Object.assign(options, { query: view.tagSearchQuery });
   }
 
-  if (view.isAllHistory || view.isSearch) {
+  if (view.isUnfilteredHistory || view.isSearch) {
     return axios.get(url, { params: options });
   } else if (view.isTagSearch) {
     return axios.post(url, options);
@@ -55,11 +55,16 @@ const requestCurrentView = (state) => {
 //
 // The reason these are two steps is that redux-promise-middleware ONLY retains the “type” and
 // “payload” action properties when creating it’s asynchronous actions (_PENDING, _FULFILLED,
-// _REJECTED), so those reducers don’t have any info about what the query was.
+// _REJECTED).  However, the reducers need access to more than the query results -- they need
+// to know what the query itself was.
 //
-// Updating the view therefore requires a separate synchronous action.
+// Therefore we split these actions into two sub-actions -- one synchronous action to store the
+// query itself in the redux store, and an asynchronous action, in which the reducers
+// reference the store in order to see what the query was.
+//
+// We use Redux-thunk to access the added functionality of nested / chained actions.
 
-const setAllHistoryView = () => ({ type: 'SET_ALL_HISTORY_VIEW' });
+const setUnfilteredHistoryView = () => ({ type: 'SET_UNFILTERED_HISTORY_VIEW' });
 const setSearchView = query => ({ type: 'SET_SEARCH_VIEW', query });
 const setTagSearchView = query => ({ type: 'SET_TAG_SEARCH_VIEW', query });
 
@@ -80,7 +85,7 @@ const tagSearch = state => ({
 
 export const historyViewAndRequest = () => (
   (dispatch, getState) => {
-    dispatch(setAllHistoryView());
+    dispatch(setUnfilteredHistoryView());
     dispatch(requestHistory(getState()));
   }
 );
@@ -127,6 +132,28 @@ export const nextPage = () => (
 );
 
 /*---------------------------------------
+  Chart scope toggle
+---------------------------------------*/
+
+export const chartPageResultsDispatcher = () => ({ type: 'CHART_PAGE_RESULTS' });
+const updateViewAllResults = () => ({ type: 'UPDATE_VIEW_ALL_RESULTS' });
+
+const loadAllResults = state => ({
+  type: 'LOAD_ALL_RESULTS',
+  payload: requestCurrentView(state),
+});
+
+export const chartAllResultsDispatcher = () => (
+  (dispatch, getState) => {
+    dispatch(updateViewAllResults());
+    const state = getState();
+    if (state.pageList.pages.length < utils.MAX_RESULTS) {
+      dispatch(loadAllResults(state));
+    }
+  }
+);
+
+/*---------------------------------------
   Tags
 ---------------------------------------*/
 
@@ -153,17 +180,6 @@ export const removeTag = (name, pageId, tagId) => ({
 });
 
 /*---------------------------------------
-  Other actions
----------------------------------------*/
-
-export const deletePage = id => ({
-  type: 'DELETE_PAGE',
-  payload: axios.post('/pageviews/delete', {
-    id,
-  }),
-});
-
-/*---------------------------------------
   Blacklist
 ---------------------------------------*/
 
@@ -184,4 +200,20 @@ export const whitelistDomain = domain => ({
 export const getBlacklist = () => ({
   type: 'GET_BLACKLIST',
   payload: axios.get('/blacklist/'),
+});
+
+/*---------------------------------------
+  Other actions
+---------------------------------------*/
+
+export const deletePage = id => ({
+  type: 'DELETE_PAGE',
+  payload: axios.post('/pageviews/delete', {
+    id,
+  }),
+});
+
+export const setQueryField = query => ({
+  type: 'SET_QUERY_FIELD',
+  query,
 });
