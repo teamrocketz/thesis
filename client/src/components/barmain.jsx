@@ -66,12 +66,12 @@ class BarMain extends Component {
 
       return (
         <div>
-          <div className="container text-center">Time Spent Per Domain</div>
+          <div className="container text-center">Most Viewed Sites</div>
           <VictoryBar
             id="graph"
             data={domains}
             height={60}
-            padding={{ top: 30, bottom: 8, left: 24, right: 36 }}
+            padding={{ top: 20, bottom: 4, left: 24, right: 36 }}
             scale={{ x: 'linear', y: 'sqrt' }}
             style={{
               data: {
@@ -108,6 +108,7 @@ class BarMain extends Component {
             chartPageResultsDispatcher={this.props.chartPageResultsDispatcher}
             chartAllResultsDispatcher={this.props.chartAllResultsDispatcher}
           />
+          <div className="blackLine" />
         </div>
       );
     };

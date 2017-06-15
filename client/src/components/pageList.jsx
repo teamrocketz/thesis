@@ -32,16 +32,16 @@ class PageList extends Component {
     const isLastPage = (this.props.currentPage === this.props.lastPage);
     const lastPageNote = isLastPage ? '(Last page)' : '';
     if (this.props.view.isUnfilteredHistory) {
-      listHeader = `All browsing history: Page ${this.props.currentPage} ${lastPageNote}`;
+      listHeader = `All History: Page ${this.props.currentPage} ${lastPageNote}`;
     } else if (this.props.view.isSearch) {
-      listHeader = `Search results for "${this.props.view.searchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+      listHeader = `Search for "${this.props.view.searchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
     } else if (this.props.view.isTagSearch) {
-      listHeader = `Entries tagged "${this.props.view.tagSearchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
+      listHeader = `"${this.props.view.tagSearchQuery}": Page ${this.props.currentPage} ${lastPageNote}`;
     }
 
     const renderPreviousButton = () => (
       <button
-        className="btn btn-link pull-left"
+        className="btn btn-link col-md-3"
         onClick={this.handleClickPreviousPage}
       >
         Previous Page
@@ -72,19 +72,16 @@ class PageList extends Component {
 
     const renderList = () => (
       <div className="clearfix">
-        <h3>{listHeader}</h3>
-        {renderButtons(false)}
         <table className="table table-condensed table-striped">
           <thead>
             <tr className="row">
+              <th colSpan="2"><h5>{listHeader}</h5></th>
               <th />
-              <th>Title</th>
               <th />
-              <th>Time visited</th>
-              <th>Open since</th>
-              <th />
+              <th colSpan="3">{renderButtons(false)}</th>
             </tr>
           </thead>
+
           { this.props.pages.slice(
               this.props.pageRanges[this.props.currentPage - 1].startIndex,
               this.props.pageRanges[this.props.currentPage - 1].endIndex + 1,
