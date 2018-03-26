@@ -32,7 +32,7 @@
     "express": "^4.15.2",
     "express-session": "^1.15.1",
     "grunt": "^1.0.1",
-    "grunt-eslint": "^19.0.0",
+    "grunt-eslint": "^20.0.0",
     "grunt-mocha-test": "^0.13.2",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "grunt-shell": "^2.1.0",
